@@ -50,13 +50,37 @@ body {
 	min-height: 100%;
 	display: flex;
 	flex-direction: column;
-
+	position: relative;
 }
 ._container {
 	padding: 0 20px;
 	margin: 0px auto;
 	box-sizing: content-box;
 }
+
+
+/*-------------------------sidebar-----------------------------*/
+
+
+.sidebar {
+	display: none;
+}
+.open {
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 100vh;
+	left: 0;
+	top: 0;
+	background-color: #16141c;
+}
+.sidebar__items {
+	
+}
+
+
+
+
 
 /*-----------------------------header---------------------------------*/
 
