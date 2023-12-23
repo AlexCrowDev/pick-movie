@@ -130,7 +130,10 @@ body {
 .search-header__filter {
 	padding: 5px;
 }
-
+.search-header__filter:active {
+	background-color: rgb(122, 91, 247);
+	border-radius: 5px;
+}
 .filter-search {
 }
 .filter-search__button {
@@ -138,7 +141,12 @@ body {
 
 
 /*-------------------------filter-----------------------------*/
-
+.filter {
+	display: none;
+}
+.active {
+	display: block;
+}
 .filter__container {
 }
 .filter__show {
