@@ -103,6 +103,9 @@ body {
 	}
 
 }
+.focused {
+	background-color: rgb(122, 91, 247);
+}
 
 .search-header {
 }
