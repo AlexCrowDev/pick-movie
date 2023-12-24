@@ -20,15 +20,25 @@
           <input type="text" placeholder="Search" class="search__input">
         </div>
         <div class="sidebar__type type">
-          <input type="radio" class="type__input" name="label" id="All">
-          <label class="type__label" for="All"> All
+          <input type="radio" class="type__input" name="label" id="Choose" checked>
+          <label class="type__label" for="Choose">Choose
           </label>
-          <input type="radio" class="type__input " name="label" id="Films">
-          <label class="type__label" for="Films"> Films
+          <input type="radio" class="type__input" name="label" id="Exclude">
+          <label class="type__label" for="Exclude">Exclude
           </label>
-          <input type="radio" class="type__input" name="label" id="TV Series">
-          <label class="type__label" for="TV Series"> TV Series
-          </label>
+        </div>
+        <div class="sidebar__list list">
+          <div class="list__items">
+            <div class="list__title mini-title">Popular</div>
+            <ul class="list__item item">
+              <li>Usa</li>
+              <li>France</li>
+            </ul>
+            <div class="list__title mini-title">All</div>
+            <ul class="list__item item">
+              <li></li>
+            </ul>
+          </div>
         </div>
         <a href="" class="sidebar__button btn">Show</a>
       </div>
@@ -55,8 +65,8 @@
       <div class="filter__container _container">
         <div class="filter__show"> 
           <div class="show__items">
-            <div class="show__title">Show</div>           
-            <div class="show__item item-show">
+            <div class="show__title mini-title">Show</div>           
+            <div class="show__item item-show item">
               <div class="item-show__type type">
                 <input type="radio" class="type__input" name="label" id="All">
                 <label class="type__label" for="All"> All
@@ -69,7 +79,7 @@
                 </label>
               </div>
             </div>
-            <div class="show__item item-show">
+            <div class="show__item item-show item">
               <div class="item-show__main main-show">
                 <a href="" class="main-show__button btn">
                   <span>Genres</span>
@@ -85,7 +95,7 @@
                 </a>
               </div>
             </div>
-            <div class="show__item item-show">
+            <div class="show__item item-show item">
               <div class="item-show__ratings ratings-show">
                 <div class="ratings-show__interval">
                   <div class="item-show__title">KP rating</div>
