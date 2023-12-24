@@ -1,14 +1,19 @@
 "use strict"
 
 //changes search background when in focus
-let srchInput = document.querySelector('.search__input');
+let srchInputs = document.querySelectorAll('.search__input');
 
-function toggleFocus () {
-  srchInput.parentElement.classList.toggle('focused')
+function addFocus () {
+    this.parentElement.classList.add('focused')
+}
+function removeFocus () {
+  this.parentElement.classList.remove('focused')
 }
 
-srchInput.addEventListener('focus', toggleFocus);
-srchInput.addEventListener('blur', toggleFocus);
+for(let input of srchInputs) {
+  input.addEventListener('focus', addFocus);
+  input.addEventListener('blur', removeFocus);
+}
 
 
 //resets default link behavior

@@ -122,7 +122,10 @@ body {
 	text-align: center;
 	background-color: rgb(91 87 107 / 20%); 
 }
-
+.btn:active {
+	background-color: rgb(122, 91, 247);
+	border-radius: 5px;
+}
 
 
 /*-----------------------------header---------------------------------*/
