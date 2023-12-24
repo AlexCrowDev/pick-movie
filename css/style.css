@@ -74,11 +74,35 @@ body {
 	top: 0;
 	background-color: #16141c;
 }
-.sidebar__items {
-	
+
+.sidebar__container {
+}
+.sidebar__search {
+	margin: 10px 0px;
 }
 
 
+.sidebar__type {
+
+}
+.type {
+}
+.type__input {
+}
+.type__label {
+}
+
+
+.sidebar__button {
+
+} 
+.btn {
+	display: block;
+	padding: 10px;
+	border-radius: 5px;
+	align-items: center;
+	text-align: center;
+}
 
 
 
@@ -106,11 +130,13 @@ body {
 	color: rgb(122, 91, 247);
 }
 .header__search {
-	width: 100%;
 	max-width: 350px;
 	margin: 0px 0px 10px;
+}
+.search {
 	background-color: rgb(91 87 107 / 20%); 
 	display: flex;
+	width: 100%;
 	border-radius: 8px;
 	justify-content: center;
 	align-items: center;
@@ -131,12 +157,10 @@ body {
 	background-color: rgb(122, 91, 247);
 }
 
-.search-header {
-}
-.search-header__icon {
+.search__icon {
 	padding: 5px;
 }
-.search-header__input {
+.search__input {
 	width: 100%;
 	padding: 5px;
 	background: transparent;
@@ -147,14 +171,14 @@ body {
 	outline: none;
 	font-size: 16px;
 }
-.search-header__input::placeholder {
+.search__input::placeholder {
 	color: #a7a4b5;
 }
 
-.search-header__filter {
+.search__filter {
 	padding: 5px;
 }
-.search-header__filter:active {
+.search__filter:active {
 	background-color: rgb(122, 91, 247);
 	border-radius: 5px;
 }
@@ -187,42 +211,36 @@ body {
 .show__item {
 	background-color: rgb(91 87 107 / 20%); 
 	border-radius: 5px;
-	padding: 15px;
 	margin: 0 0 20px;
 }
 
-.item-show:nth-child(2) {
-	padding: 0px
+.item-show {
 }
-
 .item-show__type {
+
+}
+.type {
 	display: flex;
-	
 }
-.type-show {
-}
-.type-show__label {
+.type__label {
 	display: block;
 	align-items: center;
 	text-align: center;
 	padding: 10px;
 	width: 100%;
+	border-radius: 5px;
 }
-.type-show__input {
+.type__input {
 	display: none;
-	align-items: center;
-	text-align: center;
 }
 
-.type-show__input:checked  + .type-show__label {
+.type__input:checked  + .type__label {
 	background: rgb(122, 91, 247);
-	border-radius: 5px;
 }
 
 .item-show__main {
 	display: flex;
 	flex-direction: column;
-	border-radius: 5px;
 }
 .main-show {
 }
@@ -230,19 +248,17 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-}
-.main-show__button:not(:last-child) {
-	margin: 0 0 10px 0;
+	margin: 0px 5px;
 }
 
 .item-show__ratings {
+	padding: 15px;
 }
 .ratings-show {
 }
 .ratings-show__interval {
 	display: flex;
 	flex-direction: column;
-
 }
 .ratings-show__interval:not(:last-child) {
 	margin: 0 0 10px 0;

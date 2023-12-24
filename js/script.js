@@ -1,7 +1,7 @@
 "use strict"
 
 //changes search background when in focus
-let srchInput = document.querySelector('.search-header__input');
+let srchInput = document.querySelector('.search__input');
 
 function toggleFocus () {
   srchInput.parentElement.classList.toggle('focused')

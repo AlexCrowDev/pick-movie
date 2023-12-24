@@ -12,23 +12,25 @@
 <body>
   <div class="wrapper">
     <div class="sidebar">
-      <div class="sidebar__items">
-        <header class="header">
-          <div class="header__container _container">
-              <a href="" class="header__logo">
-                Film Filter
-              </a>
-              <div class="header__search search-header">
-                  <div class="search-header__icon">
-                    <img src="img/search_google.svg" alt="картинка поиска, ты не видишь, а она есть">
-                  </div>
-                  <input type="text" placeholder="Films, TV Series, Cartoons" class="search-header__input">        
-              </div>
-            </div>
-          </header>
-          <div class="main__container  _container">
-            <a href="" class="sidebar__button">Choose</a>
+      <div class="sidebar__container _container">
+        <div class="sidebar__search search">
+          <div class="search__icon">
+            <img src="img/search_google.svg" alt="картинка поиска, ты не видишь, а она есть">
           </div>
+          <input type="text" placeholder="Search" class="search__input">
+        </div>
+        <div class="sidebar__type type">
+          <input type="radio" class="type__input" name="label" id="All">
+          <label class="type__label" for="All"> All
+          </label>
+          <input type="radio" class="type__input " name="label" id="Films">
+          <label class="type__label" for="Films"> Films
+          </label>
+          <input type="radio" class="type__input" name="label" id="TV Series">
+          <label class="type__label" for="TV Series"> TV Series
+          </label>
+        </div>
+        <a href="" class="sidebar__button btn">Show</a>
       </div>
     </div>
     <header class="header">
@@ -36,12 +38,12 @@
           <a href="" class="header__logo">
             Film Filter
           </a>
-          <div class="header__search search-header">
-              <div class="search-header__icon">
+          <div class="header__search search">
+              <div class="search__icon">
                 <img src="img/search_google.svg" alt="картинка поиска, ты не видишь, а она есть">
               </div>
-              <input type="text" placeholder="Films, TV Series, Cartoons" class="search-header__input">
-              <div class="search-header__filter filter-search">
+              <input type="text" placeholder="Films, TV Series, Cartoons" class="search__input">
+              <div class="search__filter filter-search">
                 <a href="" class="filter-search__button">
                   <img src="/img/googleFilter.svg" alt="а тут картинка фильтра, честно">
                 </a>
@@ -53,31 +55,31 @@
       <div class="filter__container _container">
         <div class="filter__show"> 
           <div class="show__items">
-              <div class="show__title">Show</div>           
+            <div class="show__title">Show</div>           
             <div class="show__item item-show">
-              <div class="item-show__type type-show">
-                <input type="radio" class="type-show__input" name="label" id="All">
-                <label class="type-show__label" for="All"> All
+              <div class="item-show__type type">
+                <input type="radio" class="type__input" name="label" id="All">
+                <label class="type__label" for="All"> All
                 </label>
-                <input type="radio" class="type-show__input " name="label" id="Films">
-                <label class="type-show__label" for="Films"> Films
+                <input type="radio" class="type__input " name="label" id="Films">
+                <label class="type__label" for="Films"> Films
                 </label>
-                <input type="radio" class="type-show__input" name="label" id="TV Series">
-                <label class="type-show__label" for="TV Series"> TV Series
+                <input type="radio" class="type__input" name="label" id="TV Series">
+                <label class="type__label" for="TV Series"> TV Series
                 </label>
               </div>
             </div>
             <div class="show__item item-show">
               <div class="item-show__main main-show">
-                <a href="" class="main-show__button">
+                <a href="" class="main-show__button btn">
                   <span>Genres</span>
                   <span>All</span>
                 </a>
-                <a href="" class="main-show__button">
+                <a href="" class="main-show__button btn">
                   <span>Country</span>
                   <span>All</span>
                 </a>
-                <a href="" class="main-show__button">
+                <a href="" class="main-show__button btn">
                   <span>Year</span>
                   <span>All</span>
                 </a>
