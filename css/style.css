@@ -103,12 +103,32 @@ body {
 .list__title {
 }
 .list__item {
+	display: flex;
+	flex-direction: column;
 	padding: 15px;
 }
-.list__item>li:not(:last-child) {
-	margin: 0px 0px 10px 0px;
+.list__label {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
-
+.list__label:not(:last-child) {
+	margin: 0px 0px 20px 0px;
+}
+.list__span {
+	padding: 10px;
+}
+.list__input {
+	display: none;
+}
+.list__img {
+	display: none;
+	width: 34px;
+	height: 34px;
+}
+.list__input:checked + .list__img {
+	display: block;
+}
 
 .sidebar__button {
 

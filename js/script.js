@@ -20,12 +20,10 @@ async function getCountries (url) {
      'Content-Type': 'application/json', 
      'X-API-KEY': apiKey,
     } 
-    
   }
   );
   countries = await resp.json();
-
-  console.log(countries);
+  createList(countries);
 }
 
 async function getGenres (url) {
@@ -34,7 +32,6 @@ async function getGenres (url) {
      'Content-Type': 'application/json', 
      'X-API-KEY': apiKey,
     } 
-    
   }
   );
   genres = await resp.json();
@@ -69,10 +66,12 @@ for(let link of allLinks) {
 let filterBtn = document.querySelector('.filter-search__button');
 let filter = document.querySelector('.filter');
 
+filterBtn.addEventListener('click', showFilter);
+
 function showFilter () {
   filter.classList.add('active')
 }
-filterBtn.addEventListener('click', showFilter);
+
 
 
 //adds sidebar opening functionality
@@ -84,16 +83,6 @@ function openSidebar () {
   sideBar.classList.add('open') 
 }
 
-function createList (type) {
-  
-  type.forEach(element => {
-    let li = element.name;
-    let listLi = document.createElement('li')
-    listLi.innerHTML = (`${li}`)
-    listItems[1].prepend(listLi);
-  });
-}
-
 for (let btn of mainBtns) {
   let spanGeners = btn.getElementsByTagName('span')[0].innerHTML;
   if (spanGeners == 'Genres') {
@@ -102,6 +91,34 @@ for (let btn of mainBtns) {
     
   }
 }
+
+function createList (type) {
+  
+  type.forEach(element => {
+    let span = element.name;
+    
+    let listLabel = document.createElement('label')
+    listLabel.classList.add('list__label')
+
+    let listInput = document.createElement('input')
+    listInput.type = 'checkbox'
+    listInput.classList.add('list__input')
+
+    let listSpan = document.createElement('span')
+    listSpan.classList.add('list__span')
+    listSpan.innerHTML = (`${span}`)
+
+    let listImg = document.createElement('img')
+    listImg.classList.add('list__img')
+    listImg.src = '/img/_check_icon.svg'
+    
+    listItems[1].prepend(listLabel);
+    listLabel.prepend(listSpan);
+    listLabel.append(listInput);
+    listLabel.append(listImg);
+  });
+}
+
 
 
 //adds sidebar closing functionality
