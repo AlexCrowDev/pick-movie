@@ -148,7 +148,7 @@ body {
 	align-items: center;
 }
 .list__label:not(:last-child) {
-	margin: 0px 0px 20px 0px;
+	margin: 0px 0px 10px 0px;
 }
 .list__span {
 	padding: 10px;
@@ -164,14 +164,21 @@ body {
 .list__input:checked + .list__img {
 	display: block;
 }
-
+.sidebar__item {
+	display: flex;
+	justify-content: center;
+	position: sticky;
+	left: 0;
+	bottom: 0;
+	z-index: 10;
+	width: 100%;
+	background-color: #24212b;
+	border-radius: 8px 8px 0px 0px;
+}
 .sidebar__button {
-
-}
-
-}
+	width: 200px;
+	margin: 10px;
 	background-color: rgb(122, 91, 247);
-	border-radius: 5px;
 }
 
 /*-----------------------------header---------------------------------*/
