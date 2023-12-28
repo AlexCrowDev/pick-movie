@@ -38,7 +38,7 @@ body {
 	height: 100%;
 	line-height: 1;
 	background-color: #16141c;
-	font-size: 14px;
+	font-size: 16px;
 	color: #fff;
 	font-weight: 500;
 	font-family: Signika Negative;
@@ -53,7 +53,7 @@ body {
 	position: relative;
 }
 ._container {
-	padding: 0 20px;
+	padding: 0 15px;
 	margin: 0px auto;
 	box-sizing: content-box;
 }
@@ -61,14 +61,14 @@ body {
 	background-color: rgb(91 87 107 / 20%); 
 	display: flex;
 	width: 100%;
-	border-radius: 8px;
+	border-radius: 12px;
 	justify-content: center;
 	align-items: center;
 }
 .mini-title {
 	color: #a7a4b5;
-	font-size: 12px;
-	padding: 5px;
+	font-size: 14px;
+	padding: 8px 0px;
 }
 .list {
 }
@@ -80,9 +80,9 @@ body {
 	display: block;
 	align-items: center;
 	text-align: center;
-	padding: 10px;
+	padding: 12px;
 	width: 100%;
-	border-radius: 8px;
+	border-radius: 12px;
 }
 .type__input {
 	display: none;
@@ -93,17 +93,16 @@ body {
 
 .item {
 	background-color: rgb(91 87 107 / 20%); 
-	border-radius: 8px;
+	border-radius: 10px;
 	margin: 0 0 20px;
 }
 .btn {
 	display: block;
-	padding: 10px;
-	border-radius: 5px;
+	padding: 12px;
 	align-items: center;
 	text-align: center;
 	background-color: rgb(91 87 107 / 20%); 
-	border-radius: 8px;
+	border-radius: 18px;
 }
 .btn:active {
 	background-color: rgb(122, 91, 247);
@@ -126,10 +125,10 @@ body {
 .sidebar__container {
 }
 .sidebar__search {
-	margin: 10px 0px;
+	margin: 15px 0px;
 }
 .sidebar__type {
-	margin: 0px 0px 20px 0px;
+	margin: 0px 0px 15px 0px;
 }
 .sidebar__list {
 }
@@ -151,7 +150,7 @@ body {
 	margin: 0px 0px 10px 0px;
 }
 .list__span {
-	padding: 10px;
+	padding: 9px;
 }
 .list__input {
 	display: none;
@@ -173,11 +172,11 @@ body {
 	z-index: 10;
 	width: 100%;
 	background-color: #24212b;
-	border-radius: 8px 8px 0px 0px;
+	border-radius: 10px 10px 0px 0px;
 }
 .sidebar__button {
-	width: 200px;
-	margin: 10px;
+	width: 230px;
+	margin: 14px;
 	background-color: rgb(122, 91, 247);
 }
 
@@ -197,21 +196,20 @@ body {
 .header__logo {
 	min-width: 130px;
 	margin: 10px 0px;
-	font-size: 28px;
+	font-size: 30px;
 	font-weight: 700;
 	color: rgb(122, 91, 247);
 }
 .header__search {
-	max-width: 350px;
 	margin: 0px 0px 10px;
 }
-@media (min-width: 410px) {
+@media (min-width: 502px) {
 	.header__container {
 		flex-direction: row;
 		justify-content: space-between;
 	}
 	.header__search {
-		max-width: 300px;
+		max-width: 370px;
 		margin: 0px 0px 0px 30px;
 	}
 
@@ -220,11 +218,11 @@ body {
 	background-color: rgb(122, 91, 247);
 }
 .search__icon {
-	padding: 5px;
+	padding: 8px;
 }
 .search__input {
 	width: 100%;
-	padding: 5px;
+	padding: 8px;
 	background: transparent;
 	font-weight: 300;
 	font-family: Signika Negative;
@@ -237,11 +235,11 @@ body {
 	color: #a7a4b5;
 }
 .search__filter {
-	padding: 5px;
+	padding: 8px;
 }
 .search__filter:active {
 	background-color: rgb(122, 91, 247);
-	border-radius: 5px;
+	border-radius: 10px;
 }
 .filter-search {
 }
@@ -279,7 +277,8 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	background-color: transparent;
-	padding: 10px 15px;
+	padding: 12px 15px;
+	border-radius: 10px;
 }
 .item-show__ratings {
 	padding: 15px;
