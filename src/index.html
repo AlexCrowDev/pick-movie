@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@400;500;700&display=swap" rel="stylesheet">
-  <title>Film Filter</title>
+  <title>Movie Search</title>
 </head>
 
 <body>
@@ -19,16 +19,15 @@
           </div>
           <input type="text" placeholder="Search" class="search__input">
         </div>
-        <div class="sidebar__type type">
-          <input type="radio" class="type__input" name="label" id="Choose" checked>
-          <label class="type__label" for="Choose">Choose
+        <div class="sidebar__switches switch">
+          <input type="radio" class="switch__input" name="sidebar" id="Choose" checked>
+          <label class="switch__label" for="Choose">Choose
           </label>
-          <input type="radio" class="type__input" name="label" id="Exclude">
-          <label class="type__label" for="Exclude">Exclude
+          <input type="radio" class="switch__input" name="sidebar" id="Exclude">
+          <label class="switch__label" for="Exclude">Exclude
           </label>
         </div>
-        <div class="sidebar__list list">
-          <div class="list__items">
+          <div class="sidebar_lists">
             <div class="list__title mini-title">Popular</div>
             <div class="list__item item">
             </div>
@@ -36,17 +35,16 @@
             <div class="list__item item">
             </div>
           </div>
-          
         </div>
-        <div class="sidebar__item">
-          <a href="" class="sidebar__button btn">Show</a>
+        <div class="sidebar__footer footer">
+          <a href="" class="sidebar__button btn btn-show">Show</a>
         </div>
       </div>
     </div>
     <header class="header">
       <div class="header__container _container">
           <a href="" class="header__logo">
-            Film Filter
+            Movie Search
           </a>
           <div class="header__search search">
               <div class="search__icon">
@@ -67,15 +65,15 @@
           <div class="show__items">
             <div class="show__title mini-title">Show</div>           
             <div class="show__item item-show item">
-              <div class="item-show__type type">
-                <input type="radio" class="type__input" name="label" id="All">
-                <label class="type__label" for="All"> All
+              <div class="item-show__switches switch">
+                <input type="radio" class="switch__input" name="show" id="All" checked>
+                <label class="switch__label" for="All"> All
                 </label>
-                <input type="radio" class="type__input " name="label" id="Films">
-                <label class="type__label" for="Films"> Films
+                <input type="radio" class="switch__input " name="show" id="Films">
+                <label class="switch__label" for="Films"> Films
                 </label>
-                <input type="radio" class="type__input" name="label" id="TV Series">
-                <label class="type__label" for="TV Series"> TV Series
+                <input type="radio" class="switch__input" name="show" id="TV Series">
+                <label class="switch__label" for="TV Series"> TV Series
                 </label>
               </div>
             </div>
@@ -108,6 +106,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="filter__footer footer">
+          <a href="" class="filter__button btn btn-show">Show</a>
         </div>
       </div>
     </div>

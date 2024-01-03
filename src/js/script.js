@@ -8,7 +8,7 @@ let genres;
 let countries;
 
 
-getCountries(countriesUrl);
+// getCountries(countriesUrl);
 getGenres(genresUrl);
 
 async function getCountries (url) {
@@ -70,7 +70,7 @@ function showFilter () {
 //adds sidebar opening functionality
 let mainBtns = document.querySelectorAll('.main-show__button');
 let sideBar = document.querySelector('.sidebar');
-let listItems = document.querySelectorAll('.list__item')
+let listItems = document.querySelectorAll('.list__item');
 let srchInput = document.querySelector('.search__input');
 
 for (let btn of mainBtns) {
@@ -104,12 +104,12 @@ function createGenres (elements) {
     listImg.classList.add('list__img')
     listImg.src = '/img/_check_icon.svg'
     
-    listItems[0].prepend(listLabel);
     listItems[1].prepend(listLabel);
     listLabel.prepend(listSpan);
     listLabel.append(listInput);
     listLabel.append(listImg);
   });
+  let genresList = listItems;
 }
 
 function createCountries (elements) { 
@@ -135,11 +135,12 @@ function createCountries (elements) {
     listLabel.append(listInput);
     listLabel.append(listImg);
   });
+  let countriesList = listItems;
 }
 
 function openGenres () {
   createGenres(genres);
-  sideBar.classList.add('open');
+  setTimeout(() =>sideBar.classList.add('open'), 200);
   srchInput.placeholder = 'Genres';
 }
 
@@ -158,7 +159,11 @@ function openYears () {
 let sidebarBtn = document.querySelector('.sidebar__button');
 
 function closeSidebar() {
-  sideBar.classList.remove('open')
+  listItems[1].innerHTML = '';
+  sideBar.classList.remove('open');
 }
 
 sidebarBtn.addEventListener('click', closeSidebar)
+
+
+

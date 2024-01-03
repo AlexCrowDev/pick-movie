@@ -70,13 +70,10 @@ body {
 	font-size: 14px;
 	padding: 8px 0px;
 }
-.list {
-}
-
-.type {
+.switch {
 	display: flex;
 }
-.type__label {
+.switch__label {
 	display: block;
 	align-items: center;
 	text-align: center;
@@ -84,28 +81,42 @@ body {
 	width: 100%;
 	border-radius: 12px;
 }
-.type__input {
+.switch__input {
 	display: none;
 }
-.type__input:checked  + .type__label {
+.switch__input:checked  + .switch__label {
 	background: rgb(122, 91, 247);
 }
 
 .item {
 	background-color: rgb(91 87 107 / 20%); 
 	border-radius: 10px;
-	margin: 0 0 20px;
+	margin: 0 0 15px;
 }
 .btn {
 	display: block;
 	padding: 12px;
 	align-items: center;
 	text-align: center;
-	background-color: rgb(91 87 107 / 20%); 
-	border-radius: 18px;
+	background-color: rgb(91 87 107 / 20%);
+	transition: background-color 0.2s ease;
+	border-radius: 10px;
 }
 .btn:active {
 	background-color: rgb(122, 91, 247);
+}
+
+.footer {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.btn-show {
+	width: 230px;
+	margin: 15px;
+	background-color: rgb(122, 91, 247);
+	border-radius: 18px;
 }
 
 /*-------------------------sidebar-----------------------------*/
@@ -127,10 +138,8 @@ body {
 .sidebar__search {
 	margin: 15px 0px;
 }
-.sidebar__type {
+.sidebar__switches {
 	margin: 0px 0px 15px 0px;
-}
-.sidebar__list {
 }
 .list__items {
 }
@@ -140,6 +149,9 @@ body {
 	display: flex;
 	flex-direction: column;
 	padding: 15px;
+}
+.list__item:last-child {
+	margin-bottom: 0px;
 }
 .list__label {
 	display: flex;
@@ -163,21 +175,23 @@ body {
 .list__input:checked + .list__img {
 	display: block;
 }
-.sidebar__item {
-	display: flex;
-	justify-content: center;
+.sidebar__footer {
 	position: sticky;
 	left: 0;
 	bottom: 0;
 	z-index: 10;
 	width: 100%;
-	background-color: #24212b;
-	border-radius: 10px 10px 0px 0px;
+	background-color: #16141c29;
+	backdrop-filter: blur(10px);
+}
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+	.sidebar__footer {
+	background-color: rgba(43, 42, 48, 0);
+	-webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+	}
 }
 .sidebar__button {
-	width: 230px;
-	margin: 14px;
-	background-color: rgb(122, 91, 247);
 }
 
 /*-----------------------------header---------------------------------*/
@@ -239,7 +253,7 @@ body {
 }
 .search__filter:active {
 	background-color: rgb(122, 91, 247);
-	border-radius: 10px;
+	border-radius: 12px;
 }
 .filter-search {
 }
@@ -278,7 +292,6 @@ body {
 	align-items: center;
 	background-color: transparent;
 	padding: 12px 15px;
-	border-radius: 10px;
 }
 .item-show__ratings {
 	padding: 15px;
@@ -298,4 +311,8 @@ body {
 .ratings-show__input {
 	accent-color: rgb(122, 91, 247);
 }
+.filter__footer {
+}
+.filter__button {
 
+}
