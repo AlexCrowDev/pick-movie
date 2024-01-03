@@ -2,16 +2,13 @@
 
 const apiUrl = 'https://api.kinopoisk.dev/';
 const genresUrl = 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=genres.name';
-// const countriesUrl = 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=countries.name';
+const countriesUrl = 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=countries.name';
 const apiKey = 'RJKDTJT-1HDM3FX-NGWJ4T8-KHQMWQF';
 let genres;
 let countries;
 
 
-
-
-
-// getCountries(countriesUrl);
+getCountries(countriesUrl);
 getGenres(genresUrl);
 
 async function getCountries (url) {
@@ -20,10 +17,8 @@ async function getCountries (url) {
      'Content-Type': 'application/json', 
      'X-API-KEY': apiKey,
     } 
-  }
-  );
+  });
   countries = await resp.json();
-  createList(countries);
 }
 
 async function getGenres (url) {
@@ -32,10 +27,8 @@ async function getGenres (url) {
      'Content-Type': 'application/json', 
      'X-API-KEY': apiKey,
     } 
-  }
-  );
+  });
   genres = await resp.json();
-  createList(genres);
 }
 
 //changes search background when in focus
@@ -78,24 +71,23 @@ function showFilter () {
 let mainBtns = document.querySelectorAll('.main-show__button');
 let sideBar = document.querySelector('.sidebar');
 let listItems = document.querySelectorAll('.list__item')
-
-function openSidebar () {
-  sideBar.classList.add('open') 
-}
+let srchInput = document.querySelector('.search__input');
 
 for (let btn of mainBtns) {
-  let spanGeners = btn.getElementsByTagName('span')[0].innerHTML;
-  if (spanGeners == 'Genres') {
-    btn.addEventListener('click', openSidebar)
-  } else {
-    
+  let attribute= btn.getAttribute('data-page');
+  if (attribute == 'genres') {
+    btn.addEventListener('click', openGenres)
+  } else if (attribute == 'countries') {
+    btn.addEventListener('click', openCountries)
+  } else if (attribute == 'years') {
+    // btn.addEventListener('click', openYears)
   }
 }
 
-function createList (type) {
-  
-  type.forEach(element => {
-    let span = element.name;
+
+function createGenres (elements) {
+
+  elements.forEach(element => {
     
     let listLabel = document.createElement('label')
     listLabel.classList.add('list__label')
@@ -106,7 +98,33 @@ function createList (type) {
 
     let listSpan = document.createElement('span')
     listSpan.classList.add('list__span')
-    listSpan.innerHTML = (`${span}`)
+    listSpan.innerHTML = (`${element.name}`)
+
+    let listImg = document.createElement('img')
+    listImg.classList.add('list__img')
+    listImg.src = '/img/_check_icon.svg'
+    
+    listItems[0].prepend(listLabel);
+    listItems[1].prepend(listLabel);
+    listLabel.prepend(listSpan);
+    listLabel.append(listInput);
+    listLabel.append(listImg);
+  });
+}
+
+function createCountries (elements) { 
+  elements.forEach(element => {
+    
+    let listLabel = document.createElement('label')
+    listLabel.classList.add('list__label')
+
+    let listInput = document.createElement('input')
+    listInput.type = 'checkbox'
+    listInput.classList.add('list__input')
+
+    let listSpan = document.createElement('span')
+    listSpan.classList.add('list__span')
+    listSpan.innerHTML = (`${element.name}`)
 
     let listImg = document.createElement('img')
     listImg.classList.add('list__img')
@@ -119,7 +137,22 @@ function createList (type) {
   });
 }
 
+function openGenres () {
+  createGenres(genres);
+  sideBar.classList.add('open');
+  srchInput.placeholder = 'Genres';
+}
 
+function openCountries () {
+  createCountries(countries);
+  sideBar.classList.add('open');
+  srchInput.placeholder = 'Countries';
+}
+
+function openYears () {
+  sideBar.classList.add('open');
+  srchInput.placeholder = 'Years';
+}
 
 //adds sidebar closing functionality
 let sidebarBtn = document.querySelector('.sidebar__button');
