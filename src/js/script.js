@@ -66,7 +66,7 @@ let filter = document.querySelector('.filter');
 filterSearchBtn.addEventListener('click', showFilter);
 
 function showFilter () {
-  filter.classList.add('active')
+  filter.classList.add('active');
 }
 
 
@@ -109,7 +109,7 @@ function createGenres (elements) {
     listImg.classList.add('list__img')
     listImg.src = '/img/_check_icon.svg'
     
-    listItems[1].prepend(listLabel);
+    listItems[1].append(listLabel);
     listLabel.prepend(listSpan);
     listLabel.append(listInput);
     listLabel.append(listImg);
@@ -134,7 +134,7 @@ function createCountries (elements) {
     listImg.classList.add('list__img')
     listImg.src = '/img/_check_icon.svg'
     
-    listItems[1].prepend(listLabel);
+    listItems[1].append(listLabel);
     listLabel.prepend(listSpan);
     listLabel.append(listInput);
     listLabel.append(listImg);
@@ -167,9 +167,9 @@ let chooseBtn = document.querySelector('.sidebar__button');
 function closeSidebar() {
   let listInputs = Array.from(listItems[1].getElementsByTagName('input'));
   
-  listInputs.forEach(e => {
-    if (e.checked) {
-      let span = e.previousElementSibling.innerHTML;
+  listInputs.forEach(input => {
+    if (input.checked) {
+      let span = input.previousElementSibling.innerHTML;
       currentSidebarModel.push(span);
     }
   })
@@ -178,7 +178,7 @@ function closeSidebar() {
   sideBar.classList.remove('open');
 }
 
-chooseBtn.addEventListener('click', closeSidebar)
+chooseBtn.addEventListener('click', closeSidebar);
 
 
 
@@ -190,20 +190,46 @@ filterBtn.addEventListener('click', showResult);
 
 
 function showResult() {
+  checkTypeMovies();
   let params = createParams();
-  getMovies(apiUrl, params);
+  console.log(params);
+  // getMovies(apiUrl, params);
 }
 
 
+function checkTypeMovies() {
+  let switchBtns = document.querySelectorAll('.item-show__switch')
+  
+  switchBtns.forEach(switchBtn => {
+    if (switchBtn.checked) {
+      let content = switchBtn.nextElementSibling.innerHTML;
+      model.type = content;
+    }
+  })
+}
+
 function createParams() {
   let params = new URLSearchParams();
-
+  let mult;
+  
   model.genres.forEach((genre) => {
-    params.append('genres.name', genre); 
+    if (genre === 'мультфильм') {
+      mult = genre;
+    }
+    params.append('genres.name', genre);
   });
+
   model.countries.forEach((country) => {
     params.append('countries.name', country);
   });
+
+  if ((model.type === 'TV Series') && mult) {
+    params.append('type', 'animated-series');
+  } else if (model.type === 'TV Series') {
+    params.append('type', 'tv-series');
+  } else if (model.type === 'Films') {
+    params.append('type', 'movie');
+  }
   return params.toString();
 }
 
@@ -211,7 +237,7 @@ function createParams() {
 async function getMovies(url, params) {
   let resp = await fetch(url + 'v1.4/movie?' + params, {
     headers: {
-     'Content-Type': 'application/json', 
+     'Content-Type': 'application/json',
      'X-API-KEY': apiKey,
     } 
   });
