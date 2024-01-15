@@ -38,10 +38,9 @@ body {
 	height: 100%;
 	line-height: 1;
 	background-color: #16141c;
-	font-size: 16px;
+	font-size: 14px;
 	color: #fff;
-	font-weight: 500;
-	font-family: Signika Negative;
+	font-family: 'Comfortaa', sans-serif;
 	letter-spacing: 0.3px;
 }
 
@@ -141,7 +140,9 @@ body {
 .sidebar__switches {
 	margin: 0px 0px 15px 0px;
 }
-.list__items {
+.sidebar__lists {
+}
+.list__body {
 }
 .list__title {
 }
@@ -208,6 +209,7 @@ body {
 	margin: 0px 0px 10px;
 }
 .header__logo {
+	font-family: Signika Negative;
 	min-width: 130px;
 	margin: 10px 0px;
 	font-size: 30px;
