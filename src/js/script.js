@@ -12,8 +12,10 @@ let model = {
 };
 
 
-getCountries(countriesUrl);
-getGenres(genresUrl);
+// getCountries(countriesUrl);
+// getGenres(genresUrl);
+getCountriesStub(countriesUrl);
+getGenresStub(genresUrl);
 
 async function getCountries (url) {
   const resp = await fetch (url, {
@@ -23,6 +25,9 @@ async function getCountries (url) {
     } 
   });
   countries = await resp.json();
+}
+function getCountriesStub () {
+  countries =  [{name: "РФ"}, {name: "Беларусь"}, {name: "США"}]
 }
 
 async function getGenres (url) {
@@ -34,12 +39,15 @@ async function getGenres (url) {
   });
   genres = await resp.json();
 }
+function getGenresStub (url) {
+  genres =  [{name: "Аниме"}, {name: "Экшн"}, {name: "Драма"}]
+}
 
 //changes search background when in focus
 let srchInputs = document.querySelectorAll('.search__input');
 
 function addFocus () {
-    this.parentElement.classList.add('focused')
+  this.parentElement.classList.add('focused')
 }
 function removeFocus () {
   this.parentElement.classList.remove('focused')
@@ -74,85 +82,42 @@ function showFilter () {
 //adds sidebar opening functionality
 let mainBtns = document.querySelectorAll('.main-show__button');
 let sideBar = document.querySelector('.sidebar');
-let listItems = document.querySelectorAll('.list__item');
 let srchInput = document.querySelector('.search__input');
 let currentSidebarModel;
+let genresBtn;
+let countriesBtn;
+let allList = document.querySelectorAll('.list__item')[1];
+let listInputs;
+
 
 for (let btn of mainBtns) {
-  let attribute= btn.getAttribute('data-page');
+  let attribute = btn.getAttribute('data-page');
   if (attribute == 'genres') {
     btn.addEventListener('click', openGenres)
+    genresBtn = btn;
   } else if (attribute == 'countries') {
     btn.addEventListener('click', openCountries)
+    countriesBtn = btn;
   } else if (attribute == 'years') {
     // btn.addEventListener('click', openYears)
   }
 }
 
-
-function createGenres (elements) {
-
-  elements.forEach(element => {
-    
-    let listLabel = document.createElement('label')
-    listLabel.classList.add('list__label')
-
-    let listInput = document.createElement('input')
-    listInput.type = 'checkbox'
-    listInput.classList.add('list__input')
-
-    let listSpan = document.createElement('span')
-    listSpan.classList.add('list__span')
-    listSpan.innerHTML = (`${element.name}`)
-
-    let listImg = document.createElement('img')
-    listImg.classList.add('list__img')
-    listImg.src = '/img/_check_icon.svg'
-    
-    listItems[1].append(listLabel);
-    listLabel.prepend(listSpan);
-    listLabel.append(listInput);
-    listLabel.append(listImg);
-  });
-}
-
-function createCountries (elements) { 
-  elements.forEach(element => {
-    
-    let listLabel = document.createElement('label')
-    listLabel.classList.add('list__label')
-
-    let listInput = document.createElement('input')
-    listInput.type = 'checkbox'
-    listInput.classList.add('list__input')
-
-    let listSpan = document.createElement('span')
-    listSpan.classList.add('list__span')
-    listSpan.innerHTML = (`${element.name}`)
-
-    let listImg = document.createElement('img')
-    listImg.classList.add('list__img')
-    listImg.src = '/img/_check_icon.svg'
-    
-    listItems[1].append(listLabel);
-    listLabel.prepend(listSpan);
-    listLabel.append(listInput);
-    listLabel.append(listImg);
-  });
-}
-
 function openGenres () {
   currentSidebarModel = model.genres;
-  createGenres(genres);
-  setTimeout(() =>sideBar.classList.add('open'), 200);
+  createAllList(genres);
+  addChecked(currentSidebarModel);
   srchInput.placeholder = 'Genres';
+  setTimeout(() => sideBar.classList.add('open'), 200);
 }
 
 function openCountries () {
   currentSidebarModel = model.countries;
-  createCountries(countries);
-  sideBar.classList.add('open');
+  createAllList(countries);
+  addChecked(currentSidebarModel);
+
   srchInput.placeholder = 'Countries';
+  sideBar.classList.add('open');
 }
 
 function openYears () {
@@ -160,26 +125,61 @@ function openYears () {
   srchInput.placeholder = 'Years';
 }
 
+function createAllList (elements) {
+  elements.forEach(element => {
+    
+    let label = document.createElement('label')
+    label.classList.add('list__label')
+
+    let input = document.createElement('input')
+    input.type = 'checkbox'
+    input.classList.add('list__input')
+
+    let span = document.createElement('span')
+    span.classList.add('list__span')
+    span.innerHTML = (`${element.name}`)
+
+    let img = document.createElement('img')
+    img.classList.add('list__img')
+    img.src = '/img/_check_icon.svg'
+
+    allList.append(label);
+    label.prepend(span);
+    label.append(input);
+    label.append(img);
+  });
+}
+
+function addChecked() {
+  listInputs = Array.from(allList.getElementsByTagName('input'));
+  listInputs.forEach(input => {
+    let span = input.previousElementSibling.innerHTML;
+    if (currentSidebarModel.includes(`${span}`)) {
+      input.checked = true;
+    }
+  })
+}
+
+
 //adds sidebar closing functionality
 let chooseBtn = document.querySelector('.sidebar__button');
 
+chooseBtn.addEventListener('click', closeSidebar);
 
 function closeSidebar() {
-  let listInputs = Array.from(listItems[1].getElementsByTagName('input'));
-  
+ 
   listInputs.forEach(input => {
     if (input.checked) {
       let span = input.previousElementSibling.innerHTML;
       currentSidebarModel.push(span);
+      let genresSpan = genresBtn.lastElementChild;
+      // genresSpan.innerHTML = currentSidebarModel.join(', ');
     }
   })
 
-  listItems[1].innerHTML = '';
+  allList.innerHTML = '';
   sideBar.classList.remove('open');
 }
-
-chooseBtn.addEventListener('click', closeSidebar);
-
 
 
 //adds show result functionality
