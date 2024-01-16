@@ -88,6 +88,7 @@ let genresBtn;
 let countriesBtn;
 let allList = document.querySelectorAll('.list__item')[1];
 let listInputs;
+let listSpans;
 
 
 for (let btn of mainBtns) {
@@ -158,6 +159,7 @@ function addChecked() {
       input.checked = true;
     }
   })
+
 }
 
 
@@ -167,18 +169,39 @@ let chooseBtn = document.querySelector('.sidebar__button');
 chooseBtn.addEventListener('click', closeSidebar);
 
 function closeSidebar() {
- 
+
   listInputs.forEach(input => {
     if (input.checked) {
       let span = input.previousElementSibling.innerHTML;
-      currentSidebarModel.push(span);
-      let genresSpan = genresBtn.lastElementChild;
-      // genresSpan.innerHTML = currentSidebarModel.join(', ');
+
+      if (!currentSidebarModel.includes(`${span}`)) {
+        currentSidebarModel.push(span);
+      }
     }
   })
 
+  if (currentSidebarModel.length > 0) { 
+    changeMainBtnsSpans() 
+  }
+
   allList.innerHTML = '';
   sideBar.classList.remove('open');
+}
+
+function changeMainBtnsSpans() {
+  if (currentSidebarModel == model.genres) {
+    let genresSpan = genresBtn.lastElementChild;
+    genresSpan.innerHTML = currentSidebarModel.slice(0, 3).join(', ');
+    if (currentSidebarModel.length > 3) {
+      genresSpan.innerHTML += ', ...';
+    }
+  } else if (currentSidebarModel == model.countries) {
+    let countriesSpan = countriesBtn.lastElementChild;
+    countriesSpan.innerHTML = currentSidebarModel.slice(0, 3).join(', ');
+    if (currentSidebarModel.length > 3) {
+      countriesSpan.innerHTML += ', ...';
+    }
+  } 
 }
 
 
