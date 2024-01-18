@@ -7,8 +7,11 @@ const apiKey = 'RJKDTJT-1HDM3FX-NGWJ4T8-KHQMWQF';
 let genres;
 let countries;
 let model = {
+  type: '',
   genres: [],
   countries: [],
+  years: [],
+  rating: [],
 };
 
 
@@ -93,6 +96,7 @@ let listSpans;
 
 for (let btn of mainBtns) {
   let attribute = btn.getAttribute('data-page');
+
   if (attribute == 'genres') {
     btn.addEventListener('click', openGenres)
     genresBtn = btn;
@@ -106,18 +110,20 @@ for (let btn of mainBtns) {
 
 function openGenres () {
   currentSidebarModel = model.genres;
+  srchInput.placeholder = 'Genres';
+
   createAllList(genres);
   addChecked(currentSidebarModel);
-  srchInput.placeholder = 'Genres';
   setTimeout(() => sideBar.classList.add('open'), 200);
 }
 
 function openCountries () {
   currentSidebarModel = model.countries;
+  srchInput.placeholder = 'Countries';
+
   createAllList(countries);
   addChecked(currentSidebarModel);
 
-  srchInput.placeholder = 'Countries';
   sideBar.classList.add('open');
 }
 
@@ -155,6 +161,7 @@ function addChecked() {
   listInputs = Array.from(allList.getElementsByTagName('input'));
   listInputs.forEach(input => {
     let span = input.previousElementSibling.innerHTML;
+
     if (currentSidebarModel.includes(`${span}`)) {
       input.checked = true;
     }
@@ -169,8 +176,20 @@ let chooseBtn = document.querySelector('.sidebar__button');
 chooseBtn.addEventListener('click', closeSidebar);
 
 function closeSidebar() {
+  checkList();
+
+  if (currentSidebarModel.length > 0) { 
+    changeMainBtnsSpans();
+  }
+
+  allList.innerHTML = '';
+  sideBar.classList.remove('open');
+}
+
+function checkList() {
 
   listInputs.forEach(input => {
+
     if (input.checked) {
       let span = input.previousElementSibling.innerHTML;
 
@@ -179,25 +198,20 @@ function closeSidebar() {
       }
     }
   })
-
-  if (currentSidebarModel.length > 0) { 
-    changeMainBtnsSpans() 
-  }
-
-  allList.innerHTML = '';
-  sideBar.classList.remove('open');
 }
 
 function changeMainBtnsSpans() {
   if (currentSidebarModel == model.genres) {
     let genresSpan = genresBtn.lastElementChild;
     genresSpan.innerHTML = currentSidebarModel.slice(0, 3).join(', ');
+
     if (currentSidebarModel.length > 3) {
       genresSpan.innerHTML += ', ...';
     }
   } else if (currentSidebarModel == model.countries) {
     let countriesSpan = countriesBtn.lastElementChild;
     countriesSpan.innerHTML = currentSidebarModel.slice(0, 3).join(', ');
+
     if (currentSidebarModel.length > 3) {
       countriesSpan.innerHTML += ', ...';
     }
@@ -214,6 +228,7 @@ filterBtn.addEventListener('click', showResult);
 
 function showResult() {
   checkTypeMovies();
+  checkMsRating();
   let params = createParams();
   console.log(params);
   // getMovies(apiUrl, params);
@@ -230,6 +245,11 @@ function checkTypeMovies() {
     }
   })
 }
+
+function checkMsRating() {
+  model.rating.push(leftSlider, rightSlider);
+}
+
 
 function createParams() {
   let params = new URLSearchParams();
@@ -253,6 +273,9 @@ function createParams() {
   } else if (model.type === 'Films') {
     params.append('type', 'movie');
   }
+
+  params.append('rating.kp', model.rating.join('-'));
+
   return params.toString();
 }
 
@@ -267,3 +290,51 @@ async function getMovies(url, params) {
   let json = await resp.json();
   console.log(json);
 };
+
+let leftSlider;
+let rightSlider;
+let rangeMin = 1;
+const range = document.querySelector(".range-selected");
+const rangeInput = document.querySelectorAll(".range-input input");
+const rangeRating = document.querySelectorAll(".range-rating input");
+
+rangeInput.forEach((input) => {
+  input.addEventListener("input", (e) => {
+    leftSlider = rangeInput[0].valueAsNumber;
+    rightSlider = rangeInput[1].valueAsNumber;
+    
+    if (rightSlider - leftSlider < rangeMin) {
+      if (e.target.className === "from") {
+        rangeInput[0].value = rightSlider - rangeMin;
+      } else {
+        rangeInput[1].value = leftSlider + rangeMin;
+      }
+    } else {
+      rangeRating[0].value = leftSlider;
+      rangeRating[1].value = rightSlider;
+      range.style.left = (leftSlider / rangeInput[0].max) * 100 + "%";
+      range.style.right = 100 - (rightSlider / rangeInput[1].max) * 100 + "%";
+    }
+  });
+});
+
+
+rangeRating.forEach((input) => {
+  input.addEventListener("input", (e) => {
+    let fromRating = rangeRating[0].valueAsNumber;
+    let toRating = rangeRating[1].valueAsNumber;
+    
+    if (toRating - fromRating < rangeMin) {
+      if (e.target.name === "from") {
+        rangeRating[0].value = toRating - rangeMin;
+      } else {
+        rangeRating[1].value = fromRating + rangeMin;
+      }
+    } else {
+      rangeInput[0].value = fromRating;
+      rangeInput[1].value = toRating;
+      range.style.left = (fromRating / rangeInput[0].max) * 100 + "%";
+      range.style.right = 100 - (toRating / rangeInput[1].max) * 100 + "%";
+    }
+  });
+});

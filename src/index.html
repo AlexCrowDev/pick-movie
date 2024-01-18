@@ -65,8 +65,8 @@
     <div class="filter">
       <div class="filter__container _container">
         <div class="filter__show"> 
+          <div class="show__title mini-title">Show</div>
           <div class="show__items">
-            <div class="show__title mini-title">Show</div>           
             <div class="show__item item-show item">
               <div class="item-show__switches switch">
                 <input type="radio" class="item-show__switch switch__input" name="show" id="All" checked>
@@ -81,15 +81,15 @@
               <div class="item-show__main main-show">
                 <a href="" class="main-show__button btn" data-page="genres">
                   <span>Genres</span>
-                  <span>All</span>
+                  <span class="mini-span">All</span>
                 </a>
                 <a href="" class="main-show__button btn" data-page="countries">
                   <span>Country</span>
-                  <span>All</span>
+                  <span class="mini-span">All</span>
                 </a>
                 <a href="" class="main-show__button btn" data-page="years">
                   <span>Year</span>
-                  <span>All</span>
+                  <span class="mini-span">All</span>
                 </a>
               </div>
             </div>
@@ -103,13 +103,32 @@
                   <div class="item-show__title">IMDb rating</div>
                   <input type="range" class="ratings-show__input">
                 </div>
+                <div class="range ratings-show__interval">
+                  <div class="item-show__title">
+                    <span>MS rating</span>
+                    <span class="mini-span">any</span>
+                  </div>
+                  <div class="range-slider">
+                    <span class="range-selected"></span>
+                  </div>
+                  <div class="range-input">
+                    <input type="range" class="from" min="0" max="10" value="0" step="1">
+                    <input type="range" class="to" min="0" max="10" value="10" step="1">
+                  </div>
+                  <div class="range-rating"> 
+                    <!-- <label for="from">from</label> -->
+                    <input type="number" name="from" min="0" max="10" value="0">      
+                    <!-- <label for="to">to</label> -->
+                    <input type="number" name="to" min="0" max="10" value="10">      
+                  </div>
+                </div> 
               </div>
             </div>
           </div>
         </div>
         <div class="filter__footer footer">
           <a href="" class="filter__button btn btn-show">Show</a>
-        </div>
+        </div> 
       </div>
     </div>
   </div>
