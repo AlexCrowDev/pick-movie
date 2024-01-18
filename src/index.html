@@ -28,14 +28,14 @@
           <label class="switch__label" for="Exclude">Exclude
           </label>
         </div>
-          <div class="sidebar__lists">
-            <div class="list__body">
-              <div class="list__title mini-title">Popular</div>
-              <div class="list__item item"></div>
+          <div class="sidebar__lists lists-sidebar">
+            <div class="lists-sidebar__body">
+              <div class="lists-sidebar__title mini-title">Popular</div>
+              <div class="lists-sidebar__item item"></div>
             </div>
-            <div class="list__body">
-              <div class="list__title mini-title">All</div>
-              <div class="list__item item"></div>
+            <div class="lists-sidebar__body">
+              <div class="lists-sidebar__title mini-title">All</div>
+              <div class="lists-sidebar__item item"></div>
             </div>
           </div>
         </div>
@@ -64,21 +64,18 @@
     </header>
     <div class="filter">
       <div class="filter__container _container">
-        <div class="filter__show"> 
+        <div class="filter__show">
           <div class="show__title mini-title">Show</div>
           <div class="show__items">
-            <div class="show__item item-show item">
-              <div class="item-show__switches switch">
-                <input type="radio" class="item-show__switch switch__input" name="show" id="All" checked>
+              <div class="show__switches switch item">
+                <input type="radio" class="switch__input" name="show" id="All" checked>
                 <label class="switch__label" for="All">All</label>
-                <input type="radio" class="item-show__switch switch__input " name="show" id="Films">
+                <input type="radio" class="switch__input " name="show" id="Films">
                 <label class="switch__label" for="Films">Films</label>
-                <input type="radio" class="item-show__switch switch__input" name="show" id="TV Series">
+                <input type="radio" class="switch__input" name="show" id="TV Series">
                 <label class="switch__label" for="TV Series">TV Series</label>
               </div>
-            </div>
-            <div class="show__item item-show item">
-              <div class="item-show__main main-show">
+              <div class="show__main main-show item">
                 <a href="" class="main-show__button btn" data-page="genres">
                   <span>Genres</span>
                   <span class="mini-span">All</span>
@@ -92,38 +89,41 @@
                   <span class="mini-span">All</span>
                 </a>
               </div>
-            </div>
-            <div class="show__item item-show item">
-              <div class="item-show__ratings ratings-show">
-                <div class="ratings-show__interval">
-                  <div class="item-show__title">KP rating</div>
-                  <input type="range" class="ratings-show__input">
-                </div>
-                <div class="ratings-show__interval">
-                  <div class="item-show__title">IMDb rating</div>
-                  <input type="range" class="ratings-show__input">
-                </div>
-                <div class="range ratings-show__interval">
-                  <div class="item-show__title">
-                    <span>MS rating</span>
+              <div class="show__ranges ranges-show item">
+                <div class="ranges-show__range range">
+                  <div class="range__top">
+                    <span>KP rating</span>
                     <span class="mini-span">any</span>
                   </div>
-                  <div class="range-slider">
-                    <span class="range-selected"></span>
+                  <div class="range__slider">
+                    <span class="range__selected"></span>
                   </div>
-                  <div class="range-input">
+                  <div class="range__input">
                     <input type="range" class="from" min="0" max="10" value="0" step="1">
                     <input type="range" class="to" min="0" max="10" value="10" step="1">
                   </div>
-                  <div class="range-rating"> 
+                  <div class="range__number"> 
                     <!-- <label for="from">from</label> -->
                     <input type="number" name="from" min="0" max="10" value="0">      
                     <!-- <label for="to">to</label> -->
                     <input type="number" name="to" min="0" max="10" value="10">      
                   </div>
-                </div> 
+                </div>
+                <div class="ranges-show__range">
+                  <div class="range__top">
+                    <span>Votes</span>
+                    <span class="mini-span">from</span>
+                  </div>
+                  <input type="range" class="range__input">
+                </div>
+                <div class="ranges-show__range">
+                  <div class="range__top">
+                    <span>Duration</span>
+                    <span class="mini-span">to</span>
+                  </div>
+                  <input type="range" class="range__input">
+                </div>
               </div>
-            </div>
           </div>
         </div>
         <div class="filter__footer footer">

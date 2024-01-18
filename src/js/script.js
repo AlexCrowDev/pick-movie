@@ -89,7 +89,7 @@ let srchInput = document.querySelector('.search__input');
 let currentSidebarModel;
 let genresBtn;
 let countriesBtn;
-let allList = document.querySelectorAll('.list__item')[1];
+let allList = document.querySelectorAll('.lists-sidebar__item')[1];
 let listInputs;
 let listSpans;
 
@@ -114,7 +114,8 @@ function openGenres () {
 
   createAllList(genres);
   addChecked(currentSidebarModel);
-  setTimeout(() => sideBar.classList.add('open'), 200);
+
+  setTimeout(() => sideBar.classList.add('open'), 100);
 }
 
 function openCountries () {
@@ -124,7 +125,7 @@ function openCountries () {
   createAllList(countries);
   addChecked(currentSidebarModel);
 
-  sideBar.classList.add('open');
+  setTimeout(() => sideBar.classList.add('open'), 100);
 }
 
 function openYears () {
@@ -136,18 +137,18 @@ function createAllList (elements) {
   elements.forEach(element => {
     
     let label = document.createElement('label')
-    label.classList.add('list__label')
+    label.classList.add('lists-sidebar__label')
 
     let input = document.createElement('input')
     input.type = 'checkbox'
-    input.classList.add('list__input')
+    input.classList.add('lists-sidebar__input')
 
     let span = document.createElement('span')
-    span.classList.add('list__span')
+    span.classList.add('lists-sidebar__span')
     span.innerHTML = (`${element.name}`)
 
     let img = document.createElement('img')
-    img.classList.add('list__img')
+    img.classList.add('lists-sidebar__img')
     img.src = '/img/_check_icon.svg'
 
     allList.append(label);
@@ -294,9 +295,9 @@ async function getMovies(url, params) {
 let leftSlider;
 let rightSlider;
 let rangeMin = 1;
-const range = document.querySelector(".range-selected");
-const rangeInput = document.querySelectorAll(".range-input input");
-const rangeRating = document.querySelectorAll(".range-rating input");
+const range = document.querySelector(".range__selected");
+const rangeInput = document.querySelectorAll(".range__input input");
+const rangeRating = document.querySelectorAll(".range__number input");
 
 rangeInput.forEach((input) => {
   input.addEventListener("input", (e) => {
