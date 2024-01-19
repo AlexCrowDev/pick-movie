@@ -295,9 +295,11 @@ async function getMovies(url, params) {
 let leftSlider;
 let rightSlider;
 let rangeMin = 1;
-const range = document.querySelector(".range__selected");
+const range = document.querySelector(".ranges-show__range");
+const rangeSpan = range.querySelector(".mini-span");
+const rangeSelected = document.querySelector(".range__selected");
 const rangeInput = document.querySelectorAll(".range__input input");
-const rangeRating = document.querySelectorAll(".range__number input");
+const rangeNumber = document.querySelectorAll(".range__number input");
 
 rangeInput.forEach((input) => {
   input.addEventListener("input", (e) => {
@@ -311,31 +313,44 @@ rangeInput.forEach((input) => {
         rangeInput[1].value = leftSlider + rangeMin;
       }
     } else {
-      rangeRating[0].value = leftSlider;
-      rangeRating[1].value = rightSlider;
-      range.style.left = (leftSlider / rangeInput[0].max) * 100 + "%";
-      range.style.right = 100 - (rightSlider / rangeInput[1].max) * 100 + "%";
+      rangeNumber[0].value = leftSlider;
+      rangeNumber[1].value = rightSlider;
+      rangeSelected.style.left = (leftSlider / rangeInput[0].max) * 100 + "%";
+      rangeSelected.style.right = 100 - (rightSlider / rangeInput[1].max) * 100 + "%";
+      changeRatingSpans();
     }
   });
 });
 
+function changeRatingSpans() {
+  if (leftSlider == 0 && rightSlider == 10) {
+    rangeSpan.innerHTML = 'any';
+  } else if (leftSlider > 0 && rightSlider == 10) {
+    rangeSpan.innerHTML = `from ${leftSlider}`;
+  } else if (leftSlider == 0 && rightSlider < 10) {
+    rangeSpan.innerHTML = `to ${rightSlider}`;
+  } else {
+    rangeSpan.innerHTML = `from ${leftSlider} to ${rightSlider}`;
+  }
+}
 
-rangeRating.forEach((input) => {
+
+rangeNumber.forEach((input) => {
   input.addEventListener("input", (e) => {
-    let fromRating = rangeRating[0].valueAsNumber;
-    let toRating = rangeRating[1].valueAsNumber;
+    let fromRating = rangeNumber[0].valueAsNumber;
+    let toRating = rangeNumber[1].valueAsNumber;
     
     if (toRating - fromRating < rangeMin) {
       if (e.target.name === "from") {
-        rangeRating[0].value = toRating - rangeMin;
+        rangeNumber[0].value = toRating - rangeMin;
       } else {
-        rangeRating[1].value = fromRating + rangeMin;
+        rangeNumber[1].value = fromRating + rangeMin;
       }
     } else {
       rangeInput[0].value = fromRating;
       rangeInput[1].value = toRating;
-      range.style.left = (fromRating / rangeInput[0].max) * 100 + "%";
-      range.style.right = 100 - (toRating / rangeInput[1].max) * 100 + "%";
+      rangeSelected.style.left = (fromRating / rangeInput[0].max) * 100 + "%";
+      rangeSelected.style.right = 100 - (toRating / rangeInput[1].max) * 100 + "%";
     }
   });
 });
