@@ -229,7 +229,7 @@ filterBtn.addEventListener('click', showResult);
 
 function showResult() {
   checkTypeMovies();
-  checkMsRating();
+  checkKpRating();
   let params = createParams();
   console.log(params);
   // getMovies(apiUrl, params);
@@ -237,7 +237,7 @@ function showResult() {
 
 
 function checkTypeMovies() {
-  let switchBtns = document.querySelectorAll('.item-show__switch')
+  let switchBtns = document.getElementsByName('show');
   
   switchBtns.forEach(switchBtn => {
     if (switchBtn.checked) {
@@ -247,8 +247,14 @@ function checkTypeMovies() {
   })
 }
 
-function checkMsRating() {
-  model.rating.push(leftSlider, rightSlider);
+function checkKpRating() {
+  let content = rangeSpan.innerHTML;
+
+  if (content == 'any') {
+    model.rating = [content];
+  } else {
+    model.rating = [leftSlider, rightSlider];
+  }
 }
 
 
@@ -275,7 +281,9 @@ function createParams() {
     params.append('type', 'movie');
   }
 
+  if (model.rating.length > 1) {
   params.append('rating.kp', model.rating.join('-'));
+  }
 
   return params.toString();
 }
@@ -292,8 +300,8 @@ async function getMovies(url, params) {
   console.log(json);
 };
 
-let leftSlider;
-let rightSlider;
+let leftSlider = 0;
+let rightSlider = 10;
 let rangeMin = 1;
 const range = document.querySelector(".ranges-show__range");
 const rangeSpan = range.querySelector(".mini-span");
