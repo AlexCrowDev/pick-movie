@@ -178,25 +178,25 @@ chooseBtn.addEventListener('click', closeSidebar);
 
 function closeSidebar() {
   checkList();
-
-  if (currentSidebarModel.length > 0) { 
-    changeMainBtnsSpans();
-  }
+  changeMainBtnsSpans();
 
   allList.innerHTML = '';
   sideBar.classList.remove('open');
 }
 
 function checkList() {
-
+  
   listInputs.forEach(input => {
+    let span = input.previousElementSibling.innerHTML;
+    let currModelValue = currentSidebarModel.includes(`${span}`);
+    
+    if (input.checked && !currModelValue) {
+      currentSidebarModel.push(span);
+    }
+    if (!input.checked && currModelValue) {
+      let index = currentSidebarModel.findIndex(e => e === `${span}`);
 
-    if (input.checked) {
-      let span = input.previousElementSibling.innerHTML;
-
-      if (!currentSidebarModel.includes(`${span}`)) {
-        currentSidebarModel.push(span);
-      }
+      currentSidebarModel.splice(index, 1);
     }
   })
 }
@@ -204,14 +204,23 @@ function checkList() {
 function changeMainBtnsSpans() {
   if (currentSidebarModel == model.genres) {
     let genresSpan = genresBtn.lastElementChild;
-    genresSpan.innerHTML = currentSidebarModel.slice(0, 3).join(', ');
 
+    if (currentSidebarModel.length > 0) {
+      genresSpan.innerHTML = currentSidebarModel.slice(0, 3).join(', ');
+    } else {
+      genresSpan.innerHTML = 'all';
+    }
     if (currentSidebarModel.length > 3) {
       genresSpan.innerHTML += ', ...';
     }
+
   } else if (currentSidebarModel == model.countries) {
     let countriesSpan = countriesBtn.lastElementChild;
-    countriesSpan.innerHTML = currentSidebarModel.slice(0, 3).join(', ');
+    if (currentSidebarModel.length > 0) {
+      countriesSpan.innerHTML = currentSidebarModel.slice(0, 3).join(', ');
+    } else {
+      countriesSpan.innerHTML = 'all';
+    }
 
     if (currentSidebarModel.length > 3) {
       countriesSpan.innerHTML += ', ...';
@@ -231,6 +240,7 @@ function showMovies() {
   checkTypeMovies();
   checkKpRating();
   let params = createParams();
+  console.log(params);
   // getMovies(apiUrl, params);
 }
 
