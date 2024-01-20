@@ -30,7 +30,7 @@ async function getCountries (url) {
   countries = await resp.json();
 }
 function getCountriesStub () {
-  countries =  [{name: "РФ"}, {name: "Беларусь"}, {name: "США"}]
+  countries =  [{name: "Россия"}, {name: "Беларусь"}, {name: "США"}]
 }
 
 async function getGenres (url) {
@@ -43,7 +43,7 @@ async function getGenres (url) {
   genres = await resp.json();
 }
 function getGenresStub (url) {
-  genres =  [{name: "Аниме"}, {name: "Экшн"}, {name: "Драма"}]
+  genres =  [{name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"},]
 }
 
 //changes search background when in focus
@@ -224,14 +224,13 @@ function changeMainBtnsSpans() {
 let filterBtn = document.querySelector('.filter__button');
 
 
-filterBtn.addEventListener('click', showResult);
+filterBtn.addEventListener('click', showMovies);
 
 
-function showResult() {
+function showMovies() {
   checkTypeMovies();
   checkKpRating();
   let params = createParams();
-  console.log(params);
   // getMovies(apiUrl, params);
 }
 
@@ -290,15 +289,35 @@ function createParams() {
 
 
 async function getMovies(url, params) {
-  let resp = await fetch(url + 'v1.4/movie?' + params, {
+  let resp = await fetch(url + 'v1.4/movie?page=1&limit=10&' + params, {
     headers: {
      'Content-Type': 'application/json',
      'X-API-KEY': apiKey,
     } 
   });
-  let json = await resp.json();
-  console.log(json);
+  let respData = await resp.json();
+  console.log(resp);
+  addMovies(respData);
 };
+
+function addMovies(data) {
+  console.log(data);
+  let moviesEl = document.querySelector('.movies__container');
+  moviesEl.innerHTML = '';
+
+  data.docs.forEach(movie => {
+    let movieEl = document.createElement('div');
+    movieEl.classList.add('movie');
+    movieEl.innerHTML = `<img class="movie__poster" src="${movie.poster.previewUrl}" alt="${movie.name}">
+    <div class="movie__info">
+      <div class="movie__rating">${movie.rating.kp}</div>
+      <div class="movie__name">${movie.name}</div>
+      <div class="movie__genre mini-title">${movie.genres.map(genre => `${genre.name}`).slice(0, 2).join(', ')}</div>
+    </div>`;
+    moviesEl.prepend(movieEl);
+  });
+}
+
 
 let leftSlider = 0;
 let rightSlider = 10;

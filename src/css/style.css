@@ -360,7 +360,7 @@ body {
   height: 15px;
   width: 15px;
   border-radius: 50%;
-  border: 3px solid rgb(122, 91, 247);;
+  border: 3px solid rgb(122, 91, 247);
   background-color: rgb(122, 91, 247);
   pointer-events: auto;
   -moz-appearance: none;
@@ -388,9 +388,52 @@ body {
 }
 
 
-
-
 .filter__footer {
 }
 .filter__button {
+}
+
+
+
+/*-------------------------movies-----------------------------*/
+
+.movies {
+}
+.movies__container{
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+.movie {
+	position: relative;
+	flex-direction: column;
+	margin: 0px 10px 10px 0px;
+	max-width: 160px;
+}
+.movie__poster {
+	width: 158px;
+	height: 237px;
+	border-radius: 10px;
+}
+.movie__info {
+	padding: 10px 0px;
+}
+.movie__rating {
+	position: absolute;
+	display: flex;
+	top: 7px;
+	left: 7px;
+	width: 40px;
+	height: 20px;
+	padding-top: 2px;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	background-color: rgb(122, 91, 247);
+	border-radius: 10px;
+}
+.movie__name {
+}
+.movie__genre {
+	padding: 5px 0px;
 }
