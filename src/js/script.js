@@ -73,11 +73,14 @@ for(let link of allLinks) {
 //adds functionality to filter button
 let filterSearchBtn = document.querySelector('.filter-search__button');
 let filter = document.querySelector('.filter');
+let movies = document.querySelector('.movies');
+
 
 filterSearchBtn.addEventListener('click', showFilter);
 
 function showFilter () {
   filter.classList.add('active');
+  movies.classList.remove('active');
 }
 
 
@@ -167,7 +170,6 @@ function addChecked() {
       input.checked = true;
     }
   })
-
 }
 
 
@@ -239,9 +241,13 @@ filterBtn.addEventListener('click', showMovies);
 function showMovies() {
   checkTypeMovies();
   checkKpRating();
+  
   let params = createParams();
-  console.log(params);
-  // getMovies(apiUrl, params);
+  movies.innerHTML = '';
+  filter.classList.remove('active');
+  movies.classList.add('active');
+
+  getMovies(apiUrl, params);
 }
 
 
@@ -299,32 +305,41 @@ function createParams() {
 
 
 async function getMovies(url, params) {
-  let resp = await fetch(url + 'v1.4/movie?page=1&limit=10&' + params, {
+  let resp = await fetch(url + 'v1.4/movie?page=1&limit=50&sortField=rating.kp&sortType=1&' + params, {
     headers: {
      'Content-Type': 'application/json',
      'X-API-KEY': apiKey,
     } 
   });
   let respData = await resp.json();
-  console.log(resp);
+
   addMovies(respData);
 };
 
 function addMovies(data) {
-  console.log(data);
-  let moviesEl = document.querySelector('.movies__container');
-  moviesEl.innerHTML = '';
 
+  let moviesCont = document.createElement('div');
+  moviesCont.classList.add('movies__container');
+  moviesCont.classList.add('_container');
+  movies.prepend(moviesCont);
+  
   data.docs.forEach(movie => {
+
     let movieEl = document.createElement('div');
     movieEl.classList.add('movie');
-    movieEl.innerHTML = `<img class="movie__poster" src="${movie.poster.previewUrl}" alt="${movie.name}">
-    <div class="movie__info">
-      <div class="movie__rating">${movie.rating.kp}</div>
-      <div class="movie__name">${movie.name}</div>
-      <div class="movie__genre mini-title">${movie.genres.map(genre => `${genre.name}`).slice(0, 2).join(', ')}</div>
-    </div>`;
-    moviesEl.prepend(movieEl);
+
+    movieEl.innerHTML = `
+    <a href="https://www.kinopoisk.ru/film/${movie.id}" target="_blank">
+      <img class="movie__poster" src="${movie.poster.previewUrl}" alt="${movie.name}">
+      <div class="movie__info">
+        <div class="movie__rating">${(movie.rating.kp).toFixed(1)}</div>
+        <div class="movie__name">${movie.name}</div>
+        <div class="movie__genre mini-title">${movie.genres.map(genre => `${genre.name}`).slice(0, 2).join(', ')}</div>
+      </div>
+    </a>
+    `;
+
+    moviesCont.prepend(movieEl);
   });
 }
 

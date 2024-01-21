@@ -398,6 +398,10 @@ body {
 /*-------------------------movies-----------------------------*/
 
 .movies {
+	display: none;
+}
+.active {
+	display: block;
 }
 .movies__container{
 	display: flex;
