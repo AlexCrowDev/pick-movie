@@ -90,7 +90,6 @@ body {
 .switch__input:checked  + .switch__label {
 	background: rgb(122, 91, 247);
 }
-
 .item {
 	background-color: rgb(91 87 107 / 20%); 
 	border-radius: 10px;
@@ -108,7 +107,11 @@ body {
 .btn:active {
 	background-color: rgb(122, 91, 247);
 }
-
+.range {
+	display: flex;
+	flex-direction: column;
+	padding: 12px 17px;
+}
 .footer {
 	display: flex;
 	justify-content: center;
@@ -303,9 +306,6 @@ body {
 .ranges-show {
 }
 .ranges-show__range {
-	display: flex;
-	flex-direction: column;
-	padding: 12px 17px;
 }
 .ranges-show__range:first-child {
 	z-index: 1;
