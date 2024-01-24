@@ -84,23 +84,42 @@
                   <span>Country</span>
                   <span class="mini-span">all</span>
                 </a>
-                <a href="" class="main-show__button btn" data-page="years">
+                <!-- <a href="" class="main-show__button btn" data-page="years">
                   <span>Year</span>
                   <span class="mini-span">all</span>
-                </a>
+                </a> -->
               </div>
               <div class="show__ranges ranges-show item">
-                <div class="ranges-show__range range">
+                <div class="ranges-show__years range">
+                  <div class="range__top">
+                    <span>Years</span>
+                    <span class="mini-span">any</span>
+                  </div>
+                  <div class="range__slider">
+                    <span class="range__selected range__selected_years"></span>
+                  </div>
+                  <div class="range__input years">
+                    <input type="range" name="years" class="from" min="1900" max="2024" value="1900" step="1">
+                    <input type="range" name="years" class="to" min="1900" max="2024" value="2024" step="1">
+                  </div>
+                  <div class="range__number"> 
+                    <!-- <label for="from">from</label> -->
+                    <input type="number" name="from" min="0" max="10" value="0">      
+                    <!-- <label for="to">to</label> -->
+                    <input type="number" name="to" min="0" max="10" value="10">      
+                  </div>
+                </div>
+                <div class="ranges-show__rating range">
                   <div class="range__top">
                     <span>KP rating</span>
                     <span class="mini-span">any</span>
                   </div>
                   <div class="range__slider">
-                    <span class="range__selected"></span>
+                    <span class="range__selected range__selected_rating"></span>
                   </div>
-                  <div class="range__input">
-                    <input type="range" class="from" min="0" max="10" value="0" step="1">
-                    <input type="range" class="to" min="0" max="10" value="10" step="1">
+                  <div class="range__input rating">
+                    <input type="range" name="rating" class="from" min="0" max="10" value="0" step="1">
+                    <input type="range" name="rating" class="to" min="0" max="10" value="10" step="1">
                   </div>
                   <div class="range__number"> 
                     <!-- <label for="from">from</label> -->

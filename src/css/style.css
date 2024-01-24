@@ -310,9 +310,6 @@ body {
 .ranges-show__range:first-child {
 	z-index: 1;
 }
-.range__input {
-	accent-color: rgb(122, 91, 247);
-}
 .range__top {
 	display: flex;
 	justify-content: space-between;
@@ -325,20 +322,25 @@ body {
   border-radius: 30px;
 }
 .range__selected {
-  height: 100%;
-  left: 0%;
-  right: 0%;
-  position: absolute;
+	height: 100%;
+	position: absolute;
   border-radius: 30px;
   background-color: rgb(122, 91, 247);
 }
-
+.range__selected_rating {
+  left: 0%;
+  right: 0%;
+}
+.range__selected_years {
+	left: 0%;
+  right: 0%;
+}
 .range__input {
   position: relative;
 }
 .range__input input {
   position: absolute;
-  width: 101%;
+  width: 100.5%;
   height: 4px;
 	left: -1px;
   top: -6px;
@@ -348,17 +350,16 @@ body {
   -moz-appearance: none;
 }
 .range__input input::-webkit-slider-thumb {
-  height: 15px;
-  width: 15px;
+  height: 17px;
+  width: 17px;
   border-radius: 50%;
-  border: 3px solid rgb(122, 91, 247);
   background-color: rgb(122, 91, 247);
   pointer-events: auto;
   -webkit-appearance: none;
 }
 .range__input input::-moz-range-thumb {
-  height: 15px;
-  width: 15px;
+  height: 17px;
+  width: 17px;
   border-radius: 50%;
   border: 3px solid rgb(122, 91, 247);
   background-color: rgb(122, 91, 247);

@@ -84,6 +84,96 @@ function showFilter () {
 }
 
 
+// changes ranges
+let leftSlider = 0;
+let rightSlider = 10;
+let rangeMin = 1;
+let span;
+let currentRangeModel;
+const rangeYears = document.querySelector(".ranges-show__years");
+const rangeRating = document.querySelector(".ranges-show__rating");
+const yearsSpan = rangeYears.querySelector(".mini-span");
+const ratingSpan = rangeRating.querySelector(".mini-span");
+const selectedRating = document.querySelector(".range__selected_rating");
+const selectedYears = document.querySelector(".range__selected_years");
+const yearsInputs = document.getElementsByName('years');
+const ratingInputs = document.getElementsByName('rating');
+// const rangeNumber = document.querySelectorAll(".range__number input");
+
+yearsInputs.forEach((input) => {
+  input.addEventListener("input", (e) => changeRanges(e, yearsInputs));
+});
+ratingInputs.forEach((input) => {
+  input.addEventListener("input", (e) => changeRanges(e, ratingInputs));
+});
+
+
+function changeRanges(e, inputs) {
+  leftSlider = inputs[0].valueAsNumber;
+  rightSlider = inputs[1].valueAsNumber;
+  
+  if (rightSlider - leftSlider < rangeMin) {
+    if (e.target.className === "from") {
+      inputs[0].value = rightSlider - rangeMin;
+    } else {
+      inputs[1].value = leftSlider + rangeMin;
+    }
+  } else {
+    // rangeNumber[0].value = leftSlider;
+    // rangeNumber[1].value = rightSlider;
+
+    if (e.target.name === "years") {
+      currentRangeModel = model.years;
+      span = yearsSpan;
+      let leftSliderRat = leftSlider - 1900;
+      let rightSliderRat = rightSlider - 1900;
+      selectedYears.style.left = (leftSliderRat / 124) * 100 + "%";
+      selectedYears.style.right = 100 - (rightSliderRat / 124) * 100 + "%";
+      changeRatingSpans(inputs, span);
+
+    } else if (e.target.name === "rating") {
+      currentRangeModel = model.rating;
+      span = ratingSpan;
+      selectedRating.style.left = (leftSlider / inputs[0].max) * 100 + "%";
+      selectedRating.style.right = 100 - (rightSlider / inputs[1].max) * 100 + "%";
+      changeRatingSpans(inputs, span);
+    }
+  }
+  checkRanges(currentRangeModel, span);
+}
+
+function changeRatingSpans(inputs, span) {
+  if (leftSlider == inputs[0].min && rightSlider == inputs[1].max) {
+    span.innerHTML = 'any';
+  } else if (leftSlider > inputs[0].min && rightSlider == inputs[1].max) {
+    span.innerHTML = `from ${leftSlider}`;
+  } else if (leftSlider == inputs[0].min && rightSlider < inputs[1].max) {
+    span.innerHTML = `to ${rightSlider}`;
+  } else {
+    span.innerHTML = `from ${leftSlider} to ${rightSlider}`;
+  }
+}
+
+// rangeNumber.forEach((input) => {
+//   input.addEventListener("input", (e) => {
+//     let fromRating = rangeNumber[0].valueAsNumber;
+//     let toRating = rangeNumber[1].valueAsNumber;
+    
+//     if (toRating - fromRating < rangeMin) {
+//       if (e.target.name === "from") {
+//         rangeNumber[0].value = toRating - rangeMin;
+//       } else {
+//         rangeNumber[1].value = fromRating + rangeMin;
+//       }
+//     } else {
+//       rangeInput[0].value = fromRating;
+//       rangeInput[1].value = toRating;
+//       rangeSelected.style.left = (fromRating / rangeInput[0].max) * 100 + "%";
+//       rangeSelected.style.right = 100 - (toRating / rangeInput[1].max) * 100 + "%";
+//     }
+//   });
+// });
+
 
 //adds sidebar opening functionality
 let mainBtns = document.querySelectorAll('.main-show__button');
@@ -230,7 +320,7 @@ function changeMainBtnsSpans() {
 }
 
 
-//adds show result functionality
+//shows movies
 let filterBtn = document.querySelector('.filter__button');
 
 
@@ -239,14 +329,15 @@ filterBtn.addEventListener('click', showMovies);
 
 function showMovies() {
   checkTypeMovies();
-  checkKpRating();
-  
   let params = createParams();
+
+  console.log(params);
+  
   movies.innerHTML = '';
   filter.classList.remove('active');
   movies.classList.add('active');
 
-  getMovies(apiUrl, params);
+  // getMovies(apiUrl, params);
 }
 
 
@@ -261,13 +352,21 @@ function checkTypeMovies() {
   })
 }
 
-function checkKpRating() {
-  let content = rangeSpan.innerHTML;
+function checkRanges(currentRangeModel, span) {
+  let content = span.innerHTML;
 
-  if (content == 'any') {
-    model.rating = [content];
-  } else {
-    model.rating = [leftSlider, rightSlider];
+  if (currentRangeModel == model.years) {
+    if (content == 'any') {
+      model.years = [content];
+    } else {
+      model.years = [leftSlider, rightSlider];
+    }
+  } else if (currentRangeModel == model.rating) {
+    if (content == 'any') {
+      model.rating = [content];
+    } else {
+      model.rating = [leftSlider, rightSlider];
+    }
   }
 }
 
@@ -295,8 +394,12 @@ function createParams() {
     params.append('type', 'movie');
   }
 
+  if (model.years.length > 1) {
+  params.append('year', model.years.join('-'));
+  }
+
   if (model.rating.length > 1) {
-  params.append('rating.kp', model.rating.join('-'));
+    params.append('rating.kp', model.rating.join('-'));
   }
 
   return params.toString();
@@ -341,67 +444,3 @@ function addMovies(data) {
     moviesCont.prepend(movieEl);
   });
 }
-
-
-let leftSlider = 0;
-let rightSlider = 10;
-let rangeMin = 1;
-const range = document.querySelector(".ranges-show__range");
-const rangeSpan = range.querySelector(".mini-span");
-const rangeSelected = document.querySelector(".range__selected");
-const rangeInput = document.querySelectorAll(".range__input input");
-const rangeNumber = document.querySelectorAll(".range__number input");
-
-rangeInput.forEach((input) => {
-  input.addEventListener("input", (e) => {
-    leftSlider = rangeInput[0].valueAsNumber;
-    rightSlider = rangeInput[1].valueAsNumber;
-    
-    if (rightSlider - leftSlider < rangeMin) {
-      if (e.target.className === "from") {
-        rangeInput[0].value = rightSlider - rangeMin;
-      } else {
-        rangeInput[1].value = leftSlider + rangeMin;
-      }
-    } else {
-      rangeNumber[0].value = leftSlider;
-      rangeNumber[1].value = rightSlider;
-      rangeSelected.style.left = (leftSlider / rangeInput[0].max) * 100 + "%";
-      rangeSelected.style.right = 100 - (rightSlider / rangeInput[1].max) * 100 + "%";
-      changeRatingSpans();
-    }
-  });
-});
-
-function changeRatingSpans() {
-  if (leftSlider == 0 && rightSlider == 10) {
-    rangeSpan.innerHTML = 'any';
-  } else if (leftSlider > 0 && rightSlider == 10) {
-    rangeSpan.innerHTML = `from ${leftSlider}`;
-  } else if (leftSlider == 0 && rightSlider < 10) {
-    rangeSpan.innerHTML = `to ${rightSlider}`;
-  } else {
-    rangeSpan.innerHTML = `from ${leftSlider} to ${rightSlider}`;
-  }
-}
-
-
-rangeNumber.forEach((input) => {
-  input.addEventListener("input", (e) => {
-    let fromRating = rangeNumber[0].valueAsNumber;
-    let toRating = rangeNumber[1].valueAsNumber;
-    
-    if (toRating - fromRating < rangeMin) {
-      if (e.target.name === "from") {
-        rangeNumber[0].value = toRating - rangeMin;
-      } else {
-        rangeNumber[1].value = fromRating + rangeMin;
-      }
-    } else {
-      rangeInput[0].value = fromRating;
-      rangeInput[1].value = toRating;
-      rangeSelected.style.left = (fromRating / rangeInput[0].max) * 100 + "%";
-      rangeSelected.style.right = 100 - (toRating / rangeInput[1].max) * 100 + "%";
-    }
-  });
-});
