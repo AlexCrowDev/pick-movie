@@ -93,8 +93,7 @@ let currentSidebarModel;
 let genresBtn;
 let countriesBtn;
 let allList = document.querySelectorAll('.lists-sidebar__item')[1];
-let listInputs;
-let listSpans;
+let allListInputs;
 
 
 for (let btn of mainBtns) {
@@ -162,11 +161,11 @@ function createAllList (elements) {
 }
 
 function addChecked() {
-  listInputs = Array.from(allList.getElementsByTagName('input'));
-  listInputs.forEach(input => {
-    let span = input.previousElementSibling.innerHTML;
+  allListInputs = Array.from(allList.getElementsByTagName('input'));
+  allListInputs.forEach(input => {
+    let listSpan = input.previousElementSibling.innerHTML;
 
-    if (currentSidebarModel.includes(`${span}`)) {
+    if (currentSidebarModel.includes(`${listSpan}`)) {
       input.checked = true;
     }
   })
@@ -188,15 +187,15 @@ function closeSidebar() {
 
 function checkList() {
   
-  listInputs.forEach(input => {
-    let span = input.previousElementSibling.innerHTML;
-    let currModelValue = currentSidebarModel.includes(`${span}`);
+  allListInputs.forEach(input => {
+    let listSpan = input.previousElementSibling.innerHTML;
+    let currModelValue = currentSidebarModel.includes(`${listSpan}`);
     
     if (input.checked && !currModelValue) {
-      currentSidebarModel.push(span);
+      currentSidebarModel.push(listSpan);
     }
     if (!input.checked && currModelValue) {
-      let index = currentSidebarModel.findIndex(e => e === `${span}`);
+      let index = currentSidebarModel.findIndex(e => e === `${listSpan}`);
 
       currentSidebarModel.splice(index, 1);
     }
