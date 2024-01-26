@@ -9,7 +9,9 @@ let countries;
 let model = {
   type: '',
   genres: [],
+  excludeGenres: [],
   countries: [],
+  excludeCountries: [],
   years: [],
   rating: [],
 };
@@ -83,6 +85,177 @@ filterSearchBtn.addEventListener('click', showFilter);
 function showFilter () {
   filter.classList.add('active');
   movies.classList.remove('active');
+}
+
+
+//adds sidebar opening functionality
+let mainBtns = document.querySelectorAll('.main-show__button');
+let genresSpan;
+let countriesSpan;
+let sideBar = document.querySelector('.sidebar');
+let srchInput = document.querySelector('.search__input');
+let excludeBtn = document.querySelector('#Exclude');
+let chooseBtn = document.querySelector('#Choose');
+let excludeCountries = [{name: "Россия"}, {name: "СССР"}, {name: "Индия"},];
+let excludeGenres = [{name: "мюзикл"},];
+let currentSidebarModel;
+let allList = document.querySelectorAll('.lists-sidebar__item')[1];
+let allListInputs;
+let excludeAllListInputs;
+let selectedAttribute;
+
+for (let btn of mainBtns) {
+  let attribute = btn.getAttribute('data-page');
+  btn.addEventListener('click', e => openSidebar(attribute));
+
+  if (attribute == 'genres') {
+    genresSpan = btn.lastElementChild;
+  } else if (attribute == 'countries') {
+    countriesSpan = btn.lastElementChild;
+  }
+}
+
+excludeBtn.addEventListener('click', e => checkList(allListInputs));
+excludeBtn.addEventListener('click', e => openSidebarExclude(selectedAttribute));
+chooseBtn.addEventListener('click', e => checkList(excludeAllListInputs));
+chooseBtn.addEventListener('click', e => openSidebar(selectedAttribute));
+
+
+function openSidebar(attribute) {
+  allList.innerHTML = '';
+  chooseBtn.checked = true;
+  selectedAttribute = attribute;
+
+  if (attribute == 'genres') {
+    currentSidebarModel = model.genres;
+    srchInput.placeholder = 'Genres';
+
+    createAllList(genres);
+
+  } else if (attribute == 'countries') {
+    currentSidebarModel = model.countries;
+    srchInput.placeholder = 'Countries';
+
+    createAllList(countries);
+  }
+  allListInputs = addChecked(currentSidebarModel);
+  setTimeout(() => sideBar.classList.add('open'), 100);
+}
+
+function openSidebarExclude(attribute) {
+  allList.innerHTML = '';
+  selectedAttribute = attribute;
+
+  if (attribute == 'genres') {
+    currentSidebarModel = model.excludeGenres;
+    srchInput.placeholder = 'Genres';
+
+    createAllList(excludeGenres);
+
+  } else if (attribute == 'countries') {
+    currentSidebarModel = model.excludeCountries;
+    srchInput.placeholder = 'Countries';
+
+    createAllList(excludeCountries);
+  }
+  excludeAllListInputs = addChecked(currentSidebarModel);
+}
+
+
+function createAllList (elements) {
+  elements.forEach(element => {
+    
+    let label = document.createElement('label')
+    label.classList.add('lists-sidebar__label')
+
+    let input = document.createElement('input')
+    input.type = 'checkbox'
+    input.classList.add('lists-sidebar__input')
+
+    let span = document.createElement('span')
+    span.classList.add('lists-sidebar__span')
+    span.innerHTML = (`${element.name}`)
+
+    let img = document.createElement('img')
+    img.classList.add('lists-sidebar__img')
+    img.src = '/img/_check_icon.svg'
+
+    allList.append(label);
+    label.prepend(span);
+    label.append(input);
+    label.append(img);
+  });
+}
+
+function addChecked() {
+  let inputs = Array.from(allList.getElementsByTagName('input'));
+  inputs.forEach(input => {
+    let listSpan = input.previousElementSibling.innerHTML;
+
+    if (currentSidebarModel.includes(`${listSpan}`)) input.checked = true;
+  })
+  return inputs;
+}
+
+
+//adds sidebar closing functionality
+let sbShowBtn = document.querySelector('.sidebar__button');
+
+sbShowBtn.addEventListener('click', closeSidebar);
+
+function closeSidebar() {
+  if (currentSidebarModel == model.countries || currentSidebarModel == model.genres) {
+    checkList(allListInputs);
+    changeMainBtnsSpans();
+
+  } else if (currentSidebarModel == model.excludeCountries || currentSidebarModel == model.excludeGenres) {
+    checkList(excludeAllListInputs);
+  }
+
+  allList.innerHTML = '';
+  sideBar.classList.remove('open');
+}
+
+function checkList(inputs) {
+  
+  inputs.forEach(input => {
+    let listSpan = input.previousElementSibling.innerHTML;
+    let currModelValue = currentSidebarModel.includes(`${listSpan}`);
+    
+    if (input.checked && !currModelValue) {
+      currentSidebarModel.push(listSpan);
+    }
+    if (!input.checked && currModelValue) {
+      let index = currentSidebarModel.findIndex(e => e === `${listSpan}`);
+
+      currentSidebarModel.splice(index, 1);
+    }
+  })
+}
+
+function changeMainBtnsSpans() {
+  if (currentSidebarModel == model.genres) {
+    if (currentSidebarModel.length > 0) {
+      genresSpan.innerHTML = currentSidebarModel.slice(0, 3).join(', ');
+    } else {
+      genresSpan.innerHTML = 'all';
+    }
+    if (currentSidebarModel.length > 3) {
+      genresSpan.innerHTML += ', ...';
+    }
+  
+  } else if (currentSidebarModel == model.countries) {
+
+    if (currentSidebarModel.length > 0) {
+      countriesSpan.innerHTML = currentSidebarModel.slice(0, 3).join(', ');
+    } else {
+      countriesSpan.innerHTML = 'all';
+    }
+
+    if (currentSidebarModel.length > 3) {
+      countriesSpan.innerHTML += ', ...';
+    }
+  } 
 }
 
 
@@ -177,159 +350,14 @@ function changeRatingSpans(inputs, span) {
 // });
 
 
-//adds sidebar opening functionality
-let mainBtns = document.querySelectorAll('.main-show__button');
-let sideBar = document.querySelector('.sidebar');
-let srchInput = document.querySelector('.search__input');
-let currentSidebarModel;
-let genresBtn;
-let countriesBtn;
-let allList = document.querySelectorAll('.lists-sidebar__item')[1];
-let allListInputs;
-
-
-for (let btn of mainBtns) {
-  let attribute = btn.getAttribute('data-page');
-
-  if (attribute == 'genres') {
-    btn.addEventListener('click', openGenres)
-    genresBtn = btn;
-  } else if (attribute == 'countries') {
-    btn.addEventListener('click', openCountries)
-    countriesBtn = btn;
-  } else if (attribute == 'years') {
-    // btn.addEventListener('click', openYears)
-  }
-}
-
-function openGenres () {
-  currentSidebarModel = model.genres;
-  srchInput.placeholder = 'Genres';
-
-  createAllList(genres);
-  addChecked(currentSidebarModel);
-
-  setTimeout(() => sideBar.classList.add('open'), 100);
-}
-
-function openCountries () {
-  currentSidebarModel = model.countries;
-  srchInput.placeholder = 'Countries';
-
-  createAllList(countries);
-  addChecked(currentSidebarModel);
-
-  setTimeout(() => sideBar.classList.add('open'), 100);
-}
-
-function openYears () {
-  sideBar.classList.add('open');
-  srchInput.placeholder = 'Years';
-}
-
-function createAllList (elements) {
-  elements.forEach(element => {
-    
-    let label = document.createElement('label')
-    label.classList.add('lists-sidebar__label')
-
-    let input = document.createElement('input')
-    input.type = 'checkbox'
-    input.classList.add('lists-sidebar__input')
-
-    let span = document.createElement('span')
-    span.classList.add('lists-sidebar__span')
-    span.innerHTML = (`${element.name}`)
-
-    let img = document.createElement('img')
-    img.classList.add('lists-sidebar__img')
-    img.src = '/img/_check_icon.svg'
-
-    allList.append(label);
-    label.prepend(span);
-    label.append(input);
-    label.append(img);
-  });
-}
-
-function addChecked() {
-  allListInputs = Array.from(allList.getElementsByTagName('input'));
-  allListInputs.forEach(input => {
-    let listSpan = input.previousElementSibling.innerHTML;
-
-    if (currentSidebarModel.includes(`${listSpan}`)) {
-      input.checked = true;
-    }
-  })
-}
-
-
-//adds sidebar closing functionality
-let chooseBtn = document.querySelector('.sidebar__button');
-
-chooseBtn.addEventListener('click', closeSidebar);
-
-function closeSidebar() {
-  checkList();
-  changeMainBtnsSpans();
-
-  allList.innerHTML = '';
-  sideBar.classList.remove('open');
-}
-
-function checkList() {
-  
-  allListInputs.forEach(input => {
-    let listSpan = input.previousElementSibling.innerHTML;
-    let currModelValue = currentSidebarModel.includes(`${listSpan}`);
-    
-    if (input.checked && !currModelValue) {
-      currentSidebarModel.push(listSpan);
-    }
-    if (!input.checked && currModelValue) {
-      let index = currentSidebarModel.findIndex(e => e === `${listSpan}`);
-
-      currentSidebarModel.splice(index, 1);
-    }
-  })
-}
-
-function changeMainBtnsSpans() {
-  if (currentSidebarModel == model.genres) {
-    let genresSpan = genresBtn.lastElementChild;
-
-    if (currentSidebarModel.length > 0) {
-      genresSpan.innerHTML = currentSidebarModel.slice(0, 3).join(', ');
-    } else {
-      genresSpan.innerHTML = 'all';
-    }
-    if (currentSidebarModel.length > 3) {
-      genresSpan.innerHTML += ', ...';
-    }
-
-  } else if (currentSidebarModel == model.countries) {
-    let countriesSpan = countriesBtn.lastElementChild;
-    if (currentSidebarModel.length > 0) {
-      countriesSpan.innerHTML = currentSidebarModel.slice(0, 3).join(', ');
-    } else {
-      countriesSpan.innerHTML = 'all';
-    }
-
-    if (currentSidebarModel.length > 3) {
-      countriesSpan.innerHTML += ', ...';
-    }
-  } 
-}
-
-
 //shows movies
-let filterBtn = document.querySelector('.filter__button');
+let showMoviesBtn = document.querySelector('.filter__button');
 let selectedParams;
 let notNullFields = 'notNullFields=name&notNullFields=alternativeName&notNullFields=year&notNullFields=rating.kp&notNullFields=votes.kp&notNullFields=poster.url&';
 let selectFields = 'selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=type&selectFields=year&selectFields=rating&selectFields=votes&selectFields=movieLength&selectFields=seriesLength&selectFields=genres&selectFields=countries&selectFields=poster&selectFields=countries&';
 
 
-filterBtn.addEventListener('click', showMovies);
+showMoviesBtn.addEventListener('click', showMovies);
 
 
 function showMovies() {
@@ -395,8 +423,16 @@ function createParams() {
     params.append('genres.name', genre);
   });
 
+  model.excludeGenres.forEach((genre) => {
+    params.append('genres.name', `!${genre}`);
+  });
+
   model.countries.forEach((country) => {
     params.append('countries.name', country);
+  });
+
+  model.excludeCountries.forEach((country) => {
+    params.append('countries.name', `!${country}`);
   });
 
   if (model.years.length > 1) {
@@ -413,7 +449,7 @@ function createParams() {
   params.append('page', '1');
   params.append('limit', '50');
 
-  return filterParams = params.toString();
+  return selectedParams = params.toString();
 }
 
 
