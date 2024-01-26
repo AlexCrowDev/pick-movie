@@ -29,6 +29,7 @@ async function getCountries (url) {
   });
   countries = await resp.json();
 }
+
 function getCountriesStub () {
   countries =  [{name: "Россия"}, {name: "Беларусь"}, {name: "США"}]
 }
@@ -42,7 +43,8 @@ async function getGenres (url) {
   });
   genres = await resp.json();
 }
-function getGenresStub (url) {
+
+function getGenresStub () {
   genres =  [{name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"},]
 }
 
@@ -322,6 +324,9 @@ function changeMainBtnsSpans() {
 
 //shows movies
 let filterBtn = document.querySelector('.filter__button');
+let selectedParams;
+let notNullFields = 'notNullFields=name&notNullFields=alternativeName&notNullFields=year&notNullFields=rating.kp&notNullFields=votes.kp&notNullFields=poster.url&';
+let selectFields = 'selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=type&selectFields=year&selectFields=rating&selectFields=votes&selectFields=movieLength&selectFields=seriesLength&selectFields=genres&selectFields=countries&selectFields=poster&selectFields=countries&';
 
 
 filterBtn.addEventListener('click', showMovies);
@@ -329,15 +334,15 @@ filterBtn.addEventListener('click', showMovies);
 
 function showMovies() {
   checkTypeMovies();
-  let params = createParams();
+  createParams();
 
-  console.log(params);
+  console.log(selectedParams);
   
   movies.innerHTML = '';
   filter.classList.remove('active');
   movies.classList.add('active');
 
-  // getMovies(apiUrl, params);
+  getMovies(apiUrl, selectedParams);
 }
 
 
@@ -375,6 +380,14 @@ function createParams() {
   let params = new URLSearchParams();
   let mult;
   
+  if ((model.type === 'TV Series') && mult) {
+    params.append('type', 'animated-series');
+  } else if (model.type === 'TV Series') {
+    params.append('type', 'tv-series');
+  } else if (model.type === 'Films') {
+    params.append('type', 'movie');
+  }
+
   model.genres.forEach((genre) => {
     if (genre === 'мультфильм') {
       mult = genre;
@@ -386,14 +399,6 @@ function createParams() {
     params.append('countries.name', country);
   });
 
-  if ((model.type === 'TV Series') && mult) {
-    params.append('type', 'animated-series');
-  } else if (model.type === 'TV Series') {
-    params.append('type', 'tv-series');
-  } else if (model.type === 'Films') {
-    params.append('type', 'movie');
-  }
-
   if (model.years.length > 1) {
   params.append('year', model.years.join('-'));
   }
@@ -402,19 +407,25 @@ function createParams() {
     params.append('rating.kp', model.rating.join('-'));
   }
 
-  return params.toString();
+  params.append('votes.kp', '10000-2500000');
+  params.append('sortField', 'rating.kp');
+  params.append('sortType', '-1');
+  params.append('page', '1');
+  params.append('limit', '50');
+
+  return filterParams = params.toString();
 }
 
 
 async function getMovies(url, params) {
-  let resp = await fetch(url + 'v1.4/movie?page=1&limit=50&sortField=rating.kp&sortType=1&' + params, {
+  let resp = await fetch(url + 'v1.4/movie?' + selectFields + notNullFields + params, {
     headers: {
      'Content-Type': 'application/json',
      'X-API-KEY': apiKey,
     } 
   });
   let respData = await resp.json();
-
+  console.log(respData);
   addMovies(respData);
 };
 
@@ -441,6 +452,6 @@ function addMovies(data) {
     </a>
     `;
 
-    moviesCont.prepend(movieEl);
+    moviesCont.append(movieEl);
   });
 }
