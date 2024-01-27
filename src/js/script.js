@@ -352,10 +352,12 @@ function changeRatingSpans(inputs, span) {
 
 //shows movies
 let showMoviesBtn = document.querySelector('.filter__button');
+let moviesCont = document.querySelector('.movies__container');
+let nextMoviesBtn = document.querySelector('.movies__button');
 let selectedParams;
 let notNullFields = 'notNullFields=name&notNullFields=alternativeName&notNullFields=year&notNullFields=rating.kp&notNullFields=votes.kp&notNullFields=poster.url&';
 let selectFields = 'selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=type&selectFields=year&selectFields=rating&selectFields=votes&selectFields=movieLength&selectFields=seriesLength&selectFields=genres&selectFields=countries&selectFields=poster&selectFields=countries&';
-
+let page = 1;
 
 //stub
 let dataStub = {docs: [
@@ -377,6 +379,7 @@ let dataStub = {docs: [
 
 
 showMoviesBtn.addEventListener('click', showMovies);
+nextMoviesBtn.addEventListener('click', nextMovies);
 
 
 function showMovies() {
@@ -385,9 +388,19 @@ function showMovies() {
 
   console.log(selectedParams);
   
-  movies.innerHTML = '';
+  moviesCont.innerHTML = '';
   filter.classList.remove('active');
   movies.classList.add('active');
+
+  // getMovies(apiUrl, selectedParams);
+  addMovies(dataStub);
+}
+
+function nextMovies() {
+  ++page;
+  createParams();
+
+  console.log(selectedParams);
 
   // getMovies(apiUrl, selectedParams);
   addMovies(dataStub);
@@ -466,7 +479,7 @@ function createParams() {
   params.append('votes.kp', '10000-2500000');
   params.append('sortField', 'rating.kp');
   params.append('sortType', '-1');
-  params.append('page', '1');
+  params.append('page', page);
   params.append('limit', '50');
 
   return selectedParams = params.toString();
@@ -486,11 +499,6 @@ async function getMovies(url, params) {
 };
 
 function addMovies(data) {
-
-  let moviesCont = document.createElement('div');
-  moviesCont.classList.add('movies__container');
-  moviesCont.classList.add('_container');
-  movies.prepend(moviesCont);
   
   data.docs.forEach(movie => {
 
