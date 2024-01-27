@@ -357,6 +357,25 @@ let notNullFields = 'notNullFields=name&notNullFields=alternativeName&notNullFie
 let selectFields = 'selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=type&selectFields=year&selectFields=rating&selectFields=votes&selectFields=movieLength&selectFields=seriesLength&selectFields=genres&selectFields=countries&selectFields=poster&selectFields=countries&';
 
 
+//stub
+let dataStub = {docs: [
+  {
+    id:1,
+    poster: {previewUrl: '/img/mem.webp'},
+    name:'lol',
+    rating: {kp: 8},
+    genres: [{name: 'mem'}]
+  },
+  {
+    id:2,
+    poster: {previewUrl: '/img/mem.webp'},
+    name:'kek',
+    rating: {kp: 9},
+    genres: [{name: 'mem'}]
+  },
+]};
+
+
 showMoviesBtn.addEventListener('click', showMovies);
 
 
@@ -370,7 +389,8 @@ function showMovies() {
   filter.classList.remove('active');
   movies.classList.add('active');
 
-  getMovies(apiUrl, selectedParams);
+  // getMovies(apiUrl, selectedParams);
+  addMovies(dataStub);
 }
 
 
