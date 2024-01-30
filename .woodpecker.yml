@@ -1,9 +1,9 @@
 steps:
   publish:
-    # when:
-    #   branch:
-    #     - main
-    #     - test
+    when:
+      branch:
+        - main
+        - vanilla
     image: harbor.smthd.com/cloudflare/wrangler
     commands:
       - .cicd/publish.sh
