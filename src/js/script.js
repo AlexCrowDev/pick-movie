@@ -1,6 +1,6 @@
 "use strict"
 
-const apiUrl = 'https://api.kinopoisk.dev/';
+const apiUrl = 'https://api.kinopoisk.dev/v1.4/';
 const genresUrl = 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=genres.name';
 const countriesUrl = 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=countries.name';
 const apiKey = 'RJKDTJT-1HDM3FX-NGWJ4T8-KHQMWQF';
@@ -17,10 +17,10 @@ let model = {
 };
 
 
-// getCountries(countriesUrl);
-// getGenres(genresUrl);
-getCountriesStub(countriesUrl);
-getGenresStub(genresUrl);
+getCountries(countriesUrl);
+getGenres(genresUrl);
+// getCountriesStub(countriesUrl);
+// getGenresStub(genresUrl);
 
 async function getCountries (url) {
   const resp = await fetch (url, {
@@ -47,11 +47,16 @@ async function getGenres (url) {
 }
 
 function getGenresStub () {
-  genres =  [{name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"},]
+  genres =  [{name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"}, {name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"}, {name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"}, {name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"},{name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"}, {name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"}, {name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"}, {name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"},]
 }
 
 //changes search background when in focus
 let srchInputs = document.querySelectorAll('.search__input');
+
+for(let input of srchInputs) {
+  input.addEventListener('focus', addFocus);
+  input.addEventListener('blur', removeFocus);
+}
 
 function addFocus () {
   this.parentElement.classList.add('focused')
@@ -59,12 +64,6 @@ function addFocus () {
 function removeFocus () {
   this.parentElement.classList.remove('focused')
 }
-
-for(let input of srchInputs) {
-  input.addEventListener('focus', addFocus);
-  input.addEventListener('blur', removeFocus);
-}
-
 
 //resets default link behavior
 let allLinks = document.querySelectorAll('a');
@@ -354,9 +353,11 @@ function changeRatingSpans(inputs, span) {
 let showMoviesBtn = document.querySelector('.filter__button');
 let moviesCont = document.querySelector('.movies__container');
 let nextMoviesBtn = document.querySelector('.movies__button');
+let form = document.querySelector('form');
+let searchMoviesEl = document.querySelector('.header__search-input');
 let selectedParams;
 let notNullFields = 'notNullFields=name&notNullFields=alternativeName&notNullFields=year&notNullFields=rating.kp&notNullFields=votes.kp&notNullFields=poster.url&';
-let selectFields = 'selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=type&selectFields=year&selectFields=rating&selectFields=votes&selectFields=movieLength&selectFields=seriesLength&selectFields=genres&selectFields=countries&selectFields=poster&selectFields=countries&';
+const selectFields = 'selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=type&selectFields=year&selectFields=rating&selectFields=votes&selectFields=movieLength&selectFields=seriesLength&selectFields=genres&selectFields=countries&selectFields=poster&selectFields=countries&';
 let page = 1;
 
 //stub
@@ -380,6 +381,11 @@ let dataStub = {docs: [
 
 showMoviesBtn.addEventListener('click', showMovies);
 nextMoviesBtn.addEventListener('click', nextMovies);
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  searchMovies();
+});
+
 
 
 function showMovies() {
@@ -392,8 +398,8 @@ function showMovies() {
   filter.classList.remove('active');
   movies.classList.add('active');
 
-  // getMovies(apiUrl, selectedParams);
-  addMovies(dataStub);
+  getMovies(apiUrl + 'movie?' + selectFields + notNullFields, selectedParams);
+  // addMovies(dataStub);
 }
 
 function nextMovies() {
@@ -402,10 +408,27 @@ function nextMovies() {
 
   console.log(selectedParams);
 
-  // getMovies(apiUrl, selectedParams);
-  addMovies(dataStub);
+  getMovies(apiUrl + 'movie?' + selectFields + notNullFields, selectedParams);
+  // addMovies(dataStub);
 }
 
+function searchMovies() {
+
+  if (searchMoviesEl.value) {
+    createParams({query: searchMoviesEl.value});
+
+    console.log(selectedParams);
+
+    getMovies(apiUrl + 'movie/search?', selectedParams);
+
+    moviesCont.innerHTML = '';
+    nextMoviesBtn.classList.add('hidden');
+    filter.classList.remove('active');
+    movies.classList.add('active');
+    searchMoviesEl.blur();
+    searchMoviesEl.value = '';
+  }
+}
 
 function checkTypeMovies() {
   let switchBtns = document.getElementsByName('show');
@@ -437,61 +460,64 @@ function checkRanges(currentRangeModel, span) {
 }
 
 
-function createParams() {
-  let params = new URLSearchParams();
+function createParams(obj) {
+  let params = new URLSearchParams(obj);
   let mult;
   
-  if ((model.type === 'TV Series') && mult) {
-    params.append('type', 'animated-series');
-  } else if (model.type === 'TV Series') {
-    params.append('type', 'tv-series');
-  } else if (model.type === 'Films') {
-    params.append('type', 'movie');
-  }
-
-  model.genres.forEach((genre) => {
-    if (genre === 'мультфильм') {
-      mult = genre;
+  if (!obj) {
+    if ((model.type === 'TV Series') && mult) {
+      params.append('type', 'animated-series');
+    } else if (model.type === 'TV Series') {
+      params.append('type', 'tv-series');
+    } else if (model.type === 'Films') {
+      params.append('type', 'movie');
     }
-    params.append('genres.name', genre);
-  });
-
-  model.excludeGenres.forEach((genre) => {
-    params.append('genres.name', `!${genre}`);
-  });
-
-  model.countries.forEach((country) => {
-    params.append('countries.name', country);
-  });
-
-  model.excludeCountries.forEach((country) => {
-    params.append('countries.name', `!${country}`);
-  });
-
-  if (model.years.length > 1) {
-  params.append('year', model.years.join('-'));
+  
+    model.genres.forEach((genre) => {
+      if (genre === 'мультфильм') {
+        mult = genre;
+      }
+      params.append('genres.name', genre);
+    });
+  
+    model.excludeGenres.forEach((genre) => {
+      params.append('genres.name', `!${genre}`);
+    });
+  
+    model.countries.forEach((country) => {
+      params.append('countries.name', country);
+    });
+  
+    model.excludeCountries.forEach((country) => {
+      params.append('countries.name', `!${country}`);
+    });
+  
+    if (model.years.length > 1) {
+    params.append('year', model.years.join('-'));
+    }
+  
+    if (model.rating.length > 1) {
+      params.append('rating.kp', model.rating.join('-'));
+    }
+  
+    params.append('votes.kp', '10000-2500000');
+    params.append('sortField', 'rating.kp');
+    params.append('sortType', '-1');
   }
 
-  if (model.rating.length > 1) {
-    params.append('rating.kp', model.rating.join('-'));
-  }
-
-  params.append('votes.kp', '10000-2500000');
-  params.append('sortField', 'rating.kp');
-  params.append('sortType', '-1');
   params.append('page', page);
-  params.append('limit', '50');
+  params.append('limit', '100');
 
   return selectedParams = params.toString();
 }
 
 
 async function getMovies(url, params) {
-  let resp = await fetch(url + 'v1.4/movie?' + selectFields + notNullFields + params, {
+  let resp = await fetch(url + params, {
     headers: {
      'Content-Type': 'application/json',
      'X-API-KEY': apiKey,
-    } 
+    }
   });
   let respData = await resp.json();
   console.log(respData);
@@ -507,7 +533,7 @@ function addMovies(data) {
 
     movieEl.innerHTML = `
     <a href="https://www.kinopoisk.ru/film/${movie.id}" target="_blank">
-      <img class="movie__poster" src="${movie.poster.previewUrl}" alt="${movie.name}">
+      <img class="movie__poster" src="${movie.poster.previewUrl}" alt="">
       <div class="movie__info">
         <div class="movie__rating">${(movie.rating.kp).toFixed(1)}</div>
         <div class="movie__name">${movie.name}</div>

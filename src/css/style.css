@@ -202,18 +202,17 @@ body {
 	text-align: center;
 	align-items: center;
 	justify-content: center;
-	margin: 0px 0px 10px;
+	margin: 10px 0px;
 }
 .header__logo {
 	font-family: Signika Negative;
 	min-width: 130px;
-	margin: 10px 0px;
+	margin-bottom: 10px;
 	font-size: 30px;
 	font-weight: 700;
 	color: rgb(122, 91, 247);
 }
 .header__search {
-	margin: 0px 0px 10px;
 }
 @media (min-width: 502px) {
 	.header__container {
@@ -222,9 +221,11 @@ body {
 	}
 	.header__search {
 		max-width: 370px;
-		margin: 0px 0px 0px 30px;
+		margin: 0px 0px 0px 50px;
 	}
-
+	.header__logo {
+		margin-bottom: 0px;
+	}
 }
 .focused {
 	background-color: rgb(122, 91, 247);
@@ -438,4 +439,9 @@ body {
 }
 .movie__genre {
 	padding: 5px 0px;
+}
+.movies__button {
+}
+.hidden {
+	display: none;
 }
