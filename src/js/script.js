@@ -68,8 +68,8 @@ function removeFocus () {
 //resets default link behavior
 let allLinks = document.querySelectorAll('a');
 
-for(let link of allLinks) {
-  link.addEventListener('click', (e) => {e.preventDefault();})
+for(let i = 1; i < allLinks.length; i++) {
+  allLinks[i].addEventListener('click', (e) => e.preventDefault())
 }
 
 
@@ -92,7 +92,7 @@ let mainBtns = document.querySelectorAll('.main-show__button');
 let genresSpan;
 let countriesSpan;
 let sideBar = document.querySelector('.sidebar');
-let srchInput = document.querySelector('.search__input');
+let sbSearch = srchInputs[1];
 let excludeBtn = document.querySelector('#Exclude');
 let chooseBtn = document.querySelector('#Choose');
 let excludeCountries = [{name: "Россия"}, {name: "СССР"}, {name: "Индия"},];
@@ -127,13 +127,13 @@ function openSidebar(attribute) {
 
   if (attribute == 'genres') {
     currentSidebarModel = model.genres;
-    srchInput.placeholder = 'Genres';
+    sbSearch.placeholder = 'Genres';
 
     createAllList(genres);
 
   } else if (attribute == 'countries') {
     currentSidebarModel = model.countries;
-    srchInput.placeholder = 'Countries';
+    sbSearch.placeholder = 'Countries';
 
     createAllList(countries);
   }
@@ -147,13 +147,13 @@ function openSidebarExclude(attribute) {
 
   if (attribute == 'genres') {
     currentSidebarModel = model.excludeGenres;
-    srchInput.placeholder = 'Genres';
+    sbSearch.placeholder = 'Genres';
 
     createAllList(excludeGenres);
 
   } else if (attribute == 'countries') {
     currentSidebarModel = model.excludeCountries;
-    srchInput.placeholder = 'Countries';
+    sbSearch.placeholder = 'Countries';
 
     createAllList(excludeCountries);
   }
@@ -354,7 +354,7 @@ let showMoviesBtn = document.querySelector('.filter__button');
 let moviesCont = document.querySelector('.movies__container');
 let nextMoviesBtn = document.querySelector('.movies__button');
 let form = document.querySelector('form');
-let searchMoviesEl = document.querySelector('.header__search-input');
+let mainSearch = srchInputs[0];
 let selectedParams;
 let notNullFields = 'notNullFields=name&notNullFields=alternativeName&notNullFields=year&notNullFields=rating.kp&notNullFields=votes.kp&notNullFields=poster.url&';
 const selectFields = 'selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=type&selectFields=year&selectFields=rating&selectFields=votes&selectFields=movieLength&selectFields=seriesLength&selectFields=genres&selectFields=countries&selectFields=poster&selectFields=countries&';
@@ -414,8 +414,8 @@ function nextMovies() {
 
 function searchMovies() {
 
-  if (searchMoviesEl.value) {
-    createParams({query: searchMoviesEl.value});
+  if (mainSearch.value) {
+    createParams({query: mainSearch.value});
 
     console.log(selectedParams);
 
@@ -425,8 +425,8 @@ function searchMovies() {
     nextMoviesBtn.classList.add('hidden');
     filter.classList.remove('active');
     movies.classList.add('active');
-    searchMoviesEl.blur();
-    searchMoviesEl.value = '';
+    mainSearch.blur();
+    mainSearch.value = '';
   }
 }
 
