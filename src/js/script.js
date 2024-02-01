@@ -477,7 +477,7 @@ function createParams(obj) {
       if (genre === 'мультфильм') {
         mult = genre;
       }
-      params.append('genres.name', genre);
+      params.append('genres.name', `+${genre}`);
     });
   
     model.excludeGenres.forEach((genre) => {
@@ -485,7 +485,7 @@ function createParams(obj) {
     });
   
     model.countries.forEach((country) => {
-      params.append('countries.name', country);
+      params.append('countries.name', `+${country}`);
     });
   
     model.excludeCountries.forEach((country) => {
