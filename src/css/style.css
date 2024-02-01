@@ -118,7 +118,7 @@ body {
 
 .btn-show {
 	min-width: 230px;
-	margin: 15px;
+	margin: 5px 0px 15px;
 	background-color: rgb(122, 91, 247);
 	border-radius: 50px;
 }
@@ -133,7 +133,7 @@ body {
 	position: absolute;
 	display: block;
 	width: 100%;
-	height: 100vh;
+	height: 100%;
 	background-color: #16141c;
 }
 .sidebar__container {
@@ -142,9 +142,13 @@ body {
 	margin: 15px 0px;
 }
 .sidebar__switches {
-	margin: 0px 0px 15px 0px;
+	margin-bottom: 15px;
 }
 .sidebar__lists {
+	margin-bottom: 15px;
+}
+.sidebar__lists:last-child {
+	padding-bottom: 55px;
 }
 .lists-sidebar {
 }
@@ -154,9 +158,6 @@ body {
 }
 .lists-sidebar__item {
 }
-.lists-sidebar__item:last-child {
-	margin-bottom: 0px;
-}
 .lists-sidebar__label {
 	display: flex;
 	justify-content: space-between;
@@ -165,7 +166,7 @@ body {
 	height: 45px;
 }
 .lists-sidebar__label:not(:last-child) {
-	border-bottom: 1px solid rgb(91 87 107 / 50%);
+	border-bottom: 1px solid rgba(91, 87, 107, 0.447);
 }
 .lists-sidebar__span {
 }
@@ -184,7 +185,6 @@ body {
 	position: fixed;
 	left: 0;
 	bottom: 0;
-	z-index: 10;
 	width: 100%;
 	background-color: #16141c;
 }
