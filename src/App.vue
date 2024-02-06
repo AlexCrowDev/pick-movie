@@ -1,11 +1,13 @@
 <template>
-    <div class="app">
-    </div>
+  <HeaderBlock/>
 </template>
 
 <script>
+  import HeaderBlock from "@/components/HeaderBlock";
   export default {
-    
+    components: {
+      HeaderBlock,
+    }
   }
 </script>
 
@@ -26,25 +28,25 @@ html, body {
   height: 100%;
 }
 #app {
+  display: flex;
+  flex-direction: column;
   height: 100%;
-}
-.app {
-  height: 100%;
+  padding: 0px 15px;
+  margin: 0px auto;
+  box-sizing: content-box;
   line-height: 1;
-  background-color: #16141c;
+  background: #16141c;
   font-size: 14px;
   color: #fff;
   font-family: 'Comfortaa', sans-serif;
   letter-spacing: 0.3px;
 }
-._container {
-  padding: 1px 15px;
-  margin: 0px auto;
-  box-sizing: content-box;
-}
 .item {
   background-color: rgb(91 87 107 / 20%);
   margin: 0 0 15px;
   border-radius: 10px;
+}
+.focused {
+	background-color: rgb(122, 91, 247);
 }
 </style>
