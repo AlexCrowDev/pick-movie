@@ -1,12 +1,14 @@
 <template>
   <HeaderBlock/>
+  <Filter/>
 </template>
 
 <script>
   import HeaderBlock from "@/components/HeaderBlock";
+  import Filter from "@/components/Filter";
   export default {
     components: {
-      HeaderBlock,
+      HeaderBlock, Filter
     }
   }
 </script>
@@ -46,7 +48,14 @@ html, body {
   margin: 0 0 15px;
   border-radius: 10px;
 }
-.focused {
+.mini-span {
+	color: #a7a4b5;
+	font-size: 14px;
+}
+.switches {
+	display: flex;
+}
+.active {
 	background-color: rgb(122, 91, 247);
 }
 </style>
