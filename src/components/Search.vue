@@ -7,7 +7,7 @@
         class="search-input" 
         type="text"
         :placeholder="placeholder"
-        @input="getValue"
+        @input="updateValue"
       >
     </div>
 </template>
@@ -22,13 +22,12 @@
     },
     data() {
       return {
-        value:'',
+
       }
     },
     methods: {
-      getValue(event) {
-        this.value = event.target.value
-        this.$emit('get', this.value)
+      updateValue(event) {
+        this.$emit('update:modelValue', event.target.value)
       },
     },
   }

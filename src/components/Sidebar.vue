@@ -2,14 +2,14 @@
   <div class="sidebar" v-if="show">
     <Search
       :placeholder="placeholder"
-      @get="listFilter"
+      v-model="searchQuery"
     />
     <div class="switches item">
       <my-switch :name="name" id="Choose">Choose</my-switch>
       <my-switch :name="name" id="Exclude">Exclude</my-switch>
     </div>
     <List
-      :list="allList"
+      :list="searchedList"
     />
     <my-fixed-buttom>
       <my-button @click.prevent="hideSidebar">Show</my-button>
@@ -26,6 +26,10 @@
     List, Search,
     },
     props: {
+      list: {
+        type: Array,
+        reqvired: true,
+      },
       show: {
         type: Boolean,
         default: false,
@@ -37,33 +41,18 @@
     },
     data() {
       return {
-        list: [
-          {name: 'USA'},
-          {name: 'UK'},
-          {name: 'France'},
-          
-        ],
         name: 'sidebar',
-        allList: [
-          {name: 'USA'},
-          {name: 'UK'},
-          {name: 'France'},
-        ],
+        searchQuery: '',
       }
     },
     methods: {
-      listFilter(value) {
-        this.allList = this.list.filter(element => {
-          if (element.name.toLowerCase().includes(value.toLowerCase())) {
-            return element
-          } else if (!value) {
-            this.allList = this.list
-          }
-        });
-        // console.log(this.filterList)
-      },
       hideSidebar() {
         this.$emit('update:show', false)
+      },
+    },
+    computed: {
+      searchedList() {
+        return [...this.list].filter( element => ( element.name.toLowerCase().includes( this.searchQuery.toLowerCase() ) ) )
       },
     }
   }

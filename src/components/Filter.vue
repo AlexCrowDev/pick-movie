@@ -28,6 +28,7 @@
     <Sidebar
       v-model:show="sidebarVisible"
       :placeholder="attribute"
+      :list="list"
     />
   </div>
 </template>
@@ -44,6 +45,11 @@
         name: 'show',
         sidebarVisible: false,
         attribute: '',
+        list: [
+          {name: 'USA'},
+          {name: 'UK'},
+          {name: 'France'},
+        ],
       }
     },
     props: {
