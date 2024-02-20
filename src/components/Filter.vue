@@ -8,40 +8,58 @@
         <my-switch :name="name" id="TV Series">TV Series</my-switch>
       </div>
       <div class="show__main item">
-        <a href="" class="show__main-button" data-page="genres">
+        <a href="" class="show__main-button" data-page="genres" @click.prevent="showSidebar">
           <span>Genres</span>
           <span class="mini-span">all</span>
         </a>
-        <a href="" class="show__main-button" data-page="countries">
+        <a href="" class="show__main-button" data-page="countries" @click.prevent="showSidebar">
           <span>Country</span>
           <span class="mini-span">all</span>
         </a>
-        <a href="" class="show__main-button" data-page="years">
+        <a href="" class="show__main-button" data-page="years" @click.prevent="showSidebar">
           <span>Year</span>
           <span class="mini-span">all</span>
         </a>
       </div>
     </div>
-    <my-button>Show</my-button>
+    <my-fixed-buttom>
+      <my-button>Show</my-button>
+    </my-fixed-buttom>
+    <Sidebar
+      v-model:show="sidebarVisible"
+      :placeholder="attribute"
+    />
   </div>
 </template>
 
 <script>
+  import Sidebar from "@/components/Sidebar";
+  
   export default {
+    components: {
+      Sidebar,
+    },
     data() {
       return {
         name: 'show',
+        sidebarVisible: false,
+        attribute: '',
       }
-    }
+    },
+    props: {
+      
+    },
+    methods: {
+      showSidebar(event) {
+        this.attribute = event.target.getAttribute('data-page');
+        this.sidebarVisible = true;
+      },
+    },
 }
 </script>
 
-<style scoped>
+<style>
 .filter {
-	/* display: none; */
-}
-.active {
-	display: block;
 }
 .show {
 }

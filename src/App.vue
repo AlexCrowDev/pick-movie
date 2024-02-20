@@ -32,6 +32,7 @@ html, body {
 #app {
   display: flex;
   flex-direction: column;
+  position: relative;
   height: 100%;
   padding: 0px 15px;
   margin: 0px auto;

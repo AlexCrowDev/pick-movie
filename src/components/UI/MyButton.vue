@@ -1,9 +1,7 @@
 <template>
-	<div class="fixed-buttom">
-		<a href="" class="btn">
-    	<slot></slot>
-  	</a>
-	</div>
+	<a href="" class="btn">
+		<slot></slot>
+	</a>
 </template>
 
 <script>
@@ -13,11 +11,6 @@
 </script>
 
 <style scoped>
-.fixed-buttom {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-}
 .btn {
 	display: flex;
 	min-height: 40px;
