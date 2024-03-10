@@ -2,9 +2,9 @@
     <div class="list">
       <div class="list__title mini-title">All</div>
       <div class="list_body item">
-        <label class="list__item" v-for="item in list">
+        <label class="list__item" v-for="(item, index) in list">
           <span class="list__span">{{ item.name }}</span>
-          <input class="list__input" type="checkbox">
+          <input class="list__input" type="checkbox" :checked="item.checked" @change="updateChecked(index)">
           <img class="list__img" src="@/assets/check.svg">
         </label>
       </div>
@@ -17,8 +17,13 @@
       list: {
         type: Array,
         reqvired: true,
-      }
-    }
+      },
+    },
+    methods: {
+      updateChecked(index) {
+        this.list[index].checked = !this.list[index].checked
+      },
+    },
   }
 </script>
 

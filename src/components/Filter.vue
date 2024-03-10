@@ -46,9 +46,9 @@
         sidebarVisible: false,
         attribute: '',
         list: [
-          {name: 'USA'},
-          {name: 'UK'},
-          {name: 'France'},
+          {name: 'USA', checked: false},
+          {name: 'UK', checked: false},
+          {name: 'France', checked: false},
         ],
       }
     },
