@@ -3,8 +3,10 @@
     <input
       class="switch__input"
       type="radio"  
-      :name="name" 
-      :id="id" 
+      :name="name"
+      :id="id"
+      :checked="checked"
+      @change="updateChecked()"
     />
     <label class="switch__label" :for="id">
       <slot></slot>
@@ -16,15 +18,26 @@
   export default {
     name: 'my-switch',
     props: {
-      id: {
-        type: String,
-        reqvired: true,
-      },
       name: {
         type: String,
         reqvired: true,
       },
-    }
+      id: {
+        type: String,
+        reqvired: true,
+      },
+      checked: {
+        type: Boolean,
+        reqvired: true,
+        default: false
+      },
+      
+    },
+    methods: {
+      updateChecked() {
+        this.$emit('update:movieType', this.id)
+      },
+    },
   }
 </script>
 

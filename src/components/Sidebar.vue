@@ -6,7 +6,7 @@
     />
     <div class="sidebar__switches">
       <div class="switches item">
-        <my-switch :name="switchName" id="Choose">Choose</my-switch>
+        <my-switch :name="switchName" id="Choose" checked>Choose</my-switch>
         <my-switch :name="switchName" id="Exclude">Exclude</my-switch>
       </div>
     </div>

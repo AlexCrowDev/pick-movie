@@ -3,9 +3,9 @@
     <div class="show">
       <my-h2>Show</my-h2>
       <div class="switches item">
-        <my-switch :name="switchName" id="All">All</my-switch>
-        <my-switch :name="switchName" id="Films">Films</my-switch>
-        <my-switch :name="switchName" id="TV Series">TV Series</my-switch>
+        <my-switch :name="switchName" v-model:movieType="movieType" id="All" checked>All</my-switch>
+        <my-switch :name="switchName" v-model:movieType="movieType" id="Films">Films</my-switch>
+        <my-switch :name="switchName" v-model:movieType="movieType" id="TV Series">TV Series</my-switch>
       </div>
       <div class="show__main item">
         <a href="" class="show__main-button" @click.prevent="showSidebar('genres', this.genres)">
@@ -45,6 +45,7 @@
         switchName: 'show',
         sidebarVisible: false,
         attribute: '',
+        movieType: 'All',
         list: [],
         genres: [],
         countries: [],
