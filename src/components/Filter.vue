@@ -3,20 +3,20 @@
     <div class="show">
       <my-h2>Show</my-h2>
       <div class="switches item">
-        <my-switch :name="name" id="All">All</my-switch>
-        <my-switch :name="name" id="Films">Films</my-switch>
-        <my-switch :name="name" id="TV Series">TV Series</my-switch>
+        <my-switch :name="switchName" id="All">All</my-switch>
+        <my-switch :name="switchName" id="Films">Films</my-switch>
+        <my-switch :name="switchName" id="TV Series">TV Series</my-switch>
       </div>
       <div class="show__main item">
-        <a href="" class="show__main-button" data-page="genres" @click.prevent="showSidebar">
+        <a href="" class="show__main-button" @click.prevent="showSidebar('genres', this.genres)">
           <span>Genres</span>
-          <span class="mini-span">all</span>
+          <span class="mini-span">{{ checkedGenres }}</span>
         </a>
-        <a href="" class="show__main-button" data-page="countries" @click.prevent="showSidebar">
+        <a href="" class="show__main-button" @click.prevent="showSidebar('countries', this.countries)">
           <span>Country</span>
-          <span class="mini-span">all</span>
+          <span class="mini-span">{{ checkedCountries }}</span>
         </a>
-        <a href="" class="show__main-button" data-page="years" @click.prevent="showSidebar">
+        <a href="" class="show__main-button" @click.prevent="showSidebar('years')">
           <span>Year</span>
           <span class="mini-span">all</span>
         </a>
@@ -27,7 +27,7 @@
     </my-fixed-buttom>
     <Sidebar
       v-model:show="sidebarVisible"
-      :placeholder="attribute"
+      :attribute="attribute"
       :list="list"
     />
   </div>
@@ -42,25 +42,76 @@
     },
     data() {
       return {
-        name: 'show',
+        switchName: 'show',
         sidebarVisible: false,
         attribute: '',
-        list: [
-          {name: 'USA', checked: false},
-          {name: 'UK', checked: false},
-          {name: 'France', checked: false},
-        ],
+        list: [],
+        genres: [],
+        countries: [],
+        years: [],
+        rating: [],
       }
     },
     props: {
       
     },
     methods: {
-      showSidebar(event) {
-        this.attribute = event.target.getAttribute('data-page');
-        this.sidebarVisible = true;
+      showSidebar(attribute, list) {
+        this.attribute = attribute
+        this.list = list
+        this.sidebarVisible = true
+      },
+      async fetchCountries (url) {
+        const resp = await fetch (url, {
+          headers: {
+            'Content-Type': 'application/json', 
+            'X-API-KEY': apiKey,
+          } 
+        });
+        this.countries = await resp.json();
+      },
+      getCountriesStub () {
+        this.countries =  [{name: "Россия"}, {name: "Беларусь"}, {name: "США"}]
+      },
+      async fetchGenres (url) {
+        const resp = await fetch (url, {
+          headers: {
+            'Content-Type': 'application/json', 
+            'X-API-KEY': apiKey,
+          } 
+        });
+        this.genres = await resp.json();
+      },
+      getGenresStub () {
+        this.genres =  [{name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"},]
       },
     },
+    computed: {
+      checkedGenres() {
+        let result = [...this.genres].filter(element => element.checked).map(element => element.name)
+        if (result.length > 0) {
+          return  result
+                        .slice(0, 3)
+                        .join(', ')
+        } else {
+          return result = 'all'
+        }
+      },
+      checkedCountries() {
+        let result = [...this.countries].filter(element => element.checked).map(element => element.name)
+        if (result.length > 0) {
+          return  result
+                        .slice(0, 3)
+                        .join(', ')
+        } else {
+          return result = 'all'
+        }
+      },
+    },
+    mounted() {
+      this.getGenresStub()
+      this.getCountriesStub()
+    }
 }
 </script>
 

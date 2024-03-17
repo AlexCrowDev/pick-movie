@@ -1,15 +1,17 @@
 <template>
   <div class="sidebar" v-if="show">
-    <Search
-      :placeholder="placeholder"
+    <Search v-if="attribute !== 'years'"
+      :placeholder="attribute"
       v-model="searchQuery"
     />
-    <div class="switches item">
-      <my-switch :name="name" id="Choose">Choose</my-switch>
-      <my-switch :name="name" id="Exclude">Exclude</my-switch>
+    <div class="sidebar__switches">
+      <div class="switches item">
+        <my-switch :name="switchName" id="Choose">Choose</my-switch>
+        <my-switch :name="switchName" id="Exclude">Exclude</my-switch>
+      </div>
     </div>
-    <List
-      :list="searchedList"
+    <List v-if="attribute !== 'years'"
+      v-model:list="searchedList"
     />
     <my-fixed-buttom>
       <my-button @click.prevent="hideSidebar">Show</my-button>
@@ -34,14 +36,14 @@
         type: Boolean,
         default: false,
       },
-      placeholder: {
+      attribute: {
         type: String,
         reqvired: true,
       },
     },
     data() {
       return {
-        name: 'sidebar',
+        switchName: 'sidebar',
         searchQuery: '',
       }
     },
@@ -52,9 +54,13 @@
     },
     computed: {
       searchedList() {
-        return [...this.list].filter( element => ( element.name.toLowerCase().includes( this.searchQuery.toLowerCase() ) ) )
+        return [...this.list].filter( element => ( 
+          element.name
+                      .toLowerCase()
+                      .includes( this.searchQuery.toLowerCase() ) 
+        ) )
       },
-    }
+    },
   }
 </script>
 
@@ -69,6 +75,9 @@
 	background-color: #16141c;
 }
 .search {
+  margin: 15px 0px;
+}
+.sidebar__switches {
   margin: 15px 0px;
 }
 </style>
