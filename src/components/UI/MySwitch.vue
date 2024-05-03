@@ -6,7 +6,7 @@
       :name="name"
       :id="id"
       :checked="checked"
-      @change="updateChecked()"
+      @change="updateValue"
     />
     <label class="switch__label" :for="id">
       <slot></slot>
@@ -20,22 +20,21 @@
     props: {
       name: {
         type: String,
-        reqvired: true,
+        required: true,
       },
       id: {
         type: String,
-        reqvired: true,
+        required: true,
       },
       checked: {
         type: Boolean,
-        reqvired: true,
         default: false
       },
       
     },
     methods: {
-      updateChecked() {
-        this.$emit('update:movieType', this.id)
+      updateValue() {
+        this.$emit('update:modelValue', this.id)
       },
     },
   }

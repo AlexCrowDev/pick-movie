@@ -1,28 +1,57 @@
 <template>
-    <div class="list">
-      <div class="list__title mini-title">All</div>
-      <div class="list_body item">
-        <label class="list__item" v-for="(item, index) in list">
-          <span class="list__span">{{ item.name }}</span>
-          <input class="list__input" type="checkbox" :checked="item.checked" @change="updateChecked(index)">
-          <img class="list__img" src="@/assets/check.svg">
-        </label>
-      </div>
+  <div class="list">
+    <div class="list__title mini-title">All</div>
+    <div class="list_body item">
+      <template v-for="(item, index) in list">
+        <!-- <ListItem v-if="pickedSwitch === 'Choose' && item.visible && !item.excluded"
+          :name="item.name"
+          :item="item"
+          :index="index"
+          :list="list"
+          :checked="item.included"
+          :pickedSwitch="pickedSwitch"
+        /> -->
+        <ListItem v-if="pickedSwitch === 'Choose'"
+          :item="item"
+          :checked="item.included"
+          :pickedSwitch="pickedSwitch"
+        />
+        <!-- checked( item, checked) {
+          if (this.pickedSwitch === 'Choose') {
+            item.include = checked
+          } else if (this.pickedSwitch === 'Exclude') {
+            item.exclude = checked
+          }
+        } -->
+        <ListItem v-else-if="pickedSwitch === 'Exclude'"
+          :item="item"
+          :checked="item.excluded"
+          :pickedSwitch="pickedSwitch"
+        />
+      </template>
     </div>
+  </div>
 </template>
 
 <script>
+  import ListItem from "@/components/ListItem.vue";
+
   export default {
+    components: {
+      ListItem,
+    },
     props: {
       list: {
         type: Array,
-        reqvired: true,
+        required: true,
+      },
+      pickedSwitch: {
+        type: String,
+        required: true,
       },
     },
     methods: {
-      updateChecked(index) {
-        this.list[index].checked = !this.list[index].checked
-      },
+
     },
   }
 </script>
@@ -34,28 +63,5 @@
   color: #a7a4b5;
   font-size: 14px;
   padding: 8px 0px;
-}
-.list__item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 8px 0px 14px;
-  height: 45px;
-}
-.list__item:not(:last-child) {
-  border-bottom: 1px solid rgba(91, 87, 107, 0.447);
-}
-.list__span {
-}
-.list__input {
-  display: none;
-}
-.list__img {
-  display: none;
-  width: 34px;
-  height: 34px;
-}
-.list__input:checked + .list__img {
-  display: block;
 }
 </style>

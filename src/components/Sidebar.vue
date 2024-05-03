@@ -6,12 +6,21 @@
     />
     <div class="sidebar__switches">
       <div class="switches item">
-        <my-switch :name="switchName" id="Choose" checked>Choose</my-switch>
-        <my-switch :name="switchName" id="Exclude">Exclude</my-switch>
+        <my-switch :name="switchName" v-model="pickedSwitch" id="Choose" checked>Choose</my-switch>
+        <my-switch :name="switchName" v-model="pickedSwitch" id="Exclude">Exclude</my-switch>
       </div>
     </div>
-    <List v-if="attribute !== 'years'"
+    <!-- <List v-if="attribute !== 'years'"
       v-model:list="searchedList"
+      :pickedSwitch="pickedSwitch"
+    /> -->
+    <List v-if="attribute !== 'years' && pickedSwitch === 'Choose'"
+      v-model:list="includedList"
+      :pickedSwitch="pickedSwitch"
+    />
+    <List v-if="attribute !== 'years' && pickedSwitch === 'Exclude'"
+      v-model:list="excludedList"
+      :pickedSwitch="pickedSwitch"
     />
     <my-fixed-buttom>
       <my-button @click.prevent="hideSidebar">Show</my-button>
@@ -30,7 +39,7 @@
     props: {
       list: {
         type: Array,
-        reqvired: true,
+        required: true,
       },
       show: {
         type: Boolean,
@@ -38,28 +47,65 @@
       },
       attribute: {
         type: String,
-        reqvired: true,
+        required: true,
       },
     },
     data() {
       return {
         switchName: 'sidebar',
         searchQuery: '',
+        pickedSwitch: 'Choose',
       }
     },
     methods: {
       hideSidebar() {
+        this.pickedSwitch = 'Choose'
+        this.$emit('update:list', this.currentList)
         this.$emit('update:show', false)
       },
+      // updateList(list) {
+      //   list = this.list
+      //   this.exclude = !this.exclude
+      // },
+      // updateLists() {
+      //   if (this.pickedSwitch === 'Choose') {
+      //     this.includedList = this.excludedList.filter( item => item.checked !== true );
+      //   } else if (this.pickedSwitch === 'Exclude') {
+      //     this.excludedList = this.includedList.filter( item => item.checked !== true );
+      //   }
+      // },
     },
     computed: {
+      currentList() {
+        return [...this.list].filter((item) => {
+          return {
+            ...item,
+            included: false,
+            excluded: false,
+          }
+        })
+      },
       searchedList() {
-        return [...this.list].filter( element => ( 
-          element.name
+        return this.currentList.filter( item => ( 
+          item.name
                       .toLowerCase()
                       .includes( this.searchQuery.toLowerCase() ) 
         ) )
       },
+      includedList() {
+        return this.searchedList.filter(item => !item.excluded)
+      },
+      excludedList() {
+        return this.searchedList.filter(item => !item.included)
+      },
+    // },
+    // watch: {
+    //   pickedSwitch: {
+    //     handler() {
+    //       this.updateLists();
+    //     },
+    //     immediate: true
+    //   },
     },
   }
 </script>
