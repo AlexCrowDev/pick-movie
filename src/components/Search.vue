@@ -17,7 +17,7 @@
     props: {
       placeholder: {
         type: String,
-        reqvired: true,
+        required: true,
       },
     },
     data() {

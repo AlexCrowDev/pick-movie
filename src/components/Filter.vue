@@ -1,20 +1,20 @@
 <template>
-  <div class="filter">
+  <div class="filter" v-if="filterVisible">
     <div class="show">
       <my-h2>Show</my-h2>
       <div class="switches item">
-        <my-switch :name="switchName" v-model:movieType="movieType" id="All" checked>All</my-switch>
-        <my-switch :name="switchName" v-model:movieType="movieType" id="Films">Films</my-switch>
-        <my-switch :name="switchName" v-model:movieType="movieType" id="TV Series">TV Series</my-switch>
+        <my-switch :name="switchName" v-model="this.movieType" id="All" checked>All</my-switch>
+        <my-switch :name="switchName" v-model="this.movieType" id="Films">Films</my-switch>
+        <my-switch :name="switchName" v-model="this.movieType" id="TV Series">TV Series</my-switch>
       </div>
       <div class="show__main item">
         <a href="" class="show__main-button" @click.prevent="showSidebar('genres', this.genres)">
           <span>Genres</span>
-          <span class="mini-span">{{ checkedGenres }}</span>
+          <span class="mini-span">{{ displayedGenres }}</span>
         </a>
         <a href="" class="show__main-button" @click.prevent="showSidebar('countries', this.countries)">
           <span>Country</span>
-          <span class="mini-span">{{ checkedCountries }}</span>
+          <span class="mini-span">{{ displayedCountries }}</span>
         </a>
         <a href="" class="show__main-button" @click.prevent="showSidebar('years')">
           <span>Year</span>
@@ -23,38 +23,114 @@
       </div>
     </div>
     <my-fixed-buttom>
-      <my-button>Show</my-button>
+      <my-button :clickMethod="showMovies">Show</my-button>
     </my-fixed-buttom>
-    <Sidebar
+  </div>
+  <Sidebar
       v-model:show="sidebarVisible"
       :attribute="attribute"
-      :list="list"
-    />
-  </div>
+      v-model:list="list"
+  />
+  <Movies
+    v-model:show="moviesVisible"
+    :movies="moviesStub"
+    :clickMethod="showMovies"
+  />
 </template>
 
 <script>
   import Sidebar from "@/components/Sidebar";
+  import Movies from "@/components/Movies";
   
   export default {
     components: {
-      Sidebar,
+      Sidebar, Movies,
+    },
+    props: {
+      apiUrl: {
+        type: String,
+        required: true,
+      },
+      apiKey: {
+        type: String,
+        required: true,
+      },
+      genres: {
+        type: Array,
+        required: true,
+      },
+      countries: {
+        type: Array,
+        required: true,
+      },
     },
     data() {
       return {
         switchName: 'show',
         sidebarVisible: false,
+        filterVisible: true,
+        moviesVisible: false,
         attribute: '',
         movieType: 'All',
+        page: 0,
         list: [],
-        genres: [],
-        countries: [],
         years: [],
         rating: [],
+        movies: [],
+        moviesStub: [
+          {
+            id:1,
+            poster: {previewUrl: '/img/mem.676f777e.webp'},
+            name:'lol',
+            rating: {kp: 8},
+            genres: [{name: 'mem'}]
+          },
+          {
+            id:2,
+            poster: {previewUrl: '/img/mem.676f777e.webp'},
+            name:'kek',
+            rating: {kp: 9},
+            genres: [{name: 'mem'}]
+          },
+          {
+            id:3,
+            poster: {previewUrl: '/img/mem.676f777e.webp'},
+            name:'lol',
+            rating: {kp: 8},
+            genres: [{name: 'mem'}]
+          },
+          {
+            id:4,
+            poster: {previewUrl: '/img/mem.676f777e.webp'},
+            name:'kek',
+            rating: {kp: 9},
+            genres: [{name: 'mem'}]
+          },
+          {
+            id:5,
+            poster: {previewUrl: '/img/mem.676f777e.webp'},
+            name:'kek',
+            rating: {kp: 9},
+            genres: [{name: 'mem'}]
+          },
+          {
+            id:6,
+            poster: {previewUrl: '/img/mem.676f777e.webp'},
+            name:'kek',
+            rating: {kp: 9},
+            genres: [{name: 'mem'}]
+          },
+          {
+            id:7,
+            poster: {previewUrl: '/img/mem.676f777e.webp'},
+            name:'kek',
+            rating: {kp: 9},
+            genres: [{name: 'mem'}]
+          },
+        ],
+        selectedFields: 'selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=type&selectFields=year&selectFields=rating&selectFields=votes&selectFields=movieLength&selectFields=seriesLength&selectFields=genres&selectFields=countries&selectFields=poster&selectFields=countries&',
+        notNullFields: 'notNullFields=name&notNullFields=alternativeName&notNullFields=year&notNullFields=rating.kp&notNullFields=votes.kp&notNullFields=poster.url&',
       }
-    },
-    props: {
-      
     },
     methods: {
       showSidebar(attribute, list) {
@@ -62,57 +138,111 @@
         this.list = list
         this.sidebarVisible = true
       },
-      async fetchCountries (url) {
-        const resp = await fetch (url, {
+      createParams() {
+        let params = new URLSearchParams()
+        let animatedFilm
+        
+        this.includedGenres.forEach((genre) => {
+          if (genre.name === 'мультфильм') {
+            animatedFilm = genre.name
+          }
+          params.append('genres.name', `+${genre.name}`)
+        })
+        
+        this.excludedGenres.forEach((genre) => {
+          params.append('genres.name', `!${genre.name}`)
+        })
+      
+        this.includedCountries.forEach((country) => {
+          params.append('countries.name', `+${country.name}`)
+        })
+      
+        this.excludedCountries.forEach((country) => {
+          params.append('countries.name', `!${country.name}`)
+        })
+      
+        // if (model.years.length > 1) {
+        // params.append('year', model.years.join('-'));
+        // }
+      
+        // if (model.rating.length > 1) {
+        //   params.append('rating.kp', model.rating.join('-'));
+        // }
+        if ((this.movieType === 'TV Series') && animatedFilm) {
+          params.append('type', 'animated-series')
+        } else if (this.movieType === 'TV Series') {
+          params.append('type', 'tv-series')
+        } else if (this.movieType === 'Films') {
+          params.append('type', 'movie')
+        }
+
+        params.append('votes.kp', '10000-2500000')
+        params.append('sortField', 'rating.kp')
+        params.append('sortType', '-1')
+        params.append('page', this.page)
+        params.append('limit', '100')
+        console.log(params.toString())
+        return params.toString()
+      },
+      async getMovies(url, params) {
+        let resp = await fetch(url + params, {
           headers: {
-            'Content-Type': 'application/json', 
-            'X-API-KEY': apiKey,
-          } 
-        });
-        this.countries = await resp.json();
+          'Content-Type': 'application/json',
+          'X-API-KEY': this.apiKey,
+          }
+        })
+        let data = await resp.json()
+        this.movies.push(...data.docs)
+        this.moviesVisible = true
       },
-      getCountriesStub () {
-        this.countries =  [{name: "Россия"}, {name: "Беларусь"}, {name: "США"}]
-      },
-      async fetchGenres (url) {
-        const resp = await fetch (url, {
-          headers: {
-            'Content-Type': 'application/json', 
-            'X-API-KEY': apiKey,
-          } 
-        });
-        this.genres = await resp.json();
-      },
-      getGenresStub () {
-        this.genres =  [{name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"},]
-      },
+      showMovies() {
+        ++this.page
+        let selectedParams = this.createParams();
+        
+        this.filterVisible = false
+
+        // this.getMovies(this.apiUrl + 'movie?' + this.selectFields + this.notNullFields, selectedParams);
+        this.moviesVisible = true
+      }
     },
     computed: {
-      checkedGenres() {
-        let result = [...this.genres].filter(element => element.checked).map(element => element.name)
-        if (result.length > 0) {
-          return  result
-                        .slice(0, 3)
-                        .join(', ')
+      includedGenres() {
+        return [...this.genres].filter(item => item.included)
+      },
+      excludedGenres() {
+        return [...this.genres].filter(item => item.excluded)
+      },
+      displayedGenres() {
+        let includedGenresNames = this.includedGenres.map(item => item.name)
+        let excludedGenresNames = this.excludedGenres.map(item => item.name)
+
+        if (includedGenresNames.length > 0) {
+          return includedGenresNames.slice(0, 3).join(', ')
+        } else if (excludedGenresNames.length > 0) {
+          return 'все, кроме: ' + excludedGenresNames.slice(0, 3).join(', ')
         } else {
-          return result = 'all'
+          return 'all'
         }
       },
-      checkedCountries() {
-        let result = [...this.countries].filter(element => element.checked).map(element => element.name)
-        if (result.length > 0) {
-          return  result
-                        .slice(0, 3)
-                        .join(', ')
+      includedCountries() {
+        return [...this.countries].filter(item => item.included)
+      },
+      excludedCountries() {
+        return [...this.countries].filter(item => item.excluded)
+      },
+      displayedCountries() {
+        let includedCountriesNames = this.includedCountries.map(item => item.name)
+        let excludedCountriesNames = this.excludedCountries.map(item => item.name)
+
+        if (includedCountriesNames.length > 0) {
+          return includedCountriesNames.slice(0, 3).join(', ')
+        } else if (excludedCountriesNames.length > 0) {
+          return 'кроме: ' + excludedCountriesNames.slice(0, 3).join(', ')
         } else {
-          return result = 'all'
+          return 'all'
         }
       },
     },
-    mounted() {
-      this.getGenresStub()
-      this.getCountriesStub()
-    }
 }
 </script>
 

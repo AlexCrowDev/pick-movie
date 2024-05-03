@@ -1,14 +1,63 @@
 <template>
   <HeaderBlock/>
-  <Filter/>
+  <Filter
+    :apiUrl="apiUrl"
+    :apiKey="apiKey"
+    :genres="genres"
+    :countries="countries"
+  />
 </template>
 
 <script>
   import HeaderBlock from "@/components/HeaderBlock";
   import Filter from "@/components/Filter";
+
   export default {
     components: {
-      HeaderBlock, Filter
+      HeaderBlock, Filter,
+    },
+    data() {
+      return {
+        apiUrl: 'https://api.kinopoisk.dev/v1.4/',
+        genresUrl: 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=genres.name',
+        countriesUrl: 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=countries.name',
+        apiKey: 'RJKDTJT-1HDM3FX-NGWJ4T8-KHQMWQF',
+        genres: [],
+        countries: [],
+      }
+    },
+    methods: {
+      async fetchCountries(url) {
+        const resp = await fetch (url, {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.apiKey,
+          }
+        });
+        this.countries = await resp.json()
+      },
+
+      getCountriesStub() {
+        this.countries =  [{name: "Россия"}, {name: "Беларусь"}, {name: "США"}]
+      },
+
+      async fetchGenres(url) {
+        const resp = await fetch (url, {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-KEY': this.apiKey,
+          }
+        })
+        this.genres = await resp.json()
+      },
+
+      getGenresStub() {
+        this.genres = [{name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"},]
+      },
+    },
+    mounted() {
+      this.getGenresStub()
+      this.getCountriesStub()
     }
   }
 </script>
@@ -27,13 +76,13 @@ a {
   color: inherit;
 }
 html, body {
-  height: 100%;
 }
 #app {
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 100%;
+  min-height: 100vh;
+  overflow: auto;
   padding: 0px 15px;
   margin: 0px auto;
   box-sizing: content-box;
