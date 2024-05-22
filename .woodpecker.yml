@@ -1,0 +1,22 @@
+
+variables:
+  - &node_image "public.ecr.aws/docker/library/node:20.13.1-bookworm-slim"
+  - &wrangpler_image "harbor.smthd.com/cloudflare/wrangler"
+
+when:
+  - event:
+      - push
+      - manual
+
+steps:
+  build:
+    image: *node_image
+    commands:
+      - .cicd/build.sh
+  publish:
+    image: *wrangpler_image
+    commands:
+      - .cicd/publish.sh
+    secrets:
+      - cloudflare_account_id
+      - cloudflare_api_token
