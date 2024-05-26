@@ -522,6 +522,12 @@ async function getMovies(url, params) {
   let respData = await resp.json();
   console.log(respData);
   addMovies(respData);
+  
+  if (respData.pages != respData.page) {
+    nextMoviesBtn.classList.remove('hidden');
+  } else {
+    nextMoviesBtn.classList.add('hidden');
+  }
 };
 
 function addMovies(data) {
