@@ -1,14 +1,14 @@
 <template>
-  <div class="movie" v-for="movie in movies">
+  <div class="movie" v-for="movie in movies" :key="movie.id">
     <a :href="href + movie.id" target="_blank">
-      <img 
+      <!-- <img 
         class="movie__poster" 
         :src="movie.poster.previewUrl"
-        alt="">
-        <!-- <img 
+        alt=""> -->
+      <img 
         class="movie__poster" 
         src="@/assets/mem.webp"
-        alt=""> -->
+        alt="">
       <div class="movie__info">
         <div class="movie__rating">{{ (movie.rating.kp).toFixed(1) }}</div>
         <div class="movie__name">{{ movie.name }}</div>

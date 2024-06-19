@@ -1,65 +1,18 @@
 <template>
   <HeaderBlock/>
-  <Filter
-    :apiUrl="apiUrl"
-    :apiKey="apiKey"
-    :genres="genres"
-    :countries="countries"
-  />
+  <Filter/>
 </template>
 
-<script>
-  import HeaderBlock from "@/components/HeaderBlock";
-  import Filter from "@/components/Filter";
+<script setup>
+import HeaderBlock from "@/components/HeaderBlock";
+import Filter from "@/components/Filter";
+import { useGlobalStore } from "./stores/global";
 
-  export default {
-    components: {
-      HeaderBlock, Filter,
-    },
-    data() {
-      return {
-        apiUrl: 'https://api.kinopoisk.dev/v1.4/',
-        genresUrl: 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=genres.name',
-        countriesUrl: 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=countries.name',
-        apiKey: 'RJKDTJT-1HDM3FX-NGWJ4T8-KHQMWQF',
-        genres: [],
-        countries: [],
-      }
-    },
-    methods: {
-      async fetchCountries(url) {
-        const resp = await fetch (url, {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-API-KEY': this.apiKey,
-          }
-        });
-        this.countries = await resp.json()
-      },
+const globalStore = useGlobalStore()
 
-      getCountriesStub() {
-        this.countries =  [{name: "Россия"}, {name: "Беларусь"}, {name: "США"}]
-      },
+globalStore.getGenresStub()
+globalStore.getCountriesStub()
 
-      async fetchGenres(url) {
-        const resp = await fetch (url, {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-API-KEY': this.apiKey,
-          }
-        })
-        this.genres = await resp.json()
-      },
-
-      getGenresStub() {
-        this.genres = [{name: "аниме"}, {name: "драма"}, {name: "комедия"}, {name: "мультфильм"},]
-      },
-    },
-    mounted() {
-      this.getGenresStub()
-      this.getCountriesStub()
-    }
-  }
 </script>
 
 <style>

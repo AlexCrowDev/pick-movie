@@ -1,7 +1,7 @@
 <template>
   <div class="movies" v-if="show">
-		<MoviesList
-			:movies="movies"
+		<Movie
+			:movies="moviesStore.moviesStub"
 		/>
     <my-fixed-buttom>
       <my-button :clickMethod="clickMethod">Next</my-button>
@@ -9,30 +9,20 @@
   </div>
 </template>
 
-<script>
-	import MoviesList from "@/components/MoviesList";
+<script setup>
+import Movie from "@/components/Movie";
+import { useMoviesStore } from "@/stores/movies";
 
-  export default {
-		components: {
-			MoviesList,
-		},
-		props: {
-			movies: {
-        type: Array,
-				required: true,
-      },
-			clickMethod: {
-				type: Function,
-			},
-			show: {
-        type: Boolean,
-        default: false,
-      },
-		},
-		methods: {
-
-		},
-  }
+const	props = defineProps({
+	clickMethod: {
+		type: Function,
+	},
+	show: {
+		type: Boolean,
+		default: false,
+	},
+})
+const moviesStore = useMoviesStore()
 </script>
 
 <style>

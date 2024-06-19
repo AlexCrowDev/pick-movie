@@ -18,7 +18,7 @@
       v-model:list="includedList"
       :pickedSwitch="pickedSwitch"
     />
-    <List v-if="attribute !== 'years' && pickedSwitch === 'Exclude'"
+    <List v-else-if="attribute !== 'years' && pickedSwitch === 'Exclude'"
       v-model:list="excludedList"
       :pickedSwitch="pickedSwitch"
     />
@@ -39,7 +39,6 @@
     props: {
       list: {
         type: Array,
-        required: true,
       },
       show: {
         type: Boolean,
