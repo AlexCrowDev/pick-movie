@@ -2,8 +2,8 @@
   <div class="sidebar" v-if="show">
     <div class="sidebar__switches">
       <div class="switches item">
-        <my-switch :name="switchName" v-model="pickedSwitch" id="Choose" checked>Choose</my-switch>
-        <my-switch :name="switchName" v-model="pickedSwitch" id="Exclude">Exclude</my-switch>
+        <my-switch :name="switchName" v-model="pickedSwitch" id="Included" checked>Choose</my-switch>
+        <my-switch :name="switchName" v-model="pickedSwitch" id="Excluded">Exclude</my-switch>
       </div>
     </div>
     <my-fixed-buttom>
@@ -14,7 +14,6 @@
 
 <script>
   import Search from "@/components/Search";
-  import List from "@/components/List";
 
   export default {
     components: {
@@ -29,12 +28,12 @@
     data() {
       return {
         switchName: 'sidebar',
-        pickedSwitch: 'Choose',
+        pickedSwitch: 'Included',
       }
     },
     methods: {
       hideSidebar() {
-        this.pickedSwitch = 'Choose'
+        this.pickedSwitch = 'Included'
         this.$emit('update:show', false)
       },
     },

@@ -11,7 +11,7 @@
           :checked="item.included"
           :pickedSwitch="pickedSwitch"
         /> -->
-        <ListItem v-if="pickedSwitch === 'Choose'"
+        <ListItem v-if="pickedSwitch === 'Included'"
           :item="item"
           :checked="item.included"
           :pickedSwitch="pickedSwitch"
@@ -23,7 +23,7 @@
             item.exclude = checked
           }
         } -->
-        <ListItem v-else-if="pickedSwitch === 'Exclude'"
+        <ListItem v-else
           :item="item"
           :checked="item.excluded"
           :pickedSwitch="pickedSwitch"

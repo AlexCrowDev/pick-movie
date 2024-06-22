@@ -5,15 +5,15 @@
     />
     <div class="sidebar__switches">
       <div class="switches item">
-        <my-switch :name="switchName" v-model="pickedSwitch" id="Choose" checked>Choose</my-switch>
-        <my-switch :name="switchName" v-model="pickedSwitch" id="Exclude">Exclude</my-switch>
+        <my-switch :name="switchName" v-model="pickedSwitch" id="Included" checked>Choose</my-switch>
+        <my-switch :name="switchName" v-model="pickedSwitch" id="Excluded">Exclude</my-switch>
       </div>
     </div>
-    <List v-if="pickedSwitch === 'Choose'"
+    <List v-if="pickedSwitch === 'Included'"
       v-model:list="includedList"
       :pickedSwitch="pickedSwitch"
     />
-    <List v-else-if="pickedSwitch === 'Exclude'"
+    <List v-else
       v-model:list="excludedList"
       :pickedSwitch="pickedSwitch"
     />
@@ -44,12 +44,12 @@
       return {
         switchName: 'sidebar',
         searchQuery: '',
-        pickedSwitch: 'Choose',
+        pickedSwitch: 'Included',
       }
     },
     methods: {
       hideSidebar() {
-        this.pickedSwitch = 'Choose'
+        this.pickedSwitch = 'Included'
         this.$emit('update:list', this.currentList)
         this.$emit('update:show', false)
       },

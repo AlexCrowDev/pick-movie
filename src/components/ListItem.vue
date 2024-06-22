@@ -36,9 +36,9 @@
         //   checked: event.target.checked
         // }
         // this.$emit('checked', item, event.target.checked)
-        if (this.pickedSwitch === 'Choose') {
+        if (this.pickedSwitch === 'Included') {
           this.item.included = event.target.checked
-        } else if (this.pickedSwitch === 'Exclude') {
+        } else if (this.pickedSwitch === 'Excluded') {
           this.item.excluded = event.target.checked
         }
       },
