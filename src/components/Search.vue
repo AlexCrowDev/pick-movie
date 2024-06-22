@@ -6,31 +6,22 @@
       <input
         class="search-input" 
         type="text"
-        :placeholder="placeholder"
+        :placeholder="filterStore.attribute"
         @input="updateValue"
       >
     </div>
 </template>
 
-<script>
-  export default {
-    props: {
-      placeholder: {
-        type: String,
-        required: true,
-      },
-    },
-    data() {
-      return {
+<script setup>
+import { useFilterStore } from '@/stores/filter';
 
-      }
-    },
-    methods: {
-      updateValue(event) {
-        this.$emit('update:modelValue', event.target.value)
-      },
-    },
-  }
+const filterStore = useFilterStore()
+const emit = defineEmits(['update:modelValue'])
+
+function updateValue(event) {
+  emit('update:modelValue', event.target.value)
+}
+
 </script>
 
 <style scoped>

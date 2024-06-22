@@ -29,16 +29,13 @@
   <Sidebar v-if="filterStore.attribute === 'genres'"
     v-model:show="filterStore.sidebarVisible"
     v-model:list="globalStore.genres"
-    :attribute="attribute"
   />
   <Sidebar v-else-if="filterStore.attribute === 'countries'"
     v-model:show="filterStore.sidebarVisible"
     v-model:list="globalStore.countries"
-    :attribute="attribute"
   />
-  <Sidebar v-else-if="filterStore.attribute === 'years'"
+  <SidebarYears v-else
     v-model:show="filterStore.sidebarVisible"
-    :attribute="attribute"
   />
   <Movies
     v-model:show="filterStore.moviesVisible"
@@ -48,6 +45,7 @@
 
 <script setup>
 import Sidebar from "@/components/Sidebar";
+import SidebarYears from "@/components/SidebarYears";
 import Movies from "@/components/Movies";
 import { useGlobalStore } from "@/stores/global";
 import { useFilterStore } from "@/stores/filter";

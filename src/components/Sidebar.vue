@@ -1,7 +1,6 @@
 <template>
   <div class="sidebar" v-if="show">
-    <Search v-if="attribute !== 'years'"
-      :placeholder="attribute"
+    <Search
       v-model="searchQuery"
     />
     <div class="sidebar__switches">
@@ -10,15 +9,11 @@
         <my-switch :name="switchName" v-model="pickedSwitch" id="Exclude">Exclude</my-switch>
       </div>
     </div>
-    <!-- <List v-if="attribute !== 'years'"
-      v-model:list="searchedList"
-      :pickedSwitch="pickedSwitch"
-    /> -->
-    <List v-if="attribute !== 'years' && pickedSwitch === 'Choose'"
+    <List v-if="pickedSwitch === 'Choose'"
       v-model:list="includedList"
       :pickedSwitch="pickedSwitch"
     />
-    <List v-else-if="attribute !== 'years' && pickedSwitch === 'Exclude'"
+    <List v-else-if="pickedSwitch === 'Exclude'"
       v-model:list="excludedList"
       :pickedSwitch="pickedSwitch"
     />
@@ -43,10 +38,6 @@
       show: {
         type: Boolean,
         default: false,
-      },
-      attribute: {
-        type: String,
-        required: true,
       },
     },
     data() {
