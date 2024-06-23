@@ -50,7 +50,7 @@
     methods: {
       hideSidebar() {
         this.pickedSwitch = 'Included'
-        this.$emit('update:list', this.currentList)
+        this.$emit('update:list', this.searchedList)
         this.$emit('update:show', false)
       },
       // updateList(list) {
@@ -66,17 +66,17 @@
       // },
     },
     computed: {
-      currentList() {
-        return [...this.list].filter((item) => {
-          return {
-            ...item,
-            included: false,
-            excluded: false,
-          }
-        })
-      },
+      // currentList() {
+      //   return [...this.list].filter((item) => {
+      //     return {
+      //       ...item,
+      //       included: false,
+      //       excluded: false,
+      //     }
+      //   })
+      // },
       searchedList() {
-        return this.currentList.filter( item => ( 
+        return [...this.list].filter( item => (
           item.name
                       .toLowerCase()
                       .includes( this.searchQuery.toLowerCase() ) 
