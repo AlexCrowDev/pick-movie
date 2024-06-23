@@ -1,12 +1,12 @@
 <template>
   <HeaderBlock/>
-  <Filter/>
+  <MainBlock/>
 </template>
 
 <script setup>
 import HeaderBlock from "@/components/HeaderBlock";
-import Filter from "@/components/Filter";
-import { useGlobalStore } from "./stores/global";
+import MainBlock from "@/components/MainBlock";
+import { useGlobalStore } from "@/stores/global";
 
 const globalStore = useGlobalStore()
 

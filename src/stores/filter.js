@@ -44,6 +44,14 @@ export const useFilterStore = defineStore('filter', {
     showSidebar(attribute) {
       this.attribute = attribute
       this.sidebarVisible = true
-    }
+    },
+    showMovies(selectedParams) {
+      const globalStore = useGlobalStore()
+      
+      ++this.page
+      this.filterVisible = false
+      // this.getMovies(globalStore.apiUrl + 'movie?' + this.selectFields + this.notNullFields, selectedParams);
+      this.moviesVisible = true
+    },
   }
 })

@@ -37,24 +37,17 @@
   <SidebarYears v-else
     v-model:show="filterStore.sidebarVisible"
   />
-  <Movies
-    v-model:show="filterStore.moviesVisible"
-    :clickMethod="showMovies"
-  />
 </template>
 
 <script setup>
 import Sidebar from "@/components/Sidebar";
 import SidebarYears from "@/components/SidebarYears";
-import Movies from "@/components/Movies";
 import { useGlobalStore } from "@/stores/global";
 import { useFilterStore } from "@/stores/filter";
-import { useSidebarStore } from "@/stores/sidebar";
 import { computed } from "vue";
 
 const globalStore = useGlobalStore()
 const filterStore = useFilterStore()
-const sidebarStore = useSidebarStore()
 
 const includedGenres = computed(() => {
   return [...globalStore.genres].filter(item => item.included)
@@ -68,7 +61,6 @@ const includedCountries = computed(() => {
 const excludedCountries = computed(() => {
   return [...globalStore.countries].filter(item => item.excluded)
 })
-
 const displayedGenres = computed(() => {
   let includedGenresNames = includedGenres.value.map(item => item.name)
   let excludedGenresNames = excludedGenres.value.map(item => item.name)
@@ -93,7 +85,6 @@ const displayedCountries = computed(() => {
     return 'all'
   }
 })
-
 
 function createParams() {
   let params = new URLSearchParams()
@@ -142,14 +133,8 @@ function createParams() {
   return params.toString()
 }
  function showMovies() {
-  ++filterStore.page
-  console.log(filterStore.page);
-  let selectedParams = createParams();
-  
-  filterStore.filterVisible = false
-
-  // filterStore.getMovies(filterStore.apiUrl + 'movie?' + filterStore.selectFields + filterStore.notNullFields, selectedParams);
-  filterStore.moviesVisible = true
+  const selectedParams = createParams()
+  filterStore.showMovies(selectedParams)
 }
 </script>
 
