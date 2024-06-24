@@ -1,7 +1,7 @@
 <template>
   <label class="list__item">
-    <span class="list__title">{{ item.name }}</span>
-    <input class="list__input" type="checkbox" :checked="checked" @change="checkboxChangeEventHandler($event)">
+    <span class="list__title">{{ name }}</span>
+    <input class="list__input" type="checkbox" :checked="checked" @change="this.$emit('checked')">
     <img class="list__img" src="@/assets/check.svg">
   </label>
 </template>
@@ -9,38 +9,12 @@
 <script>
   export default {
     props: {
-      // id: {
-      //   type: Number,
-      //   required: true
-      // },
-      // name: {
-      //   type: String,
-      //   required: true
-      // },
-      item: {
-        type: Object,
-        required: true,
+      name: {
+        type: String,
+        required: true
       },
       checked: {
         type: Boolean,
-      },
-      pickedSwitch: {
-        type: String,
-        required: true,
-      },
-    },
-    methods: {
-      checkboxChangeEventHandler(event) {
-        // let event = {
-        //   item: this.item,
-        //   checked: event.target.checked
-        // }
-        // this.$emit('checked', item, event.target.checked)
-        if (this.pickedSwitch === 'Included') {
-          this.item.included = event.target.checked
-        } else if (this.pickedSwitch === 'Excluded') {
-          this.item.excluded = event.target.checked
-        }
       },
     },
   }

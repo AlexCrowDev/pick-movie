@@ -2,31 +2,16 @@
   <div class="list">
     <div class="list__title mini-title">All</div>
     <div class="list_body item">
-      <template v-for="(item, index) in list">
-        <!-- <ListItem v-if="pickedSwitch === 'Choose' && item.visible && !item.excluded"
-          :name="item.name"
-          :item="item"
-          :index="index"
-          :list="list"
-          :checked="item.included"
-          :pickedSwitch="pickedSwitch"
-        /> -->
+      <template v-for="(item, index) in list" :key="item.id">
         <ListItem v-if="pickedSwitch === 'Included'"
-          :item="item"
+          :name="item.name"
           :checked="item.included"
-          :pickedSwitch="pickedSwitch"
+          @checked="updateIncluded(item)"
         />
-        <!-- checked( item, checked) {
-          if (this.pickedSwitch === 'Choose') {
-            item.include = checked
-          } else if (this.pickedSwitch === 'Exclude') {
-            item.exclude = checked
-          }
-        } -->
         <ListItem v-else
-          :item="item"
+          :name="item.name"
           :checked="item.excluded"
-          :pickedSwitch="pickedSwitch"
+          @checked="updateExcluded(item)"
         />
       </template>
     </div>
@@ -51,7 +36,12 @@
       },
     },
     methods: {
-
+      updateIncluded(item) {
+        item.included = !item.included
+      },
+      updateExcluded(item) {
+        item.excluded = !item.excluded
+      }
     },
   }
 </script>
