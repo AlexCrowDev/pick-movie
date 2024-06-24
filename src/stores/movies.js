@@ -9,7 +9,7 @@ export const useMoviesStore = defineStore('movies', {
         poster: {previewUrl: '/img/mem.676f777e.webp'},
         name:'lol',
         rating: {kp: 8},
-        genres: [{name: 'mem'}]
+        genres: [{name: 'mem'},{name: 'rofl'},{name: 'mem'},{name: 'rofl'}]
       },
       {
         id:2,

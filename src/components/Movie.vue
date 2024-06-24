@@ -12,7 +12,7 @@
       <div class="movie__info">
         <div class="movie__rating">{{ (movie.rating.kp).toFixed(1) }}</div>
         <div class="movie__name">{{ movie.name }}</div>
-        <div class="movie__genre mini-span">{{ movie.genres.map(genre => `${genre.name}`).slice(0, 2).join(', ') }}</div>
+        <div class="movie__genre mini-span">{{ movie.genres.map(genre => genre.name).slice(0, 2).join(', ') }}</div>
       </div>
     </a>
   </div>

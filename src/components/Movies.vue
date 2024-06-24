@@ -4,7 +4,7 @@
 			:movies="moviesStore.moviesStub"
 		/>
     <my-fixed-buttom>
-      <my-button :clickMethod="showMovies">Next</my-button>
+      <my-button :clickMethod="filterStore.showMovies">Next</my-button>
     </my-fixed-buttom>
   </div>
 </template>
@@ -23,9 +23,6 @@ const	props = defineProps({
 const moviesStore = useMoviesStore()
 const filterStore = useFilterStore()
 
-function showMovies() {
-  filterStore.showMovies()
-}
 </script>
 
 <style>
