@@ -7,11 +7,14 @@
 import HeaderBlock from "@/components/HeaderBlock";
 import MainBlock from "@/components/MainBlock";
 import { useGlobalStore } from "@/stores/global";
+import { onMounted } from "vue";
 
 const globalStore = useGlobalStore()
 
-globalStore.getGenresStub()
-globalStore.getCountriesStub()
+onMounted(() => {
+  globalStore.getGenresStub()
+  globalStore.getCountriesStub()
+})
 
 </script>
 

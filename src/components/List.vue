@@ -3,7 +3,7 @@
     <div class="list__title mini-title">All</div>
     <div class="list_body item">
       <template v-for="(item, index) in list" :key="item.id">
-        <ListItem v-if="pickedSwitch === 'Included'"
+        <ListItem v-if="currentSwitchItem === 'Include'"
           :name="item.name"
           :checked="item.included"
           @checked="updateIncluded(item)"
@@ -30,7 +30,7 @@
         type: Array,
         required: true,
       },
-      pickedSwitch: {
+      currentSwitchItem: {
         type: String,
         required: true,
       },

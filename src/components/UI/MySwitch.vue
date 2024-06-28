@@ -2,13 +2,10 @@
   <div class="switch">
     <input
       class="switch__input"
-      type="radio"  
-      :name="name"
-      :id="id"
-      :checked="checked"
-      @change="updateValue"
+      type="radio"
+      v-bind="$attrs"
     />
-    <label class="switch__label" :for="id">
+    <label class="switch__label" :for="$attrs.id">
       <slot></slot>
     </label>
   </div>
@@ -17,26 +14,21 @@
 <script>
   export default {
     name: 'my-switch',
-    props: {
-      name: {
-        type: String,
-        required: true,
-      },
-      id: {
-        type: String,
-        required: true,
-      },
-      checked: {
-        type: Boolean,
-        default: false
-      },
-      
-    },
-    methods: {
-      updateValue() {
-        this.$emit('update:modelValue', this.id)
-      },
-    },
+    inheritAttrs: false,
+    // props: {
+    //   name: {
+    //     type: String,
+    //     required: true,
+    //   },
+    //   id: {
+    //     type: String,
+    //     required: true,
+    //   },
+    //   checked: {
+    //     type: Boolean,
+    //     default: false
+    //   },
+    // },
   }
 </script>
 

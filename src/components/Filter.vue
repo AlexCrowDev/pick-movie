@@ -3,9 +3,15 @@
     <div class="show">
       <my-h2>Show</my-h2>
       <div class="switches item">
-        <my-switch :name="filterStore.switchName" v-model="filterStore.movieType" id="All" checked>All</my-switch>
-        <my-switch :name="filterStore.switchName" v-model="filterStore.movieType" id="Films">Films</my-switch>
-        <my-switch :name="filterStore.switchName" v-model="filterStore.movieType" id="TV Series">TV Series</my-switch>
+        <my-switch v-for="item in switchItems"
+          :key="item"
+          :name="switchName"
+          :id="item"
+          :checked="item === currentSwitchItem"
+          @change="currentSwitchItem = item"
+        >
+          {{ item }}
+        </my-switch>
       </div>
       <div class="show__main item">
         <a href="" class="show__main-button" @click.prevent="filterStore.showSidebar('genres')">
@@ -44,10 +50,14 @@ import Sidebar from "@/components/Sidebar";
 import YearsSidebar from "@/components/YearsSidebar";
 import { useGlobalStore } from "@/stores/global";
 import { useFilterStore } from "@/stores/filter";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 const globalStore = useGlobalStore()
 const filterStore = useFilterStore()
+
+const switchName = 'filter'
+const switchItems = ['All', 'Films', 'TV Series']
+let currentSwitchItem = ref('All')
 
 const includedGenres = computed(() => {
   return [...globalStore.genres].filter(item => item.included)
@@ -116,11 +126,11 @@ function createParams() {
   // if (model.rating.length > 1) {
   //   params.append('rating.kp', model.rating.join('-'));
   // }
-  if ((filterStore.movieType === 'TV Series') && animatedFilm) {
+  if ((currentSwitchItem.value === 'TV Series') && animatedFilm) {
     params.append('type', 'animated-series')
-  } else if (filterStore.movieType === 'TV Series') {
+  } else if (currentSwitchItem.value === 'TV Series') {
     params.append('type', 'tv-series')
-  } else if (filterStore.movieType === 'Films') {
+  } else if (currentSwitchItem.value === 'Films') {
     params.append('type', 'movie')
   }
 

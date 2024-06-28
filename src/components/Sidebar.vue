@@ -3,19 +3,24 @@
     <Search
       v-model="searchQuery"
     />
-    <div class="sidebar__switches">
-      <div class="switches item">
-        <my-switch :name="switchName" v-model="pickedSwitch" id="Included" checked>Choose</my-switch>
-        <my-switch :name="switchName" v-model="pickedSwitch" id="Excluded">Exclude</my-switch>
-      </div>
+    <div class="sidebar__switches switches item">
+      <my-switch v-for="item in switchItems"
+        :key="item"
+        :name="switchName"
+        :id="item"
+        :checked="item === currentSwitchItem"
+        @change="currentSwitchItem = item"
+      >
+        {{ item }}
+      </my-switch>
     </div>
-    <List v-if="pickedSwitch === 'Included'"
+    <List v-if="currentSwitchItem === 'Include'"
       v-model:list="includedList"
-      :pickedSwitch="pickedSwitch"
+      :currentSwitchItem="currentSwitchItem"
     />
     <List v-else
       v-model:list="excludedList"
-      :pickedSwitch="pickedSwitch"
+      :currentSwitchItem="currentSwitchItem"
     />
     <my-fixed-buttom>
       <my-button @click.prevent="hideSidebar">Show</my-button>
@@ -44,12 +49,13 @@
       return {
         switchName: 'sidebar',
         searchQuery: '',
-        pickedSwitch: 'Included',
+        currentSwitchItem: 'Include',
+        switchItems: ['Include', 'Exclude']
       }
     },
     methods: {
       hideSidebar() {
-        this.pickedSwitch = 'Included'
+        this.currentSwitchItem = 'Include'
         this.$emit('update:list', this.searchedList)
         this.$emit('update:show', false)
       },
@@ -58,10 +64,10 @@
       //   this.exclude = !this.exclude
       // },
       // updateLists() {
-      //   if (this.pickedSwitch === 'Choose') {
-      //     this.includedList = this.excludedList.filter( item => item.checked !== true );
-      //   } else if (this.pickedSwitch === 'Exclude') {
-      //     this.excludedList = this.includedList.filter( item => item.checked !== true );
+      //   if (this.currentSwitchItem === 'Choose') {
+      //     this.includeList = this.excludeList.filter( item => item.checked !== true );
+      //   } else if (this.currentSwitchItem === 'Exclude') {
+      //     this.excludeList = this.includeList.filter( item => item.checked !== true );
       //   }
       // },
     },
@@ -70,8 +76,8 @@
       //   return [...this.list].filter((item) => {
       //     return {
       //       ...item,
-      //       included: false,
-      //       excluded: false,
+      //       include: false,
+      //       exclude: false,
       //     }
       //   })
       // },
@@ -90,7 +96,7 @@
       },
     // },
     // watch: {
-    //   pickedSwitch: {
+    //   currentSwitchItem: {
     //     handler() {
     //       this.updateLists();
     //     },

@@ -3,7 +3,7 @@ import { useGlobalStore } from "@/stores/global";
 
 export const useFilterStore = defineStore('filter', {
   state: () => ({
-    switchName: 'show',
+    switchName: 'filter',
     sidebarVisible: false,
     filterVisible: true,
     moviesVisible: false,

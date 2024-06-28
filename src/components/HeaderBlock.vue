@@ -7,19 +7,8 @@
 	</header>
 </template>
 
-<script>
+<script setup>
 	import HeaderSearch from "@/components/HeaderSearch";
-	
-  export default {
-		components: {
-      HeaderSearch, 
-    },
-    data() {
-      return {
-				
-      }
-		}
-  }
 </script>
 
 <style>
