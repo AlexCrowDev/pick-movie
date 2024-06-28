@@ -44,19 +44,5 @@
 </script>
 
 <style>
-.sidebar {
-	z-index: 10;
-  position: absolute;
-  top: 0;
-  right: 15px;
-  left: 15px;
-	height: 100%;
-	background-color: #16141c;
-}
-.search {
-  margin: 15px 0px;
-}
-.sidebar__switches {
-  margin: 15px 0px;
-}
+
 </style>

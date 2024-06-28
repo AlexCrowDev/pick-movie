@@ -34,14 +34,14 @@
     v-model:show="filterStore.sidebarVisible"
     v-model:list="globalStore.countries"
   />
-  <SidebarYears v-else
+  <YearsSidebar v-else
     v-model:show="filterStore.sidebarVisible"
   />
 </template>
 
 <script setup>
 import Sidebar from "@/components/Sidebar";
-import SidebarYears from "@/components/SidebarYears";
+import YearsSidebar from "@/components/YearsSidebar";
 import { useGlobalStore } from "@/stores/global";
 import { useFilterStore } from "@/stores/filter";
 import { computed } from "vue";
