@@ -54,7 +54,6 @@ export const useMoviesStore = defineStore('movies', {
         genres: [{name: 'mem'}]
       },
     ],
-    moviesVisible: false,
   }),
   actions: {
     async getMovies(url, params) {
@@ -66,10 +65,6 @@ export const useMoviesStore = defineStore('movies', {
       })
       let data = await resp.json()
       this.movies.push(...data.docs)
-      setMoviesVisible()
     },
-    setMoviesVisible() {
-      this.moviesVisible = !this.moviesVisible
-    }
   }
 })

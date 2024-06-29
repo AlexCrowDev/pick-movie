@@ -1,22 +1,35 @@
 import { defineStore } from "pinia";
 import { useGlobalStore } from "@/stores/global";
+import { useMainStore } from "@/stores/mainStore";
 
 export const useFilterStore = defineStore('filter', {
   state: () => ({
-    switchName: 'filter',
     sidebarVisible: false,
     filterVisible: true,
     moviesVisible: false,
     attribute: '',
     movieType: 'All',
-    page: 0,
-    list: [],
     years: [],
     rating: [],
-    selectedFields: 'selectFields=id&selectFields=name&selectFields=enName&selectFields=alternativeName&selectFields=type&selectFields=year&selectFields=rating&selectFields=votes&selectFields=movieLength&selectFields=seriesLength&selectFields=genres&selectFields=countries&selectFields=poster&selectFields=countries&',
-    notNullFields: 'notNullFields=name&notNullFields=alternativeName&notNullFields=year&notNullFields=rating.kp&notNullFields=votes.kp&notNullFields=poster.url&',
   }),
   getters: {
+    includedGenres() {
+      const globalStore = useGlobalStore()
+      return [...globalStore.genres].filter(item => item.included)
+    },
+    excludedGenres() {
+      const globalStore = useGlobalStore()
+      return [...globalStore.genres].filter(item => item.excluded)
+    },
+    includedCountries() {
+      const globalStore = useGlobalStore()
+      return [...globalStore.countries].filter(item => item.included)
+    },
+    excludedCountries() {
+      const globalStore = useGlobalStore()
+      return [...globalStore.countries].filter(item => item.excluded)
+    },
+
   //   genres() {
   //     const globalStore = useGlobalStore()
       
@@ -41,17 +54,52 @@ export const useFilterStore = defineStore('filter', {
   //   },
   },
   actions: {
-    showSidebar(attribute) {
-      this.attribute = attribute
-      this.sidebarVisible = true
-    },
-    showMovies(selectedParams) {
-      const globalStore = useGlobalStore()
+    createParams() {
+      const mainStore = useMainStore()
+      let params = new URLSearchParams()
+      let animatedFilm
       
-      ++this.page
-      this.filterVisible = false
-      // this.getMovies(globalStore.apiUrl + 'movie?' + this.selectFields + this.notNullFields, selectedParams);
-      this.moviesVisible = true
-    },
+      this.includedGenres.forEach((genre) => {
+        if (genre.name === 'мультфильм') {
+          animatedFilm = genre.name
+        }
+        params.append('genres.name', `+${genre.name}`)
+      })
+      
+      this.excludedGenres.forEach((genre) => {
+        params.append('genres.name', `!${genre.name}`)
+      })
+    
+      this.includedCountries.forEach((country) => {
+        params.append('countries.name', `+${country.name}`)
+      })
+    
+      this.excludedCountries.forEach((country) => {
+        params.append('countries.name', `!${country.name}`)
+      })
+    
+      // if (model.years.length > 1) {
+      // params.append('year', model.years.join('-'));
+      // }
+    
+      // if (model.rating.length > 1) {
+      //   params.append('rating.kp', model.rating.join('-'));
+      // }
+      if ((this.movieType === 'TV Series') && animatedFilm) {
+        params.append('type', 'animated-series')
+      } else if (this.movieType === 'TV Series') {
+        params.append('type', 'tv-series')
+      } else if (this.movieType === 'Films') {
+        params.append('type', 'movie')
+      }
+    
+      params.append('votes.kp', '10000-2500000')
+      params.append('sortField', 'rating.kp')
+      params.append('sortType', '-1')
+      params.append('page', mainStore.page)
+      params.append('limit', '100')
+      console.log(params.toString())
+      return params.toString()
+    }
   }
 })

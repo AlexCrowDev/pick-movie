@@ -1,27 +1,21 @@
 <template>
-  <div class="movies" v-if="show">
+  <div class="movies" v-if="mainStore.moviesVisible">
 		<Movie
 			:movies="moviesStore.moviesStub"
 		/>
     <my-fixed-buttom>
-      <my-button :clickMethod="filterStore.showMovies">Next</my-button>
+      <my-button :clickMethod="mainStore.getMovies">Next</my-button>
     </my-fixed-buttom>
   </div>
 </template>
 
 <script setup>
 import Movie from "@/components/Movie";
-import { useFilterStore } from "@/stores/filter";
+import { useMainStore } from "@/stores/mainStore";
 import { useMoviesStore } from "@/stores/movies";
 
-const	props = defineProps({
-	show: {
-		type: Boolean,
-		default: false,
-	},
-})
 const moviesStore = useMoviesStore()
-const filterStore = useFilterStore()
+const mainStore = useMainStore()
 
 </script>
 
