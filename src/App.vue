@@ -12,8 +12,11 @@ import { onMounted } from "vue";
 const globalStore = useGlobalStore()
 
 onMounted(() => {
-  globalStore.getGenresStub()
-  globalStore.getCountriesStub()
+  // globalStore.loadGenres()
+  // globalStore.loadCountries()
+  //Stubs
+  globalStore.loadGenresStub()
+  globalStore.loadCountriesStub()
 })
 
 </script>

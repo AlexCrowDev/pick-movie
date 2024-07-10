@@ -54,8 +54,7 @@ export const useFilterStore = defineStore('filter', {
   //   },
   },
   actions: {
-    createParams() {
-      const mainStore = useMainStore()
+    createParams(page) {
       let params = new URLSearchParams()
       let animatedFilm
       
@@ -96,7 +95,7 @@ export const useFilterStore = defineStore('filter', {
       params.append('votes.kp', '10000-2500000')
       params.append('sortField', 'rating.kp')
       params.append('sortType', '-1')
-      params.append('page', mainStore.page)
+      params.append('page', page)
       params.append('limit', '100')
       console.log(params.toString())
       return params.toString()

@@ -1,11 +1,11 @@
 <template>
   <div class="movie" v-for="movie in movies" :key="movie.id">
     <a :href="href + movie.id" target="_blank">
-      <!-- <img 
+      <img v-if="movie.poster.previewUrl"
         class="movie__poster" 
         :src="movie.poster.previewUrl"
-        alt=""> -->
-      <img 
+        alt="">
+      <img v-else
         class="movie__poster" 
         src="@/assets/mem.webp"
         alt="">

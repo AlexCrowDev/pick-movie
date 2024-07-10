@@ -1,4 +1,6 @@
+import useApiClient from "@/composables/useApiClient";
 import { defineStore } from "pinia";
+import { useFilterStore } from "./filter";
 
 export const useMoviesStore = defineStore('movies', {
   state: () => ({
@@ -54,17 +56,16 @@ export const useMoviesStore = defineStore('movies', {
         genres: [{name: 'mem'}]
       },
     ],
+    page: 1,
   }),
   actions: {
-    async getMovies(url, params) {
-      let resp = await fetch(url + params, {
-        headers: {
-        'Content-Type': 'application/json',
-        'X-API-KEY': this.apiKey,
-        }
-      })
-      let data = await resp.json()
+    async loadMovies(page) {
+      const ApiClient = useApiClient()
+      let data = await ApiClient.getMovies(page)
       this.movies.push(...data.docs)
+    },
+    nextMovies() {
+      this.loadMovies(++this.page)
     },
   }
 })

@@ -4,7 +4,7 @@
 			:movies="moviesStore.moviesStub"
 		/>
     <my-fixed-buttom>
-      <my-button :clickMethod="mainStore.getMovies">Next</my-button>
+      <my-button :clickMethod="moviesStore.nextMovies">Next</my-button>
     </my-fixed-buttom>
   </div>
 </template>

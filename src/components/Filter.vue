@@ -52,10 +52,12 @@ import { useGlobalStore } from "@/stores/global";
 import { useFilterStore } from "@/stores/filter";
 import { useMainStore } from "@/stores/mainStore";
 import { computed, ref, watch } from "vue";
+import { useMoviesStore } from "@/stores/movies";
 
 const globalStore = useGlobalStore()
 const filterStore = useFilterStore()
 const mainStore = useMainStore()
+const moviesStore = useMoviesStore()
 
 const switchName = 'filter'
 const switchItems = ['All', 'Films', 'TV Series']
@@ -92,7 +94,7 @@ watch(currentSwitchItem, () => {
 
 function showMovies() {
   mainStore.filterVisible = false
-  mainStore.getMovies()
+  // moviesStore.loadMovies(1)
   mainStore.moviesVisible = true
 }
 
