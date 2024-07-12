@@ -1,5 +1,5 @@
 <template>
-  <div class="filter" v-if="mainStore.filterVisible">
+  <div class="filter" v-if="filterStore.filterVisible">
     <div class="show">
       <my-h2>Show</my-h2>
       <div class="switches item">
@@ -33,15 +33,15 @@
     </my-fixed-buttom>
   </div>
   <Sidebar v-if="filterStore.attribute === 'genres'"
-    v-model:show="mainStore.sidebarVisible"
+    v-model:show="filterStore.sidebarVisible"
     v-model:list="globalStore.genres"
   />
   <Sidebar v-else-if="filterStore.attribute === 'countries'"
-    v-model:show="mainStore.sidebarVisible"
+    v-model:show="filterStore.sidebarVisible"
     v-model:list="globalStore.countries"
   />
   <YearsSidebar v-else
-    v-model:show="mainStore.sidebarVisible"
+    v-model:show="filterStore.sidebarVisible"
   />
 </template>
 
@@ -50,13 +50,11 @@ import Sidebar from "@/components/Sidebar";
 import YearsSidebar from "@/components/YearsSidebar";
 import { useGlobalStore } from "@/stores/global";
 import { useFilterStore } from "@/stores/filter";
-import { useMainStore } from "@/stores/mainStore";
 import { computed, ref, watch } from "vue";
 import { useMoviesStore } from "@/stores/movies";
 
 const globalStore = useGlobalStore()
 const filterStore = useFilterStore()
-const mainStore = useMainStore()
 const moviesStore = useMoviesStore()
 
 const switchName = 'filter'
@@ -93,14 +91,14 @@ watch(currentSwitchItem, () => {
 })
 
 function showMovies() {
-  mainStore.filterVisible = false
+  filterStore.filterVisible = false
   // moviesStore.loadMovies(1)
-  mainStore.moviesVisible = true
+  filterStore.moviesVisible = true
 }
 
 function showSidebar(attribute) {
   filterStore.attribute = attribute
-  mainStore.sidebarVisible = true
+  filterStore.sidebarVisible = true
 }
 </script>
 

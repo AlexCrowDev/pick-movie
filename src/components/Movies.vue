@@ -1,5 +1,5 @@
 <template>
-  <div class="movies" v-if="mainStore.moviesVisible">
+  <div class="movies" v-if="filterStore.moviesVisible">
 		<Movie
 			:movies="moviesStore.moviesStub"
 		/>
@@ -11,11 +11,11 @@
 
 <script setup>
 import Movie from "@/components/Movie";
-import { useMainStore } from "@/stores/mainStore";
+import { useFilterStore } from "@/stores/filter";
 import { useMoviesStore } from "@/stores/movies";
 
 const moviesStore = useMoviesStore()
-const mainStore = useMainStore()
+const filterStore = useFilterStore()
 
 </script>
 

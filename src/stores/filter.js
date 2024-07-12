@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { useGlobalStore } from "@/stores/global";
-import { useMainStore } from "@/stores/mainStore";
 
 export const useFilterStore = defineStore('filter', {
   state: () => ({
