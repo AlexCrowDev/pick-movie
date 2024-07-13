@@ -6,7 +6,6 @@ export const useFilterStore = defineStore('filter', {
     sidebarVisible: false,
     filterVisible: true,
     moviesVisible: false,
-    attribute: '',
     movieType: 'All',
     years: [],
     rating: [],
