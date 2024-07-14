@@ -15,20 +15,6 @@
   export default {
     name: 'my-switch',
     inheritAttrs: false,
-    // props: {
-    //   name: {
-    //     type: String,
-    //     required: true,
-    //   },
-    //   id: {
-    //     type: String,
-    //     required: true,
-    //   },
-    //   checked: {
-    //     type: Boolean,
-    //     default: false
-    //   },
-    // },
   }
 </script>
 

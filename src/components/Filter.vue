@@ -2,17 +2,12 @@
   <div class="filter" v-if="filterStore.filterVisible">
     <div class="show">
       <my-h2>Show</my-h2>
-      <div class="switches item">
-        <my-switch v-for="item in switchItems"
-          :key="item"
-          :name="switchName"
-          :id="item"
-          :checked="item === currentSwitchItem"
-          @change="currentSwitchItem = item"
-        >
-          {{ item }}
-        </my-switch>
-      </div>
+      <RadioGroup
+        :switchName="switchName"
+        :switchItems="switchItems"
+        :currentSwitchItem="currentSwitchItem"
+        @change-current="(item) => currentSwitchItem = item"
+      />
       <ButtonsList
         :buttons="filterButtons"
         @open-sidebar="showSidebar"
@@ -22,16 +17,17 @@
       <my-button :clickMethod="showMovies">Show</my-button>
     </my-fixed-buttom>
   </div>
-    <component :is="sidebars[currentSidebar]"
-      v-model:show="filterStore.sidebarVisible"
-      v-model:list="globalStore[currentSidebar.toLowerCase()]"
-    />
+  <component :is="sidebars[currentSidebar]"
+    v-model:show="filterStore.sidebarVisible"
+    v-model:list="globalStore[currentSidebar.toLowerCase()]"
+  />
 </template>
 
 <script setup>
 import Sidebar from "@/components/Sidebar";
 import YearsSidebar from "@/components/YearsSidebar";
 import ButtonsList from "@/components/ButtonsList.vue"
+import RadioGroup from "./RadioGroup.vue";
 import { useGlobalStore } from "@/stores/global";
 import { useFilterStore } from "@/stores/filter";
 import { useMoviesStore } from "@/stores/movies";
@@ -43,10 +39,10 @@ const moviesStore = useMoviesStore()
 
 const switchName = 'filter'
 const switchItems = ['All', 'Films', 'TV Series']
-let currentSwitchItem = ref('All')
+let currentSwitchItem = ref(switchItems[0])
 
 watch(currentSwitchItem, () => {
-  filterStore.movieType = currentSwitchItem
+  filterStore.movieType = currentSwitchItem.value
 })
 
 
