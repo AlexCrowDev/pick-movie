@@ -22,9 +22,7 @@
       v-model:list="excludedList"
       :currentSwitchItem="currentSwitchItem"
     />
-    <my-fixed-buttom>
-      <my-button @click.prevent="hideSidebar">Show</my-button>
-    </my-fixed-buttom>
+    <fixed-button @click.prevent="hideSidebar">Show</fixed-button>
   </div>
 </template>
 

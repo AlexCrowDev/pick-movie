@@ -13,9 +13,7 @@
         @open-sidebar="showSidebar"
       />
     </div>
-    <my-fixed-buttom>
-      <my-button :clickMethod="showMovies">Show</my-button>
-    </my-fixed-buttom>
+    <fixed-button @click.prevent="showMovies">Show</fixed-button>
   </div>
   <component :is="sidebars[currentSidebar]"
     v-model:show="filterStore.sidebarVisible"

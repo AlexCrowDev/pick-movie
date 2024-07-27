@@ -1,8 +1,5 @@
 <template>
-	<a
-		href=""
-		class="btn"
-		@click.prevent="clickMethod">
+	<a href="" class="btn">
 		<slot></slot>
 	</a>
 </template>
@@ -10,11 +7,6 @@
 <script>
   export default {
     name: 'my-button',
-		props: {
-			clickMethod: {
-				type: Function,
-			}
-		}
   }
 </script>
 

@@ -1,17 +1,19 @@
 <template>
-	<div class="fixed-buttom">
-		<slot></slot>
+	<div class="fixed-button">
+		<my-button>
+			<slot></slot>
+		</my-button>
 	</div>
 </template>
 
 <script>
   export default {
-    name: 'my-fixed-buttom',
+    name: 'fixed-button',
   }
 </script>
 
 <style>
-.fixed-buttom {
+.fixed-button {
 	display: flex;
 	justify-content: center;
 }
