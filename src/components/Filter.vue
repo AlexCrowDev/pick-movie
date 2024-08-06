@@ -3,9 +3,9 @@
     <div class="show">
       <my-h2>Show</my-h2>
       <RadioGroup
-        :switchName="switchName"
-        :switchItems="switchItems"
-        :currentSwitchItem="currentSwitchItem"
+        :switchName
+        :switchItems
+        :currentSwitchItem
         @change-current="(item) => currentSwitchItem = item"
       />
       <ButtonsList

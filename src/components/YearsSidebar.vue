@@ -1,23 +1,22 @@
 <template>
   <div class="sidebar" v-if="show">
-    <div class="sidebar__switches">
-      <div class="switches item">
-        <my-switch :name="switchName" v-model="pickedSwitch" id="Included" checked>Choose</my-switch>
-        <my-switch :name="switchName" v-model="pickedSwitch" id="Excluded">Exclude</my-switch>
-      </div>
-    </div>
-    <my-fixed-buttom>
-      <my-button @click.prevent="hideSidebar">Show</my-button>
-    </my-fixed-buttom>
+    <RadioGroup
+      :switchName
+      :switchItems
+      :currentSwitchItem
+      @change-current="(item) => currentSwitchItem = item"
+    />
+    <fixed-button @click.prevent="hideSidebar">Show</fixed-button>
   </div>
 </template>
 
 <script>
   import Search from "@/components/Search";
+  import RadioGroup from "@/components/RadioGroup";
 
   export default {
     components: {
-      Search,
+      Search, RadioGroup,
     },
     props: {
       show: {
@@ -28,17 +27,16 @@
     data() {
       return {
         switchName: 'sidebar',
-        pickedSwitch: 'Included',
+        currentSwitchItem: 'Include',
+        switchItems: ['Include', 'Exclude']
       }
     },
     methods: {
       hideSidebar() {
-        this.pickedSwitch = 'Included'
+        this.currentSwitchItem = 'Include'
+        this.$emit('update:list', this.searchedList)
         this.$emit('update:show', false)
       },
-    },
-    computed: {
-
     },
   }
 </script>

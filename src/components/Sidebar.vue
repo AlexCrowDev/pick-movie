@@ -3,24 +3,19 @@
     <Search
       v-model="searchQuery"
     />
-    <div class="sidebar__switches switches item">
-      <my-switch v-for="item in switchItems"
-        :key="item"
-        :name="switchName"
-        :id="item"
-        :checked="item === currentSwitchItem"
-        @change="currentSwitchItem = item"
-      >
-        {{ item }}
-      </my-switch>
-    </div>
+    <RadioGroup
+      :switchName
+      :switchItems
+      :currentSwitchItem
+      @change-current="(item) => currentSwitchItem = item"
+    />
     <List v-if="currentSwitchItem === 'Include'"
       v-model:list="includedList"
-      :currentSwitchItem="currentSwitchItem"
+      :currentSwitchItem
     />
     <List v-else
       v-model:list="excludedList"
-      :currentSwitchItem="currentSwitchItem"
+      :currentSwitchItem
     />
     <fixed-button @click.prevent="hideSidebar">Show</fixed-button>
   </div>
@@ -29,10 +24,11 @@
 <script>
   import Search from "@/components/Search";
   import List from "@/components/List";
+  import RadioGroup from "@/components/RadioGroup";
 
   export default {
     components: {
-    List, Search,
+    List, Search, RadioGroup, 
     },
     props: {
       list: {
@@ -54,7 +50,6 @@
     methods: {
       hideSidebar() {
         this.currentSwitchItem = 'Include'
-        this.$emit('update:list', this.searchedList)
         this.$emit('update:show', false)
       },
       // updateList(list) {
@@ -115,9 +110,6 @@
 	background-color: #16141c;
 }
 .search {
-  margin: 15px 0px;
-}
-.sidebar__switches {
   margin: 15px 0px;
 }
 </style>
