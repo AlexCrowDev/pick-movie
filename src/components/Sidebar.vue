@@ -106,6 +106,7 @@
   top: 0;
   right: 15px;
   left: 15px;
+  padding-top: 15px;
 	height: 100%;
 	background-color: #16141c;
 }

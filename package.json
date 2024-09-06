@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@primevue/themes": "^4.0.5",
     "core-js": "^3.8.3",
     "pinia": "^2.1.7",
     "primevue": "^4.0.5",
