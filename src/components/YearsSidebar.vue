@@ -9,9 +9,8 @@
     <div class="years item">
       <span class="mini-span">{{ displayedYears }}</span>
       <Slider
-        class="YearsSlider"
-        v-model="years"
-        :step="1"
+        class="years__slider"
+        v-model="localYears"
         range
         :min
         :max
@@ -35,13 +34,16 @@
         type: Boolean,
         default: false,
       },
+      years: {
+        type: Array,
+      },
     },
     data() {
       return {
         switchName: 'sidebar',
         currentSwitchItem: 'Include',
         switchItems: ['Include', 'Exclude'],
-        years: [1940, 2024],
+        localYears: this.years,
         min: 1940,
         max: 2024, // change to a dynamic Date
       }
@@ -49,13 +51,20 @@
     methods: {
       hideSidebar() {
         this.currentSwitchItem = 'Include'
-        this.$emit('updateDisplayed', this.years)
+        this.$emit('updateDisplayed', this.displayedYears)
+        this.$emit('update:years', this.localYears)
         this.$emit('update:show', false)
       },
     },
     computed: {
+      // min () {
+      //   return this.localYears[0]
+      // },
+      // max () {
+      //   return this.localYears[1]
+      // },
       displayedYears () {
-        let [left, right] = this.years
+        let [left, right] = this.localYears
         if (left === this.min && right === this.max) {
           return 'any'
         } else if (left > this.min && right === this.max) {
@@ -80,7 +89,7 @@
 	margin: 0 0 10px 0;
   padding: 5px;
 }
-.YearsSlider {
+.years__slider {
   position: absolute;
   margin: 0px 10px;
 }

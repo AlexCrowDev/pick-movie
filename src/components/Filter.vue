@@ -15,7 +15,20 @@
     </div>
     <fixed-button @click.prevent="showMovies">Show</fixed-button>
   </div>
-  <component :is="sidebars[currentSidebar]"
+  <!-- <YearsSidebar v-if="currentSidebar == 'Years'"
+    v-model:show="filterStore.sidebarVisible"
+    @update-displayed="displayedYears"
+  />
+  <component v-else :is="sidebars[currentSidebar]"
+    v-model:show="filterStore.sidebarVisible"
+    v-model:list="globalStore[currentSidebar.toLowerCase()]"
+  /> -->
+  <YearsSidebar v-if="currentSidebar == 'Years'"
+    v-model:show="filterStore.sidebarVisible"
+    v-model:years="filterStore.years"
+    @update-displayed="(years) => displayedYears = years"
+  />
+  <Sidebar v-else
     v-model:show="filterStore.sidebarVisible"
     v-model:list="globalStore[currentSidebar.toLowerCase()]"
   />
@@ -68,16 +81,16 @@ const displayedCountries = computed(() => {
     return 'all'
   }
 })
+let displayedYears = ref('all')
 
 const filterButtons = ref({
   Genres: displayedGenres,
   Countries: displayedCountries,
-  Years: 'all',
+  Years: displayedYears,
 })
 const sidebars = {
   Genres: Sidebar,
   Countries: Sidebar,
-  Years: YearsSidebar,
 }
 let currentSidebar = ref('Genres')
 

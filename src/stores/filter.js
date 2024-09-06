@@ -7,7 +7,7 @@ export const useFilterStore = defineStore('filter', {
     filterVisible: true,
     moviesVisible: false,
     movieType: 'All',
-    years: [],
+    years: [1940, 2024],
     rating: [],
   }),
   getters: {
