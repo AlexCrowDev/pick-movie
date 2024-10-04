@@ -12,21 +12,18 @@
         :buttons="filterButtons"
         @open-sidebar="showSidebar"
       />
+      <Range
+        v-model="filterStore.rating"
+      >
+      KP Rating
+      </Range>
     </div>
     <fixed-button @click.prevent="showMovies">Show</fixed-button>
   </div>
-  <!-- <YearsSidebar v-if="currentSidebar == 'Years'"
-    v-model:show="filterStore.sidebarVisible"
-    @update-displayed="displayedYears"
-  />
-  <component v-else :is="sidebars[currentSidebar]"
-    v-model:show="filterStore.sidebarVisible"
-    v-model:list="globalStore[currentSidebar.toLowerCase()]"
-  /> -->
   <YearsSidebar v-if="currentSidebar == 'Years'"
     v-model:show="filterStore.sidebarVisible"
     v-model:years="filterStore.years"
-    @update-displayed="(years) => displayedYears = years"
+    @change="(years) => displayedYears = years"
   />
   <Sidebar v-else
     v-model:show="filterStore.sidebarVisible"
@@ -39,6 +36,7 @@ import Sidebar from "@/components/Sidebar";
 import YearsSidebar from "@/components/YearsSidebar";
 import ButtonsList from "@/components/ButtonsList.vue"
 import RadioGroup from "./RadioGroup.vue";
+import Range from "./Range.vue";
 import { useGlobalStore } from "@/stores/global";
 import { useFilterStore } from "@/stores/filter";
 import { useMoviesStore } from "@/stores/movies";
@@ -88,15 +86,12 @@ const filterButtons = ref({
   Countries: displayedCountries,
   Years: displayedYears,
 })
-const sidebars = {
-  Genres: Sidebar,
-  Countries: Sidebar,
-}
 let currentSidebar = ref('Genres')
 
 function showMovies() {
   filterStore.filterVisible = false
   // moviesStore.loadMovies(1)
+  filterStore.createParams(1)
   filterStore.moviesVisible = true
 }
 

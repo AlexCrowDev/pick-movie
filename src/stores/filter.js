@@ -7,8 +7,8 @@ export const useFilterStore = defineStore('filter', {
     filterVisible: true,
     moviesVisible: false,
     movieType: 'All',
-    years: [1940, 2024],
-    rating: [],
+    years: [1960, new Date().getFullYear()],
+    rating: [1, 10],
   }),
   getters: {
     includedGenres() {
@@ -75,13 +75,11 @@ export const useFilterStore = defineStore('filter', {
         params.append('countries.name', `!${country.name}`)
       })
     
-      // if (model.years.length > 1) {
-      // params.append('year', model.years.join('-'));
-      // }
+      params.append('year', this.years.join('-'));
     
-      // if (model.rating.length > 1) {
-      //   params.append('rating.kp', model.rating.join('-'));
-      // }
+      if (this.rating.length > 1) {
+        params.append('rating.kp', this.rating.join('-'));
+      }
       if ((this.movieType === 'TV Series') && animatedFilm) {
         params.append('type', 'animated-series')
       } else if (this.movieType === 'TV Series') {
