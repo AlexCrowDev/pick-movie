@@ -34,7 +34,7 @@
   }
 </script>
 
-<style scoped>
+<style>
 .movie {
 	position: relative;
 	flex-direction: column;

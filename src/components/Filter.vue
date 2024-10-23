@@ -90,8 +90,8 @@ let currentSidebar = ref('Genres')
 
 function showMovies() {
   filterStore.filterVisible = false
-  // moviesStore.loadMovies(1)
-  filterStore.createParams(1)
+  moviesStore.loadMovies(1)
+  // filterStore.createParams(1)
   filterStore.moviesVisible = true
 }
 

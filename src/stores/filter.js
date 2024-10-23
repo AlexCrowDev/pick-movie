@@ -92,7 +92,7 @@ export const useFilterStore = defineStore('filter', {
       params.append('sortField', 'rating.kp')
       params.append('sortType', '-1')
       params.append('page', page)
-      params.append('limit', '100')
+      params.append('limit', '40')
       console.log(params.toString())
       return params.toString()
     }
