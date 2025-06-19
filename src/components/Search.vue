@@ -6,16 +6,16 @@
       <input
         class="search-input" 
         type="text"
-        :placeholder="filterStore.attribute"
+        :placeholder
         @input="updateValue"
       >
     </div>
 </template>
 
 <script setup>
-import { useFilterStore } from '@/stores/filter';
+import { inject } from 'vue';
 
-const filterStore = useFilterStore()
+const placeholder = inject('placeholder')
 const emit = defineEmits(['update:modelValue'])
 
 function updateValue(event) {

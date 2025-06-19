@@ -40,7 +40,7 @@ import Range from "./Range.vue";
 import { useGlobalStore } from "@/stores/global";
 import { useFilterStore } from "@/stores/filter";
 import { useMoviesStore } from "@/stores/movies";
-import { computed, ref, watch } from "vue";
+import { computed, provide, ref, watch } from "vue";
 
 const globalStore = useGlobalStore()
 const filterStore = useFilterStore()
@@ -86,7 +86,10 @@ const filterButtons = ref({
   Countries: displayedCountries,
   Years: displayedYears,
 })
+
 let currentSidebar = ref('Genres')
+provide('placeholder', currentSidebar)
+
 
 function showMovies() {
   filterStore.filterVisible = false
@@ -96,7 +99,7 @@ function showMovies() {
 }
 
 function showSidebar(button) {
-  currentSidebar = button
+  currentSidebar.value = button
   filterStore.sidebarVisible = true
 }
 </script>
