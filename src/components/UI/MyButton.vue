@@ -17,7 +17,7 @@
 	width: 230px;
 	align-items: center;
 	justify-content: center;
-	margin: 5px 0px 15px;
+	margin: 15px;
 	background-color: rgb(122, 91, 247);
 	transition: background-color 0.2s ease;
 	border-radius: 50px;

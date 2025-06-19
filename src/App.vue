@@ -40,7 +40,7 @@ html, body {
   display: flex;
   flex-direction: column;
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   overflow: auto;
   padding: 0px 15px;
   margin: 0px auto;

@@ -17,7 +17,9 @@
       v-model:list="excludedList"
       :currentSwitchItem
     />
-    <fixed-button @click.prevent="hideSidebar">Show</fixed-button>
+    <div class="sidebar__button-wrapper">
+      <fixed-button @click.prevent="hideSidebar">Show</fixed-button>
+    </div>
   </div>
 </template>
 
@@ -106,11 +108,20 @@
   top: 0;
   right: 15px;
   left: 15px;
+  min-height: 100vh;
   padding-top: 15px;
-	height: 100%;
+  padding-bottom: 55px;
 	background-color: #16141c;
 }
 .search {
   margin: 15px 0px;
+}
+.sidebar__button-wrapper {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 11;
+	background-color: #16141c;
 }
 </style>
