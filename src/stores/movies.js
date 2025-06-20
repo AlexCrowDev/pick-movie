@@ -4,7 +4,7 @@ import { useFilterStore } from "./filter";
 
 export const useMoviesStore = defineStore('movies', {
   state: () => ({
-    movies: [],
+    movies: null,
     moviesStub: [
       {
         id:1,
@@ -62,7 +62,7 @@ export const useMoviesStore = defineStore('movies', {
     async loadMovies(page) {
       const ApiClient = useApiClient()
       let data = await ApiClient.getMovies(page)
-      this.movies.push(...data.docs)
+      this.movies = data.docs
     },
     nextMovies() {
       this.loadMovies(++this.page)

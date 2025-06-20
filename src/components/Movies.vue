@@ -1,13 +1,16 @@
 <template>
   <div v-if="filterStore.moviesVisible">
 		<div class="movies">
-			<Movie
-				:movies="moviesStore.movies"
-			/>
 			<MovieSkeleton v-if="skeletonActive"
 			/>
+			<template v-else-if="moviesStore.movies.length">
+				<Movie
+					:movies="moviesStore.movies"
+				/>
+				<fixed-button @click.prevent="nextMovies">Next</fixed-button>
+			</template>
+			<p v-else>Movies not found</p>
 		</div>
-    <fixed-button @click.prevent="nextMovies">Next</fixed-button>
   </div>
 </template>
 
@@ -23,7 +26,7 @@ const filterStore = useFilterStore()
 
 let skeletonActive = ref(true)
 
-watch(moviesStore.movies, () => {
+watch(() => moviesStore.movies, () => {
   skeletonActive.value = false
 })
 

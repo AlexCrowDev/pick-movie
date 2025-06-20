@@ -22,7 +22,6 @@
   export default {
     props: {
       movies: {
-        type: Array,
         required: true,
       },
     },
